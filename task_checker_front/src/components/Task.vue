@@ -1,10 +1,17 @@
 <script setup>
 import Select from './Select.vue'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import DetailModal from './DetailModal.vue'
 
 const props = defineProps({
   task: Object
 })
+
+const isModalVisible = ref(false)
+
+const showDetailModal = () => {
+  isModalVisible.value = true
+}
 
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)
@@ -12,34 +19,35 @@ const formattedDeadlineDate = computed(() => {
 })
 
 const taskStyle = computed(() => {
-  // 現在の日時より deadlineDate が後であるかをチェック
-  const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
-  // 条件に基づいてスタイルオブジェクトを返す
+  const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date()
   return {
     backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
-  };
+  }
 })
-
 </script>
 
 <template>
-   <div class="task" :style="taskStyle">
+<div class="task" :style="taskStyle" @click="showDetailModal">
     <span class="task_date">{{ formattedDeadlineDate }}</span>
     <div class="task_text_contents">
       <h3 class="task_title">{{ task.name }}</h3>
-      <p class="task_sentence">{{ task.explanation}}</p>
+      <p class="task_sentence">{{ task.explanation }}</p>
     </div>
-      <div v-if="task.image_url" class="image-container">
-        <div class="image-wrapper">
-          <img
-            :src="task.image_url"
-            class="task-image"
-          />
-        </div>
+    <div v-if="task.image_url" class="image-container">
+      <div class="image-wrapper">
+        <img :src="task.image_url" class="task-image" />
       </div>
-      <div className="task_input_contents">
+    </div>
+    <div class="task_input_contents">
       <Select />
     </div>
+
+    <!-- DetailModalを表示 -->
+    <DetailModal
+      :task="task"
+      :isVisible="isModalVisible"
+      @update:isVisible="isModalVisible = $event"
+    />
   </div>
 </template>
 
@@ -98,7 +106,6 @@ const taskStyle = computed(() => {
 .task_input_contents {
   padding: 0 20px 20px 20px;
 }
-
 
 .image-container {
   width: 100px;
