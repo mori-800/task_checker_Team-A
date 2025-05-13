@@ -40,13 +40,13 @@
               required
             ></textarea>
 
-            <label for="taskDeadline">Deadline:</label>
+            <!-- <label for="taskDeadline">Deadline:</label>
             <input
               type="date"
               id="taskDeadline"
               v-model="editedTask.deadlineDate"
               required
-            />
+            /> -->
 
             <button type="submit">Save</button>
             <button type="button" @click="closeEditModal">Cancel</button>
