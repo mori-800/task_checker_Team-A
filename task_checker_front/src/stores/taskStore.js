@@ -61,6 +61,7 @@ export const useTaskStore = defineStore('task', () => {
       console.error('検索に失敗しました:', error);
     }
   }
+  
  return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, searchResults}
 })
  
