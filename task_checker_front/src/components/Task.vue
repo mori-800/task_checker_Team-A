@@ -7,19 +7,27 @@ const props = defineProps({
   task: Object
 })
 
+// タスクをrefとしてローカルに保持（編集反映のため）
+const localTask = ref({ ...props.task })
+
 const isModalVisible = ref(false)
 
 const showDetailModal = () => {
   isModalVisible.value = true
 }
 
+// 編集内容を受け取って更新
+const handleTaskUpdate = (updatedTask) => {
+  localTask.value = { ...updatedTask }
+}
+
 const formattedDeadlineDate = computed(() => {
-  const date = new Date(props.task.deadlineDate)
+  const date = new Date(localTask.value.deadlineDate)
   return date.toLocaleDateString('ja-JP')
 })
 
 const taskStyle = computed(() => {
-  const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date()
+  const isDeadlineAfterToday = new Date(localTask.value.deadlineDate) > new Date()
   return {
     backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
   }
@@ -27,31 +35,31 @@ const taskStyle = computed(() => {
 </script>
 
 <template>
-<div class="task" :style="taskStyle" @click="showDetailModal">
+  <div class="task" :style="taskStyle" @click="showDetailModal">
     <span class="task_date">{{ formattedDeadlineDate }}</span>
     <div class="task_text_contents">
-      <h3 class="task_title">{{ task.name }}</h3>
-      <p class="task_sentence">{{ task.explanation }}</p>
+      <h3 class="task_title">{{ localTask.name }}</h3>
+      <p class="task_sentence">{{ localTask.explanation }}</p>
     </div>
-    <div v-if="task.image_url" class="image-container">
+    <div v-if="localTask.image_url" class="image-container">
       <div class="image-wrapper">
-        <img :src="task.image_url" class="task-image" />
+        <img :src="localTask.image_url" class="task-image" />
       </div>
     </div>
     <div class="task_input_contents">
       <Select />
     </div>
 
-    <!-- DetailModalを表示 -->
     <DetailModal
-      :task="task"
+      :task="localTask"
       :isVisible="isModalVisible"
       @update:isVisible="isModalVisible = $event"
+      @update-task="handleTaskUpdate"
     />
   </div>
 </template>
 
-<style>
+<style scoped>
 .task {
   background-color: white;
   max-height: 350px;

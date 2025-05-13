@@ -1,50 +1,27 @@
 <template>
-<div v-if="isVisible" class="modal-overlay" @click="closeModal">
+  <div v-if="isVisible" class="modal-overlay" @click="closeModal">
     <div class="modal-content" @click.stop>
       <h2>Task Details</h2>
 
-      <!-- タスク情報表示（ローカル状態を表示） -->
       <p><strong>Title:</strong> {{ localTask.name }}</p>
       <p><strong>Description:</strong> {{ localTask.explanation }}</p>
       <p><strong>Deadline:</strong> {{ formattedDeadlineDate }}</p>
 
-      <!-- 画像があれば表示 -->
       <div v-if="localTask.image_url" class="image-container">
         <img :src="localTask.image_url" alt="Task Image" />
       </div>
 
-      <!-- 編集ボタン -->
       <button @click="openEditModal">Edit</button>
 
-      <!-- 編集用モーダル -->
       <div v-if="isEditModalVisible" class="edit-modal-overlay" @click="closeEditModal">
         <div class="edit-modal-content" @click.stop>
           <h3>Edit Task</h3>
-          
-          <!-- 編集フォーム -->
           <form @submit.prevent="saveChanges">
             <label for="taskName">Task Name:</label>
-            <input
-              type="text"
-              id="taskName"
-              v-model="editedTask.name"
-              required
-            />
+            <input type="text" id="taskName" v-model="editedTask.name" required />
 
             <label for="taskExplanation">Explanation:</label>
-            <textarea
-              id="taskExplanation"
-              v-model="editedTask.explanation"
-              required
-            ></textarea>
-
-            <!-- <label for="taskDeadline">Deadline:</label>
-            <input
-              type="date"
-              id="taskDeadline"
-              v-model="editedTask.deadlineDate"
-              required
-            /> -->
+            <textarea id="taskExplanation" v-model="editedTask.explanation" required></textarea>
 
             <button type="submit">Save</button>
             <button type="button" @click="closeEditModal">Cancel</button>
@@ -58,37 +35,30 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   task: Object,
   isVisible: Boolean
 })
 
-const emit = defineEmits(['update:isVisible'])
+const emit = defineEmits(['update:isVisible', 'update-task'])
 
-// ローカルタスクデータ（表示用）
 const localTask = ref({ ...props.task })
-
-// 編集用データ
 const editedTask = ref({ ...props.task })
 
-// モーダル状態
 const isEditModalVisible = ref(false)
 
-// フォーマット済み日付
 const formattedDeadlineDate = computed(() => {
   const date = new Date(localTask.value.deadlineDate)
   return date.toLocaleDateString('ja-JP')
 })
 
-// 編集モーダルを開く
 const openEditModal = () => {
-  editedTask.value = { ...localTask.value }  // 現在のタスク内容で初期化
+  editedTask.value = { ...localTask.value }
   isEditModalVisible.value = true
 }
 
-// 閉じる処理
 const closeEditModal = () => {
   isEditModalVisible.value = false
 }
@@ -97,19 +67,15 @@ const closeModal = () => {
   emit('update:isVisible', false)
 }
 
-// 編集保存 → 表示に反映
 const saveChanges = () => {
-  // 編集データを表示用に反映
   localTask.value = { ...editedTask.value }
-
-  // 編集モーダルを閉じる
   isEditModalVisible.value = false
 
-  // 必要であれば親にも通知（例：API保存など）
-  // emit('updateTask', localTask.value)
+  // 🔥 編集結果を親(Task.vue)に送信
+  emit('update-task', localTask.value)
 }
 
-// タスクが外部から変更された場合にも反映
+// propsが変わったら自動で更新
 watch(() => props.task, (newTask) => {
   localTask.value = { ...newTask }
   editedTask.value = { ...newTask }
@@ -157,7 +123,6 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* 編集モーダル */
 .edit-modal-overlay {
   position: fixed;
   top: 0;
