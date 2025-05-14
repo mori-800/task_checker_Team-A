@@ -4,6 +4,7 @@ CREATE TABLE "Task" (
     "name" TEXT NOT NULL,
     "explanation" TEXT NOT NULL,
     "deadlineDate" TIMESTAMP(3) NOT NULL,
+    "image_url" TEXT,
     "status" INTEGER NOT NULL,
     "genreId" INTEGER NOT NULL,
 
