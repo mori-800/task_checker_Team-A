@@ -1,9 +1,13 @@
 <script setup>
 import Select from './Select.vue'
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 import { useTaskStore } from '../stores/taskStore';
+//ログインユーザー名をトップページに反映する　森
+import { auth, signOut } from '../firebase'
+import  api from '../api/axios';
 
-
+//ユーザーリストを定義
+const allUsers = ref([]);
 const task = ref({
   name: '',
   explanation: '',
@@ -25,10 +29,26 @@ const handleImageUpload = (event) => {
   console.log(event.target.files)
 };
 
+//ユーザーリストのプルダウン
+onMounted(async()=> {
+  try {
+    const fetchAllUsers = await api.get('/users');
+    allUsers.value = fetchAllUsers.data;
+    console.log("え",fetchAllUsers.data);
+    console.log("わ",allUsers.value)
+    console.log("る",allUsers)
+    console.log("ほ",allUsers.value.displayName)
+  }catch(error) {
+    console.log("ユーザーデータの取得ができませんでした", error);
+  }
+})
+
+
 const submitTask = async() => {
   taskStore.addTask(task.value);
   emit('close-modal')
 }
+
 
 </script>
 
@@ -48,6 +68,9 @@ const submitTask = async() => {
       <input class="input_date" type="date" v-model="task.deadlineDate"/>
       <h4 class="input_title">画像</h4>
       <input type="file" @change="handleImageUpload" accept="image/*"/>
+      <select>
+        <option :value=user.uid v-for="user in allUsers">{{ user.displayName }}</option>
+      </select>
     </div>
     <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </form>
