@@ -21,8 +21,6 @@ model Task {
   status       Int
   genreId      Int
   genre        Genre    @relation(fields: [genreId], references: [id])
-  makerId      String
-  assigneeId   String
 }
 
 model Genre {

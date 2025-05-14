@@ -34,10 +34,6 @@ onMounted(async()=> {
   try {
     const fetchAllUsers = await api.get('/users');
     allUsers.value = fetchAllUsers.data;
-    console.log("え",fetchAllUsers.data);
-    console.log("わ",allUsers.value)
-    console.log("る",allUsers)
-    console.log("ほ",allUsers.value.displayName)
   }catch(error) {
     console.log("ユーザーデータの取得ができませんでした", error);
   }

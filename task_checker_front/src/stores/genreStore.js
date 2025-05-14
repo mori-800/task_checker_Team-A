@@ -14,20 +14,6 @@ export const useGenreStore = defineStore('genre', () => {
       console.log('タスクデータの取得ができませんでした', error);
     }
   }
-  // ジャンルデータ変更に伴うタスクのフィルタリング
-  async function filterGenres(genreId) {
-    //取得したselectedGenreIdとtaskのidが同一だったらtasks.valueのデータを更新
-    if(!genreId) {
-      console.log(genreId)
-      filteredGenres.value = [...genres.value];
-      console.log(filteredGenres.value)
-    } else {
-      filteredGenres.value = genres.value.filter(genre => genreId === genre.id)
-    }
-  }
-
-
-
    // 保存処理を実施するためのリクエスト　吉田
   async function addGenre(newGenre){
     try {
@@ -57,5 +43,4 @@ export const useGenreStore = defineStore('genre', () => {
   }
 
   return { genres, fetchAllGenres, addGenre, removeGenre }
-
 })
