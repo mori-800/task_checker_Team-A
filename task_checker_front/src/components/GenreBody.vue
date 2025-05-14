@@ -5,6 +5,8 @@ import { useGenreStore } from '../stores/genreStore';
 const genre = ref({ name: '' });
 const genreStore = useGenreStore();
 
+
+
 // ジャンルのリストを格納するための変数
 const genreList = ref([]);
 
@@ -33,6 +35,14 @@ const submitGenre = async () => {
   }
 };
 
+const removeGenre = async(removeId) => {
+  try{
+    await genreStore.removeGenre(removeId);
+  }catch(error){
+    console.log('ジャンルの削除に失敗しました', error);
+  }
+}
+
 // モーダルが表示されるタイミングでジャンルを取得
 onMounted(fetchGenres);
 </script>
@@ -40,21 +50,17 @@ onMounted(fetchGenres);
 
 <template>
   <div class="modal_body">
-    <h2 class="input_menu">ジャンル編集</h2>
-
-    <!-- 入力フォーム -->
-    <form>
-      <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name" />
-      <input class="input_submit" type="button" value="追加" @click="submitGenre" />
-    </form>
-
-    <!-- ジャンルリスト -->
-    <div class="genre_list">
-      <h3>登録されているジャンル</h3>
+      <h2 class="input_menu">ジャンル編集</h2>
       <ul>
-        <li v-for="(item, index) in genreList" :key="index">{{ item.name }}</li>
+        <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
+          <span>{{ genre.name }}</span>
+          <input class="delete_btn" type="submit" value="削除" @click="removeGenre(genre.id)">
+        </li>
       </ul>
-    </div>
+      <form>
+        <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name"/>
+        <input class="input_submit" type="button" value="追加" @click="submitGenre" />
+      </form>
   </div>
 </template>
 
@@ -86,5 +92,9 @@ form {
 .genre_list li {
   padding: 5px 0;
   border-bottom: 1px solid #ddd;
+}
+
+.delete_btn {
+  margin-left: 24px;
 }
 </style>

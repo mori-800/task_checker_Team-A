@@ -120,6 +120,16 @@ app.post('/genres', async(req, res) => {
   }
 })
 
+app.delete("/genres/:id", async (req, res) => {
+  try {
+    const genreId = parseInt(req.params.id, 10);
+    await prisma.genre.delete({where:{id: genreId}})
+    return res.status(200).send();
+  } catch(error) {
+    res.status(500).send("ジャンルの削除に失敗しました。")
+  }
+})
+
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
 })  
