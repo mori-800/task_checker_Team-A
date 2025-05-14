@@ -128,7 +128,7 @@ app.post('/genres', async(req, res) => {
   }
 })
 
-// ジャンルの削除　吉田
+// ジャンルの削除 吉田
 app.delete("/genres/:id", async (req, res) => {
   try {
     const genreId = parseInt(req.params.id, 10);
@@ -136,6 +136,8 @@ app.delete("/genres/:id", async (req, res) => {
     return res.status(200).send();
   } catch(error) {
     res.status(500).send("ジャンルの削除に失敗しました。")
+  }
+})
 
 //firebaseにユーザーリストをリクエスト　森
 app.get('/users', async(req, res) => {
