@@ -1,7 +1,8 @@
 <script setup>
-import Select from './Select.vue'
+import Select from '../Select.vue'
 import { ref } from 'vue'
-import { useTaskStore } from '../stores/taskStore';
+import { useTaskStore } from '../../stores/taskStore';
+
 
 const task = ref({
   name: '',
