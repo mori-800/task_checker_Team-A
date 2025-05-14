@@ -6,11 +6,6 @@ const props = defineProps({
   task: Object
 })
 const emit = defineEmits('close-modal');
-const editModal=ref(false);
-
-const closeModal = () => {
-  showModal.value = false
-}
 
 //{task}の中身へ親要素からもらった{task}を代入
 const task = ref({
@@ -19,7 +14,7 @@ const task = ref({
   deadlineDate: props.task.deadlineDate,
 })
 
-console.log(props.task)
+//時間をjpの表示に変更
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)
   return date.toLocaleDateString('ja-JP')
@@ -33,10 +28,10 @@ const formattedDeadlineDate = computed(() => {
       <div class="detail_modal_content">
         <h2 class="detail_modal_title">タイトル</h2>
         <div class="detail_task_title">{{ task.name }}</div>
-        <h2 class="detail_modal_title">説明</h2>
-        <div class="detail_task_title">{{ task.explanation }}</div>
-        <h2 class="detail_modal_title">期限</h2>
-        <div class="detail_task_title">{{ formattedDeadlineDate }}</div>
+        <h2 class="detail_modal_explanation">説明</h2>
+        <div class="detail_task_explanation">{{ task.explanation }}</div>
+        <h2 class="detail_modal_deadlineDate">期限</h2>
+        <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
       </div>
       <button class="detail_edit_button" @click="showModal=true">
         編集

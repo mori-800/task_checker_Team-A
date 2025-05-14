@@ -36,8 +36,8 @@ const taskStyle = computed(() => {
    <div class="task" :style="taskStyle">
     <FormModal v-model="showModal" body="detailBody" @close-modal="closeModal" :task="props.task"/>
     <span class="task_date">{{ formattedDeadlineDate }}</span>
-    <div class="task_text_contents">
-      <h3 class="task_title" @click="showModal=true">{{ task.name }}</h3>
+    <div class="task_text_contents" @click="showModal=true">
+      <h3 class="task_title">{{ task.name }}</h3>
       <p class="task_sentence">{{ task.explanation}}</p>
     </div>
       <div v-if="task.image_url" class="image-container">
