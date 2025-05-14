@@ -117,6 +117,26 @@ app.get('/search', async (req, res) => {
   }
 });
 
+
+// ジャンルの追加　吉田
+app.post('/genres', async(req, res) => {
+  try {
+    const savedData = await prisma.genre.create({data: req.body});
+    res.json(savedData)
+  }catch(error){
+    res.status(500).send("ジャンルの保存に失敗しました");
+  }
+})
+
+// ジャンルの削除　吉田
+app.delete("/genres/:id", async (req, res) => {
+  try {
+    const genreId = parseInt(req.params.id, 10);
+    await prisma.genre.delete({where:{id: genreId}})
+    return res.status(200).send();
+  } catch(error) {
+    res.status(500).send("ジャンルの削除に失敗しました。")
+
 //firebaseにユーザーリストをリクエスト　森
 app.get('/users', async(req, res) => {
   // レスポンス返却する際に使用する配列を準備
@@ -140,6 +160,7 @@ app.get('/users', async(req, res) => {
     res.json(allUsers);
   }catch(error){
     res.status(500).send("ユーザーリストの取得に失敗しました。");
+
   }
 })
 
