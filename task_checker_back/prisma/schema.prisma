@@ -11,6 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//schema.prismaを修正する際は森に確認お願いします。migrationの兼ね合いですべて森が修正します。
 model Task {
   id           Int      @default(autoincrement()) @id
   name         String
@@ -20,6 +21,8 @@ model Task {
   status       Int
   genreId      Int
   genre        Genre    @relation(fields: [genreId], references: [id])
+  makerId      String
+  assigneeId   String
 }
 
 model Genre {

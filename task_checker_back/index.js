@@ -18,6 +18,13 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 app.use('/uploads', express.static('uploads'))
 
+// firebaseの初期化設定　森
+const admin = require("firebase-admin");
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 app.get("/tasks", async(req, res) => {
   try {
@@ -109,6 +116,32 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ message: "検索処理に失敗しました" });
   }
 });
+
+//firebaseにユーザーリストをリクエスト　森
+app.get('/users', async(req, res) => {
+  // レスポンス返却する際に使用する配列を準備
+  let allUsers = [];
+
+  const listAllUsers = async (nextPageToken) => {
+    try {
+      const listUsersResult = await admin.auth().listUsers(1000, nextPageToken);
+      allUsers = allUsers.concat(listUsersResult.users.map(userRecord => userRecord.toJSON()));
+      if (listUsersResult.pageToken) {
+        await listAllUsers(listUsersResult.pageToken);
+      }
+    } catch (error) {
+      console.log('Error listing users:', error);
+      throw error; //エラーが発生したら、後続の処理を実施しない
+    }
+  };
+
+  try {
+    await listAllUsers();
+    res.json(allUsers);
+  }catch(error){
+    res.status(500).send("ユーザーリストの取得に失敗しました。");
+  }
+})
 
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
