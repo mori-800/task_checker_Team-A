@@ -1,19 +1,34 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import CancelIcon from 'vue-material-design-icons/CloseCircle.vue'
+
+import { useGenreStore } from '../stores/genreStore'
+const genreStore = useGenreStore()
+
+onMounted(() => {
+  genreStore.fetchAllGenres()
+})
 </script>
 
 <template>
-    <div class="modal_body">
-      <h2 class="input_menu">ジャンル編集</h2>
-      <ul>
-        <li class="genre_title">
-          <span>ジャンルの名前</span>
-          <CancelIcon />
-        </li>
-      </ul>
-      <input type="text" />
-      <input class="input_submit" type="button" value="追加" />
-    </div>
+  <div class="modal_body">
+    <h2 class="input_menu">ジャンル編集</h2>
+
+    <!-- 🔽 ここでジャンル一覧を表示 -->
+    <ul class="genre_list">
+      <li v-for="g in genreStore.genres" :key="g.id">{{ g.name }}</li>
+    </ul>
+
+    <ul>
+      <li class="genre_title">
+        <span>ジャンルの名前</span>
+        <CancelIcon />
+      </li>
+    </ul>
+
+    <input type="text" />
+    <input class="input_submit" type="button" value="追加" />
+  </div>
 </template>
 
 <style>
@@ -33,6 +48,7 @@ import CancelIcon from 'vue-material-design-icons/CloseCircle.vue'
   justify-content: center;
   align-items: center;
 }
+
 input,
 textarea {
   border: none;
@@ -59,6 +75,12 @@ textarea {
   border-style: none;
   padding: 16px 40px;
   font-size: 15px;
- }
+}
 
+.genre_list {
+  list-style-type: disc;
+  margin-bottom: 16px;
+  padding-left: 20px;
+  text-align: left;
+}
 </style>
