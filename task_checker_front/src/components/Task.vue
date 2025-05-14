@@ -1,15 +1,25 @@
 <script setup>
 import Select from './Select.vue'
-import { computed } from 'vue'
+import { computed,ref } from 'vue'
+import FormModal from './FormModal.vue';
 
+const showModal=ref(false);
 const props = defineProps({
   task: Object
 })
-
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)
   return date.toLocaleDateString('ja-JP')
 })
+
+const genreSelect = (e) => {
+  task.value.genreId = Number(e.target.value)
+}
+
+const closeModal = () => {
+  showModal.value = false
+}
+
 
 const taskStyle = computed(() => {
   // 現在の日時より deadlineDate が後であるかをチェック
@@ -24,8 +34,9 @@ const taskStyle = computed(() => {
 
 <template>
    <div class="task" :style="taskStyle">
+    <FormModal v-model="showModal" body="detailBody" @close-modal="closeModal" :task="props.task"/>
     <span class="task_date">{{ formattedDeadlineDate }}</span>
-    <div class="task_text_contents">
+    <div class="task_text_contents" @click="showModal=true">
       <h3 class="task_title">{{ task.name }}</h3>
       <p class="task_sentence">{{ task.explanation}}</p>
     </div>
@@ -38,8 +49,8 @@ const taskStyle = computed(() => {
         </div>
       </div>
       <div className="task_input_contents">
-      <Select />
-    </div>
+        <Select @change="genreSelect" :value="task.genreId"/>
+      </div>
   </div>
 </template>
 

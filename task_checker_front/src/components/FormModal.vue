@@ -2,14 +2,18 @@
 import { computed } from 'vue'
 import GenreBody from './GenreBody.vue'
 import TaskBody from './TaskBody.vue'
+import DetailBody from './DetailBody.vue'
 
 const props = defineProps({
-  body: String
+  body: String,
+  task: Object
 })
 
-const component = computed(() =>  {
-  return props.body === 'taskBody' ? TaskBody: GenreBody
-})
+const component = computed(() => {
+  if (props.body === 'taskBody') return TaskBody;
+  else if (props.body === 'genreBody') return GenreBody;
+  else if (props.body === 'detailBody') return DetailBody;
+});
 
 const emit = defineEmits('close-modal') 
 
@@ -21,7 +25,7 @@ const closeModal = () => {
 
 <template>
   <Modal v-model="showModal">
-    <component :is="component" @close-modal="closeModal" />
+    <component :is="component" @close-modal="closeModal" :task="task"/>
   </Modal>
 </template>
 

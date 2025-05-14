@@ -61,11 +61,11 @@ const handleSubmit = (e) => {
         </button>
       </form>
     </div>
-    <!-- <div class="header-right">
+    <div class="header-right">
       <button v-if="currentUser" @click="handleSignOut" class="logout-button">
         ログアウト
       </button>
-    </div> -->
+    </div>
   </div>
 </template>
 
