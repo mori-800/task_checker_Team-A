@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import api from '../api/axios'
 import { ref } from 'vue'
-
 export const useGenreStore = defineStore('genre', () => {
   const genres = ref([]);
   
@@ -14,5 +13,21 @@ export const useGenreStore = defineStore('genre', () => {
     }
   }
 
-  return { genres, fetchAllGenres }
+
+   // 保存処理を実施するためのリクエスト
+  async function addGenre(newGenre){
+    try {
+      const response = await api.post('/genres', newGenre)
+      const addedGenre = response.data
+      // 追加したジャンルデータをgenresに追加する。
+      genres.value.push({
+        id: addedGenre.id,
+        name: addedGenre.name
+      })
+    } catch (error) {
+      console.log("保存ができませんでした", error);
+    }
+  }
+  return { genres, fetchAllGenres, addGenre }
+
 })

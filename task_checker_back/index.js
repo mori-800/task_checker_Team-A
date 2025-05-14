@@ -110,6 +110,16 @@ app.get('/search', async (req, res) => {
   }
 });
 
+// ジャンルの追加
+app.post('/genres', async(req, res) => {
+  try {
+    const savedData = await prisma.genre.create({data: req.body});
+    res.json(savedData)
+  }catch(error){
+    res.status(500).send("ジャンルの保存に失敗しました");
+  }
+})
+
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
 })  
