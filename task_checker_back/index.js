@@ -110,7 +110,7 @@ app.get('/search', async (req, res) => {
   }
 });
 
-// ジャンルの追加
+// ジャンルの追加　吉田
 app.post('/genres', async(req, res) => {
   try {
     const savedData = await prisma.genre.create({data: req.body});
@@ -120,6 +120,7 @@ app.post('/genres', async(req, res) => {
   }
 })
 
+// ジャンルの削除　吉田
 app.delete("/genres/:id", async (req, res) => {
   try {
     const genreId = parseInt(req.params.id, 10);

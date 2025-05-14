@@ -14,7 +14,7 @@ export const useGenreStore = defineStore('genre', () => {
   }
 
 
-   // 保存処理を実施するためのリクエスト
+   // 保存処理を実施するためのリクエスト　吉田
   async function addGenre(newGenre){
     try {
       const response = await api.post('/genres', newGenre)
@@ -30,6 +30,7 @@ export const useGenreStore = defineStore('genre', () => {
     
   }
 
+   // 削除処理を実施するためのリクエスト　吉田
   async function removeGenre(removeId) {
     try {
       // サーバーからジャンルを削除
@@ -40,6 +41,6 @@ export const useGenreStore = defineStore('genre', () => {
         console.error('ジャンルの削除に失敗しました。', error);
     }
   }
-  
+
   return { genres, fetchAllGenres, addGenre, removeGenre }
 })
