@@ -1,10 +1,8 @@
 <script setup>
-import Select from './Select.vue'
+import Select from '../Select.vue'
 import { ref,onMounted } from 'vue'
-import { useTaskStore } from '../stores/taskStore';
-//ログインユーザー名をトップページに反映する　森
-import { auth, signOut } from '../firebase'
-import  api from '../api/axios';
+import { useTaskStore } from '../../stores/taskStore';
+import  api from '../../api/axios';
 
 //ユーザーリストを定義
 const allUsers = ref([]);

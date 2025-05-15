@@ -1,6 +1,6 @@
 <script setup>
 import { ref , computed} from 'vue'
-import FormModal from './FormModal.vue';
+import FormModal from '../FormModal.vue';
 
 const showModal=ref(false)
 //Taskから{task}を取得する

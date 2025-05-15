@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useGenreStore } from '../stores/genreStore';
+import { useGenreStore } from '../../stores/genreStore';
 
 const genre = ref({ name: '' });
 const genreStore = useGenreStore();
