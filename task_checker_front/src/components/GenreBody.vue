@@ -10,7 +10,7 @@ const genreStore = useGenreStore();
 // ジャンルのリストを格納するための変数 吉田
 const genreList = ref([]);
 
-// ジャンル名を全て取得する関数　吉田
+// ジャンル名を全て取得する関数 吉田
 const fetchGenres = async () => {
   try {
     await genreStore.fetchAllGenres();  // 全ジャンルの取得
@@ -20,7 +20,7 @@ const fetchGenres = async () => {
   }
 };
 
-// ジャンルの追加処理　吉田
+// ジャンルの追加処理 吉田
 const submitGenre = async () => {
   try {
     await genreStore.addGenre(genre.value);

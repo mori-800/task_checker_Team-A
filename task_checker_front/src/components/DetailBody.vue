@@ -1,11 +1,13 @@
 <script setup>
 import { ref , computed} from 'vue'
+import FormModal from './FormModal.vue';
 
+const showModal=ref(false)
 //Taskから{task}を取得する
 const props = defineProps({
   task: Object
 })
-const emit = defineEmits('close-modal');
+
 
 //{task}の中身へ親要素からもらった{task}を代入
 const task = ref({
@@ -20,6 +22,16 @@ const formattedDeadlineDate = computed(() => {
   return date.toLocaleDateString('ja-JP')
 })
 
+//編集モーダルを閉じる
+const closeModal = () => {
+  showModal.value = false
+}
+
+//閉じるボタンを押されたらモーダルを閉じる
+const emit = defineEmits('close-modal');
+const closeDetail = async() => {
+  emit('close-modal')
+}
 </script>
 
 <template>
@@ -33,11 +45,13 @@ const formattedDeadlineDate = computed(() => {
         <h2 class="detail_modal_deadlineDate">期限</h2>
         <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
       </div>
-      <button class="detail_edit_button" @click="showModal=true">
+      <button type="button" class="detail_edit_button" @click="showModal=true">
         編集
+        <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
       </button>
-      <button class="detail_delete_button">削除</button>
+      <button type="button" class="detail_delete_button">削除</button>
     </div>
+    <button type="button" class="detail_delete_button" @click="closeDetail">閉じる</button>
   </form>
 </template>
 
