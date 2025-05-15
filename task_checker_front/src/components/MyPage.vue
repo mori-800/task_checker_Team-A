@@ -11,14 +11,6 @@ import { auth, onAuthStateChanged } from '../firebase';
 const taskStore = useTaskStore();
 const currentUser = ref(null);
 
-const props = defineProps({
-  status: String,
-  tasks: {
-    type: Array,
-    default: () => []
-  }
-})
-
 onMounted(async() => {
   const response = await api.get('/tasks');
   Task.value = response.data;
@@ -72,13 +64,12 @@ function formatDate(dateString) {
 
 <template>
   <Header />
-  <!-- tasksは複数のタスクの配列なので繰り返しで<Task>に渡す 森 -->
-  <div v-for="task in tasks" :key="task.id">
-    <Task :task="task" />
-  </div>
-  <ShowList :task="task"/>
+<!-- 全タスク（props経由の tasks でなく、store から取得するように変更）アサイン機能完成次第調整します森 -->
+<div v-for="task in taskStore.tasks" :key="task.id">
+  <Task :task="task" />
+</div>
 
-  <!-- 以下はShareWhiZから輸入 -->
+  <!-- 以下はShareWhiZから輸入 森 -->
   <div>
     <h2 class="mp_title">投稿タスク一覧</h2>
     <div v-if="myTasks.length">
