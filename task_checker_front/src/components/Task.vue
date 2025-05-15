@@ -20,7 +20,6 @@ const closeModal = () => {
   showModal.value = false
 }
 
-
 const taskStyle = computed(() => {
   // 現在の日時より deadlineDate が後であるかをチェック
   const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();

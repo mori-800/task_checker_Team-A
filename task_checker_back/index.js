@@ -18,9 +18,10 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 app.use('/uploads', express.static('uploads'))
 
-// firebaseの初期化設定　森
+// firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -32,7 +33,6 @@ app.get("/tasks", async(req, res) => {
   const updatedTasks = AllTasks.map((task) => {
     if (task.image_url) {
       task.image_url = `http://localhost:3000/${task.image_url}`
-      console.log(task.image_url)
     } else {
       task.image_url = null;
     }
@@ -56,7 +56,6 @@ app.get("/genres", async(req, res) => {
 
 // タスクの保存処理
 app.post("/tasks", upload.single('image_url'), async (req, res) => {
-
   try {
     const imagePath = req.file ? req.file.path : null;
     const deadlineDate = new Date(req.body.deadlineDate)
@@ -67,7 +66,6 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
         deadlineDate: deadlineDate,
         status: Number(req.body.status),
         genreId: Number(req.body.genreId)
-
       },
     });
 
@@ -81,6 +79,34 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
   } catch(error) {
     console.log(error)
     res.status(500).send("タスクの保存に失敗しました")
+  }
+})
+//タスクの編集
+app.put("/tasks/:id", upload.single('image_url'),async(req, res) => {
+  const tasksId=parseInt(req.params.id);
+  try{
+    const imagePath = req.file ? req.file.path : null;
+    const deadlineDate = new Date(req.body.deadlineDate)
+    const updateData = await prisma.task.update({
+      where:{
+        id: tasksId
+      },
+      data:{
+        ...req.body,
+        image_url: imagePath,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status),
+        genreId: Number(req.body.genreId)
+      },
+    });
+    if(updateData.image_url){
+      updateData.image_url = `http://localhost:3000/${updateData.image_url}`
+    }else{
+      updateData.image_url=null;
+    }
+    res.json(updateData)
+    } catch(error) {
+    res.status(500).send("タスクの更新に失敗しました。")
   }
 })
 
@@ -118,7 +144,7 @@ app.get('/search', async (req, res) => {
 });
 
 
-// ジャンルの追加　吉田
+// ジャンルの追加 吉田
 app.post('/genres', async(req, res) => {
   try {
     const savedData = await prisma.genre.create({data: req.body});
@@ -139,7 +165,7 @@ app.delete("/genres/:id", async (req, res) => {
   }
 })
 
-//firebaseにユーザーリストをリクエスト　森
+//firebaseにユーザーリストをリクエスト 森
 app.get('/users', async(req, res) => {
   // レスポンス返却する際に使用する配列を準備
   let allUsers = [];
@@ -165,7 +191,6 @@ app.get('/users', async(req, res) => {
 
   }
 })
-
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
 })  

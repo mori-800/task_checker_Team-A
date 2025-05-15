@@ -11,7 +11,7 @@ const props = defineProps({
 
 //{task}の中身へ親要素からもらった{task}を代入
 const task = ref({
-  name: props.task.title,
+  name: props.task.name,
   explanation: props.task.explanation,
   deadlineDate: props.task.deadlineDate,
 })

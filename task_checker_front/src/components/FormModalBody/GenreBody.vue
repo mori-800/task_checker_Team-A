@@ -35,7 +35,7 @@ const submitGenre = async () => {
   }
 };
 
-// ジャンルの削除処理　吉田
+// ジャンルの削除処理 吉田
 const removeGenre = async(removeId) => {
   try{
     await genreStore.removeGenre(removeId);
@@ -44,7 +44,7 @@ const removeGenre = async(removeId) => {
   }
 }
 
-// モーダルが表示されるタイミングでジャンルを取得　吉田
+// モーダルが表示されるタイミングでジャンルを取得 吉田
 onMounted(fetchGenres);
 </script>
 

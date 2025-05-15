@@ -39,6 +39,7 @@ onMounted(async()=> {
 
 
 const submitTask = async() => {
+  console.log(task.value)
   taskStore.addTask(task.value);
   emit('close-modal')
 }

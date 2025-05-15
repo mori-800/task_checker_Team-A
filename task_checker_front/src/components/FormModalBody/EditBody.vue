@@ -1,10 +1,9 @@
 <script setup>
 import Select from '../Select.vue'
-import { ref } from 'vue'
+import { ref , computed} from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
 
 const taskStore = useTaskStore();
-
 //Taskから{task}を取得する
 const props = defineProps({
   task: Object
@@ -25,16 +24,29 @@ const genreSelect = (e) => {
 }
 
 const handleImageUpload = (event) => {
-  task.value.image_url = event.target.files[0];
+if (!event.target.files || event.target.files.length === 0) {
+  task.value.image_url = props.task.image_url
+  console.log(task.value.image_url)
+} else {
+  task.value.image_url = event.target.files[0]
+}
 };
+
+
 
 //送信ボタンを押したら編集モーダルを閉じる
 const emit = defineEmits('close-modal') 
 const submitTask = async() => {
-  // taskStore.addTask(task.value);
-  emit('close-modal')
+  try{
+    //タスクストアにタスクを追加
+    taskStore.updateTasks(props.task.id,task.value);
+    console.log(task.value)
+    emit('close-modal')
+  }catch(error){
+    console.error("データの入力に誤りあり",error)
+  }
+  
 }
-
 </script>
 
 <template>
@@ -51,6 +63,7 @@ const submitTask = async() => {
         <textarea v-model="task.explanation"/>
         <h4 class="input_title">期限</h4>
         <input class="input_date" type="date" v-model="task.deadlineDate"/>
+        <div>※変更されない場合は前のが適用されます</div>
         <h4 class="input_title">画像</h4>
         <input type="file" @change="handleImageUpload" accept="image/*"/>
       </div>
