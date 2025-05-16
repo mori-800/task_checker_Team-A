@@ -1,12 +1,30 @@
 <script setup>
 import Select from './Select.vue'
-import { computed,ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import FormModal from './FormModal.vue';
+//UserStoreから取得する形に変更 森
+import { useUserStore } from '../stores/userStore'
 
 const showModal=ref(false);
+const userStore = useUserStore()
+
 const props = defineProps({
   task: Object
 })
+
+// 担当者名の算出（userStore.usersから一致するIDを探す）森
+const assigneeName = computed(() => {
+  const user = userStore.users.find(u => u.uid === props.task.assigneeId)
+  return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
+})
+
+// 初回取得（必要なら）森
+onMounted(() => {
+  if (userStore.users.length === 0) {
+    userStore.fetchUsers()
+  }
+})
+
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)
   return date.toLocaleDateString('ja-JP')
@@ -48,6 +66,8 @@ const taskStyle = computed(() => {
           />
         </div>
       </div>
+      <!-- 👇 担当者名表示エリアを追加 森 -->
+    <p class="assignee">担当者: {{ assigneeName }}</p>
       <div className="task_input_contents">
         <Select @change="genreSelect" :value="task.genreId"/>
       </div>
@@ -128,5 +148,12 @@ const taskStyle = computed(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* 👇 担当者名のスタイル追加 */
+.assignee {
+  font-size: 12px;
+  color: rgb(70, 70, 70);
+  padding-left: 20px;
+  margin-top: 10px;
 }
 </style>
