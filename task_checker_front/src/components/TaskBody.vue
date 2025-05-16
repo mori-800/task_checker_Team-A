@@ -3,18 +3,19 @@ import Select from './Select.vue'
 import { ref,onMounted } from 'vue'
 import { useTaskStore } from '../stores/taskStore';
 //ログインユーザー名をトップページに反映する　森
-import { auth, signOut } from '../firebase'
 import  api from '../api/axios';
 
 //ユーザーリストを定義
 const allUsers = ref([]);
+const selectedAssigneeId = ref('')
 const task = ref({
   name: '',
   explanation: '',
   deadlineDate: '',
   image_url: '',
   status: 0,
-  genreId: null
+  genreId: null,
+  assigneeId: ''
 })
 
 const taskStore = useTaskStore();
@@ -26,25 +27,29 @@ const genreSelect = (e) => {
 
 const handleImageUpload = (event) => {
   task.value.image_url = event.target.files[0];
-  console.log(event.target.files)
 };
 
 //ユーザーリストのプルダウン
-onMounted(async()=> {
+onMounted(async () => {
   try {
-    const fetchAllUsers = await api.get('/users');
-    allUsers.value = fetchAllUsers.data;
-  }catch(error) {
-    console.log("ユーザーデータの取得ができませんでした", error);
+    const res = await api.get('/users')
+    allUsers.value = res.data
+  } catch (error) {
+    console.error("ユーザーデータの取得ができませんでした", error)
   }
 })
 
+const submitTask = async () => {
+  // ✅ 担当者IDを設定
+  task.value.assigneeId = selectedAssigneeId.value
 
-const submitTask = async() => {
-  taskStore.addTask(task.value);
-  emit('close-modal')
+  try {
+    await taskStore.addTask(task.value)
+    emit('close-modal')
+  } catch (error) {
+    console.error("タスクの登録に失敗しました", error)
+  }
 }
-
 
 </script>
 
@@ -64,11 +69,14 @@ const submitTask = async() => {
       <input class="input_date" type="date" v-model="task.deadlineDate"/>
       <h4 class="input_title">画像</h4>
       <input type="file" @change="handleImageUpload" accept="image/*"/>
-      <select>
-        <option :value=user.uid v-for="user in allUsers">{{ user.displayName }}</option>
+      <h4 class="input_title">担当者</h4>
+      <select v-model="selectedAssigneeId">
+        <option disabled value="">-- 担当者を選択 --</option>
+        <option :value="user.uid" v-for="user in allUsers" :key="user.uid">
+          {{ user.displayName || '名前未登録' }}
+        </option>
       </select>
-    </div>
-    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
+    </div>    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </form>
 </template>
 

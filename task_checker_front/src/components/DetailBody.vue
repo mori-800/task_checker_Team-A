@@ -1,15 +1,25 @@
 <script setup>
 import { ref , computed} from 'vue'
+import { useUserStore } from '../stores/userStore'
 
 //Taskから{task}を取得する
 const props = defineProps({
   task: Object
 })
+
+const userStore = useUserStore()
+
+const assigneeName = computed(() => {
+  const user = userStore.users.find(u => u.uid === props.task.assigneeId)
+  return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
+})
+
+
 const emit = defineEmits('close-modal');
 
 //{task}の中身へ親要素からもらった{task}を代入
 const task = ref({
-  name: props.task.title,
+  name: props.task.name,
   explanation: props.task.explanation,
   deadlineDate: props.task.deadlineDate,
 })
@@ -32,6 +42,8 @@ const formattedDeadlineDate = computed(() => {
         <div class="detail_task_explanation">{{ task.explanation }}</div>
         <h2 class="detail_modal_deadlineDate">期限</h2>
         <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
+            <p class="assignee">担当者: {{ assigneeName }}</p>
+
       </div>
       <button class="detail_edit_button" @click="showModal=true">
         編集

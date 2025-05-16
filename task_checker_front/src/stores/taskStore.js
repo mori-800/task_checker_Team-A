@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import api from '../api/axios'
 import { ref } from 'vue'
+import { auth } from '../firebase' // ← auth も必要なので忘れずに追加
 
 export const useTaskStore = defineStore('task', () => {
   const tasks = ref([]);
@@ -8,46 +9,51 @@ export const useTaskStore = defineStore('task', () => {
   const searchResults = ref([]);
 
   async function fetchAllTasks () {
-    try{
-      const response = await api.get('/tasks')
+    try {
+      const response = await api.get('/tasks');
       tasks.value = response.data;
       filteredTasks.value = tasks.value;
-    }catch(error){
+    } catch (error) {
       console.log('タスクデータの取得ができませんでした', error);
     }
   }
 
-  // ジャンルデータ変更に伴うタスクのフィルタリング
   async function filterTasks(genreId) {
-    //取得したselectedGenreIdとtaskのidが同一だったらtasks.valueのデータを更新
-    if(!genreId) {
+    if (!genreId) {
       filteredTasks.value = [...tasks.value];
     } else {
-      filteredTasks.value = tasks.value.filter(task => genreId === task.genreId)
+      filteredTasks.value = tasks.value.filter(task => genreId === task.genreId);
     }
   }
 
   async function addTask(newTask) {
-    try{
-      const formData = new FormData();
-      formData.append('name', newTask.name);
-      formData.append('explanation', newTask.explanation);
-      formData.append('deadlineDate', newTask.deadlineDate);
-      formData.append('status', newTask.status);
-      formData.append('genreId', newTask.genreId);
-      formData.append('image_url', newTask.image_url);
+  try {
+    const formData = new FormData();
+    formData.append('name', newTask.name);
+    formData.append('explanation', newTask.explanation);
+    formData.append('deadlineDate', newTask.deadlineDate);
+    formData.append('status', newTask.status);
+    formData.append('genreId', newTask.genreId);
 
-      const response = await api.post('/tasks', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      const addedTask = response.data;
-      tasks.value.push(addedTask);
-    }catch(error){
-      console.log('タスクデータの保存ができませんでした', error);
+    if (newTask.image_url) {
+      formData.append('image', newTask.image_url); // 必要に応じてimage_urlではなくimageなどに変更
     }
+
+formData.append('assigneeId', newTask.assigneeId);
+formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
+
+    const response = await api.post('/tasks', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    const addedTask = response.data;
+    tasks.value.push(addedTask);
+  } catch (error) {
+    console.log('タスクデータの保存ができませんでした', error);
   }
+}
+
 
   async function taskSearch(query) {
     if (!query) return;
@@ -55,13 +61,20 @@ export const useTaskStore = defineStore('task', () => {
       const response = await api.get('/search', {
         params: { q: query },
       });
-      searchResults.value = response.data; // 検索結果を保存
+      searchResults.value = response.data;
       console.log(searchResults.value)
     } catch (error) {
       console.error('検索に失敗しました:', error);
     }
   }
-  
- return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, searchResults}
+
+  return {
+    tasks,
+    filteredTasks,
+    fetchAllTasks,
+    filterTasks,
+    addTask,
+    taskSearch,
+    searchResults
+  }
 })
- 
