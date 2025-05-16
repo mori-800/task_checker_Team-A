@@ -41,6 +41,6 @@ export const useGenreStore = defineStore('genre', () => {
         console.error('ジャンルの削除に失敗しました。', error);
     }
   }
-
+  
   return { genres, fetchAllGenres, addGenre, removeGenre }
 })

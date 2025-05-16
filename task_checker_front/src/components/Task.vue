@@ -1,8 +1,10 @@
 <script setup>
-import Select from './Select.vue'
+import StatusSelect from './StatusSelect.vue';
 import { computed,ref } from 'vue'
 import FormModal from './FormModal.vue';
+import { useTaskStore } from '../stores/taskStore';
 
+const taskStore = useTaskStore();
 const showModal=ref(false);
 const props = defineProps({
   task: Object
@@ -12,8 +14,9 @@ const formattedDeadlineDate = computed(() => {
   return date.toLocaleDateString('ja-JP')
 })
 
-const genreSelect = (e) => {
-  props.task.value.genreId = Number(e.target.value)
+const statusSelect = (e) => {
+  props.task.status = Number(e.target.value)
+  taskStore.changeTasksStatus(props.task)
 }
 
 const closeModal = () => {
@@ -50,7 +53,7 @@ const taskStyle = computed(() => {
       </div>
     </div>
     <div className="task_input_contents">
-      <Select @change="genreSelect" :value="props.task.genreId"/>
+      <StatusSelect @change="statusSelect":tasks="props.task"/>
     </div>
   </div>
 </template>

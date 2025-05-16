@@ -2,12 +2,16 @@
 import Select from '../Select.vue'
 import { ref } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
-//Taskから{task}を取得する
+
+//タスクストアの宣言 river
+const taskStore = useTaskStore();
+
+//Taskから{task}を取得する river
 const props = defineProps({
   task: Object
 })
 
-//{task}の中身へ親要素からもらった{task}を代入
+//{task}の中身へ親要素からもらった{task}を代入 river
 const task = ref({
   name: props.task.name,
   explanation: props.task.explanation,
@@ -16,21 +20,17 @@ const task = ref({
   status: props.task.status,
   genreId: props.task.genreId
 })
-
-const taskStore = useTaskStore();
-
-
 const genreSelect = (e) => {
   task.value.genreId = Number(e.target.value)
 }
 
 
-//送信ボタンを押したら編集モーダルを閉じる
+//送信ボタンを押したら編集モーダルを閉じる river
 const emit = defineEmits('close-modal') 
 const submitTask = async() => {
   try{
     console.log("実行前",task.value)
-    //タスクストアにタスクを追加
+    //タスクストアにタスクを追加 river
     await taskStore.updateTasks(
       props.task.id,
       task.value,

@@ -5,23 +5,23 @@ import { useTaskStore } from '../../stores/taskStore';
 
 const taskStore=useTaskStore();
 const showModal=ref(false)
-//Taskから{task}を取得する
+//Taskから{task}を取得する river
 const props = defineProps({
   task: Object
 })
 
-//時間をjpの表示に変更
+//時間をjpの表示に変更 river
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)
   return date.toLocaleDateString('ja-JP')
 })
 
-//編集モーダルを閉じる
+//編集モーダルを閉じる river
 const closeModal = () => {
   showModal.value = false
 }
 
-//閉じるボタンを押されたらモーダルを閉じる
+//閉じるボタンを押されたらモーダルを閉じる river
 const emit = defineEmits('close-modal');
 
 const DeleteTask =(async(taskId)=> {

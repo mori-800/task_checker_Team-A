@@ -19,14 +19,14 @@ export const useTaskStore = defineStore('task', () => {
 
   // ジャンルデータ変更に伴うタスクのフィルタリング
   async function filterTasks(genreId) {
-    //取得したselectedGenreIdとtaskのidが同一だったらtasks.valueのデータを更新
+    //取得したGenreIdとtaskのidが同一だったらtasks.valueのデータを更新
     if(!genreId) {
       filteredTasks.value = [...tasks.value];
     } else {
       filteredTasks.value = tasks.value.filter(task => genreId === task.genreId)
     }
   }
-
+  //タスクを追加
   async function addTask(newTask) {
     try{
       const formData = new FormData();
@@ -47,7 +47,7 @@ export const useTaskStore = defineStore('task', () => {
       console.log('タスクデータの保存ができませんでした', error);
     }
   }
-
+  //タスクを検索
   async function taskSearch(query) {
     if (!query) return;
     try {
@@ -60,6 +60,7 @@ export const useTaskStore = defineStore('task', () => {
       console.error('検索に失敗しました:', error);
     }
   }
+  //タスクをアップデートする river
   async function updateTasks(taskId, updateTask) {
     if (!taskId) return;
     try {
@@ -73,7 +74,8 @@ export const useTaskStore = defineStore('task', () => {
       console.error("編集ミス", error);
     }
   }
-    async function deleteTasks(taskId) {
+  //タスクの削除 river
+  async function deleteTasks(taskId) {
     if(!taskId) return;
     try{
       const response = await api.delete('/tasks',{
@@ -86,7 +88,19 @@ export const useTaskStore = defineStore('task', () => {
       console.error("フロント側で削除の失敗",error)
     }
   }
+  //ステータスの変更 river
+  async function changeTasksStatus(task) {
+    try{
+      const response = await api.put(`/tasks/${task.id}/status`, {status: task.status});
 
- return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, updateTasks, deleteTasks,searchResults}
+      // responseの商品idと合致する商品をgoods内から探してIndexを取得する
+      const index = tasks.value.findIndex(t => t.id === response.data.id)
+      // Indexが取得できたら、該当データのstatusIdを更新する。
+    }catch(error){
+      console.log('ステータス変更に失敗しました', error);
+    }
+  }
+
+ return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, updateTasks, deleteTasks,changeTasksStatus,searchResults}
 })
  

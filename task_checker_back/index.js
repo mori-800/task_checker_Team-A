@@ -81,7 +81,7 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
     res.status(500).send("タスクの保存に失敗しました")
   }
 })
-//タスクの編集
+//タスクの編集 river
 app.put("/tasks/:id",async(req, res) => {
   const tasksId=parseInt(req.params.id);
   try{
@@ -102,7 +102,8 @@ app.put("/tasks/:id",async(req, res) => {
     res.status(500).send("タスクの更新に失敗しました。")
   }
 })
-//ポストの削除機能
+
+//ポストの削除機能 river
 app.delete('/tasks',async(req, res)=>{
   const delete_id=parseInt(req.query.id);
   try{
@@ -198,6 +199,24 @@ app.get('/users', async(req, res) => {
 
   }
 })
+
+// ステータス変更処理の管理
+app.put(`/tasks/:id/status`, async(req, res) => {
+  try{
+    console.log(req.params.id)
+    console.log(req.body.status)
+    const tasksId = parseInt(req.params.id, 10);
+    const statusId = parseInt(req.body.status, 10);
+    const updateData = await prisma.task.update({
+      where: { id: tasksId },
+      data: { status: statusId }
+    });
+    res.json(updateData);
+  }catch(error){
+    res.status(500).send("ステータスの変更に失敗しました")
+  }
+})
+
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
 })  
