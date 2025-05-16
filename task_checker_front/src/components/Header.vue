@@ -65,6 +65,8 @@ const handleSubmit = (e) => {
       <button v-if="currentUser" @click="handleSignOut" class="logout-button">
         ログアウト
       </button>
+      <!-- マイページへの遷移ボタンを追加 森 -->
+      <router-link to="/mypage" class="mypage-button">マイページ</router-link>
     </div>
   </div>
 </template>
@@ -137,5 +139,17 @@ const handleSubmit = (e) => {
   padding: 8px 20px;
   margin-bottom: 8px;
   font-size: 15px;
+}
+
+/* マイページへの遷移ボタン 森 */
+.mypage-button {
+  background-color: rgb(66, 163, 247);
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  padding: 8px 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  text-decoration: none;
 }
 </style>

@@ -7,7 +7,11 @@ const showModal=ref(false);
 const props = defineProps({
   task: Object
 })
+
+//taskがnullやundefinedの場合のガード 森
+
 const formattedDeadlineDate = computed(() => {
+  if (!props.task || !props.task.deadlineDate) return '';
   const date = new Date(props.task.deadlineDate)
   return date.toLocaleDateString('ja-JP')
 })
@@ -22,9 +26,8 @@ const closeModal = () => {
 
 
 const taskStyle = computed(() => {
-  // 現在の日時より deadlineDate が後であるかをチェック
+  if (!props.task || !props.task.deadlineDate) return {};
   const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
-  // 条件に基づいてスタイルオブジェクトを返す
   return {
     backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
   };

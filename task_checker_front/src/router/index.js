@@ -4,6 +4,7 @@ import SignIn from '../components/SignIn.vue'
 import SignUp from '../components/SignUp.vue';
 import Home from '../components/Home.vue';
 import SearchResult from '../components/SearchResult.vue';
+import MyPage from '../components/MyPage.vue';
 import { auth,onAuthStateChanged } from '../firebase'
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     path: '/search',
     name: 'SearchResult',
     component: SearchResult,
+  },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage,
   }
 ]
 
