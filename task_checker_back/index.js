@@ -82,7 +82,7 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
   }
 })
 //タスクの編集
-app.put("/tasks/:id", upload.single('image_url'),async(req, res) => {
+app.put("/tasks/:id",async(req, res) => {
   const tasksId=parseInt(req.params.id);
   try{
     const deadlineDate = new Date(req.body.deadlineDate)
