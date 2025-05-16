@@ -1,5 +1,5 @@
 <script setup>
-import { ref , computed,onMounted} from 'vue'
+import { ref , computed} from 'vue'
 import FormModal from '../FormModal.vue';
 import { useTaskStore } from '../../stores/taskStore';
 
@@ -45,12 +45,9 @@ const DeleteTask =(async(taskId)=> {
         <div class="detail_task_explanation">{{ task.explanation }}</div>
         <h2 class="detail_modal_deadlineDate">期限</h2>
         <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
-        <h4 class="input_title">画像</h4>
-        <img :src="task.image_url" alt="画像プレビュー" v-if="task.image_url" style="max-width: 200px;"/>
-        <div v-else>画像なし</div>
       </div>
       <button type="button" class="detail_edit_button" @click="showModal=true">
-        編集
+          編集
         <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
       </button>
       <button type="button" class="detail_delete_button" @click="DeleteTask(props.task.id)">削除</button>
