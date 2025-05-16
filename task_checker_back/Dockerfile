@@ -20,3 +20,5 @@ RUN npm install -g prisma
 EXPOSE 3000
 
 CMD ["sh", "-c", "npx prisma generate && npx prisma migrate deploy && prisma db seed && node index.js"]
+
+#  
