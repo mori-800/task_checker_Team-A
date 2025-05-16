@@ -10,15 +10,6 @@ const props = defineProps({
   task: Object
 })
 
-
-//{task}の中身へ親要素からもらった{task}を代入
-const task = ref({
-  name: props.task.name,
-  explanation: props.task.explanation,
-  deadlineDate: props.task.deadlineDate,
-  image_url: props.task.image_url,
-})
-
 //時間をjpの表示に変更
 const formattedDeadlineDate = computed(() => {
   const date = new Date(props.task.deadlineDate)

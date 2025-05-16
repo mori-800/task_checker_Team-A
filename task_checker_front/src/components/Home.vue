@@ -28,7 +28,7 @@ const taskStatusElements = [
     "Done",
   ]
 
-onMounted(async()=> {
+  onMounted(async()=> {
   try{
     await taskStore.fetchAllTasks();
   }catch(error){
