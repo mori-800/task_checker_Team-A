@@ -1,7 +1,9 @@
 <script setup>
-import { ref , computed} from 'vue'
+import { ref , computed,onMounted} from 'vue'
 import FormModal from '../FormModal.vue';
+import { useTaskStore } from '../../stores/taskStore';
 
+const taskStore=useTaskStore();
 const showModal=ref(false)
 //Taskから{task}を取得する
 const props = defineProps({
@@ -14,6 +16,7 @@ const task = ref({
   name: props.task.name,
   explanation: props.task.explanation,
   deadlineDate: props.task.deadlineDate,
+  image_url: props.task.image_url,
 })
 
 //時間をjpの表示に変更
@@ -29,9 +32,16 @@ const closeModal = () => {
 
 //閉じるボタンを押されたらモーダルを閉じる
 const emit = defineEmits('close-modal');
-const closeDetail = async() => {
-  emit('close-modal')
-}
+
+const DeleteTask =(async(taskId)=> {
+  try{
+    await taskStore.deleteTasks(taskId)
+    emit('close-modal')
+  }catch(error){
+    console.error(error);
+  }
+});
+
 </script>
 
 <template>
@@ -44,14 +54,16 @@ const closeDetail = async() => {
         <div class="detail_task_explanation">{{ task.explanation }}</div>
         <h2 class="detail_modal_deadlineDate">期限</h2>
         <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
+        <h4 class="input_title">画像</h4>
+        <img :src="task.image_url" alt="画像プレビュー" v-if="task.image_url" style="max-width: 200px;"/>
+        <div v-else>画像なし</div>
       </div>
       <button type="button" class="detail_edit_button" @click="showModal=true">
         編集
         <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
       </button>
-      <button type="button" class="detail_delete_button">削除</button>
+      <button type="button" class="detail_delete_button" @click="DeleteTask(props.task.id)">削除</button>
     </div>
-    <button type="button" class="detail_delete_button" @click="closeDetail">閉じる</button>
   </form>
 </template>
 
@@ -77,6 +89,16 @@ const closeDetail = async() => {
   margin: 15px 10px 15px 30px;
 }
 .detail_delete_button{
+  background-color: rgb(233, 77, 77);
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  padding: 8px 20px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  margin: 15px 10px;
+}
+.detail_close_button{
   background-color: rgb(66, 163, 247);
   color: white;
   border-radius: 25px;

@@ -15,6 +15,7 @@ const task = ref({
   genreId: null
 })
 
+const imagePreviewUrl = ref()
 const taskStore = useTaskStore();
 const emit = defineEmits(['close-modal'])
 
@@ -24,7 +25,7 @@ const genreSelect = (e) => {
 
 const handleImageUpload = (event) => {
   task.value.image_url = event.target.files[0];
-  console.log(event.target.files)
+  imagePreviewUrl.value=URL.createObjectURL(event.target.files[0]);
 };
 
 //ユーザーリストのプルダウン
@@ -39,7 +40,6 @@ onMounted(async()=> {
 
 
 const submitTask = async() => {
-  console.log(task.value)
   taskStore.addTask(task.value);
   emit('close-modal')
 }
@@ -62,6 +62,7 @@ const submitTask = async() => {
       <h4 class="input_title">期限</h4>
       <input class="input_date" type="date" v-model="task.deadlineDate"/>
       <h4 class="input_title">画像</h4>
+      <img :src="imagePreviewUrl" alt="画像プレビュー" v-if="imagePreviewUrl" style="max-width: 200px;"/>
       <input type="file" @change="handleImageUpload" accept="image/*"/>
       <select>
         <option :value=user.uid v-for="user in allUsers">{{ user.displayName }}</option>

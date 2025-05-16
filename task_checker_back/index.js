@@ -71,8 +71,8 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
 
     if (savedData.image_url) {
       savedData.image_url = `http://localhost:3000/${savedData.image_url}`
-    } else {
-      savedData.image_url = null;
+    } else if(req.body.image_url) {
+      savedData.image_url;
     }
 
     res.json(savedData)
@@ -85,7 +85,6 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
 app.put("/tasks/:id", upload.single('image_url'),async(req, res) => {
   const tasksId=parseInt(req.params.id);
   try{
-    const imagePath = req.file ? req.file.path : null;
     const deadlineDate = new Date(req.body.deadlineDate)
     const updateData = await prisma.task.update({
       where:{
@@ -93,20 +92,28 @@ app.put("/tasks/:id", upload.single('image_url'),async(req, res) => {
       },
       data:{
         ...req.body,
-        image_url: imagePath,
         deadlineDate: deadlineDate,
         status: Number(req.body.status),
         genreId: Number(req.body.genreId)
       },
     });
-    if(updateData.image_url){
-      updateData.image_url = `http://localhost:3000/${updateData.image_url}`
-    }else{
-      updateData.image_url=null;
-    }
     res.json(updateData)
     } catch(error) {
     res.status(500).send("タスクの更新に失敗しました。")
+  }
+})
+//ポストの削除機能
+app.delete('/tasks',async(req, res)=>{
+  const delete_id=parseInt(req.query.id);
+  try{
+      const task = await prisma.task.delete({
+      where:{
+        id: delete_id,
+      }
+    });
+    res.json(task);
+  }catch(error){
+    console.error("削除に失敗しました",error)
   }
 })
 

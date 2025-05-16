@@ -15,7 +15,6 @@ const props = defineProps({
   status: String,
   tasks: Object
 })
-
 const toggleShowTasks = () => {
   showTask.value = !showTask.value
 }

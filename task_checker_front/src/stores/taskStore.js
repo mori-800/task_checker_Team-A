@@ -60,39 +60,33 @@ export const useTaskStore = defineStore('task', () => {
       console.error('検索に失敗しました:', error);
     }
   }
+  async function updateTasks(taskId, updateTask) {
+    if (!taskId) return;
+    try {
+      const response = await api.put(`/tasks/${taskId}`, updateTask);
 
-  async function updateTasks(taskId,updateTask) {
-    console.log("id:",taskId)
-    console.log("タスクデータ:",updateTask)
+      const index = tasks.value.findIndex((t) => t.id === taskId);
+      if (index !== -1) {
+        tasks.value[index] = response.data;
+      }
+    } catch (error) {
+      console.error("編集ミス", error);
+    }
+  }
+    async function deleteTasks(taskId) {
     if(!taskId) return;
     try{
-      let payload;
-      if (updateTask.image_url instanceof File) {
-        console.log("ファイルあるらしい")
-        payload = new FormData();
-        payload.append('name', updateTask.name);
-        payload.append('explanation', updateTask.explanation);
-        payload.append('deadlineDate', updateTask.deadlineDate);
-        payload.append('status', updateTask.status);
-        payload.append('genreId', updateTask.genreId);
-        payload.append('image_url', updateTask.image_url); // imageとして送信
-      } else {
-        payload = updateTask; // 通常のJSON送信
-      }
-      const response= await api.put(`/tasks/${taskId}`,payload,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      const index = tasks.value.findIndex(t => t.id === taskId);
-      if (index !== -1) {
-       tasks.value[index]= response.data;
-      }
+      const response = await api.delete('/tasks',{
+        params:{id: taskId},
+      })
+      const deletedTask = response.data;
+      const deleteTask=tasks.value.findIndex(t =>t.id === deletedTask.id);
+      tasks.value.splice(deleteTask,1);
     }catch(error){
-      console.error("編集ミス",error);
+      console.error("フロント側で削除の失敗",error)
     }
-    
   }
- return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, updateTasks,searchResults}
+
+ return { tasks, filteredTasks, fetchAllTasks, filterTasks, addTask, taskSearch, updateTasks, deleteTasks,searchResults}
 })
  
