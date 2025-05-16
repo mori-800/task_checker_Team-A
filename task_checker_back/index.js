@@ -29,6 +29,25 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+// JWT認証ミドルウェアの追加
+const authenticateToken = async (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Token missing' });
+  }
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    req.user = decodedToken;
+    next();
+  } catch (err) {
+    console.error("JWT認証エラー:", err);
+    res.status(403).json({ error: 'Invalid or expired token' });
+  }
+};
+
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
@@ -183,3 +202,21 @@ app.get('/users', async (_, res) => {
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
 })  
+
+app.get('/tasks/mypage', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.uid; // JWTから取得
+    const tasks = await prisma.task.findMany({
+      where: {
+        makerId: userId
+      },
+      orderBy: {
+        deadlineDate: 'asc'
+      }
+    });
+    res.json(tasks);
+  } catch (err) {
+    console.error("タスク取得エラー:", err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
