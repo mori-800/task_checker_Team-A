@@ -21,7 +21,7 @@ const upload = multer();
 
 app.use('/uploads', express.static('uploads'))
 
-// firebaseの初期化設定　森
+// firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
 
@@ -65,7 +65,42 @@ app.get("/tasks", async(req, res) => {
   console.log(error)
   }
 })
-//ブランチ機能確認のためテスト 森
+//タスクの編集 river
+app.put("/tasks/:id",async(req, res) => {
+  const tasksId=parseInt(req.params.id);
+  try{
+    const deadlineDate = new Date(req.body.deadlineDate)
+    const updateData = await prisma.task.update({
+      where:{
+        id: tasksId
+      },
+      data:{
+        ...req.body,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status),
+        genreId: Number(req.body.genreId)
+      },
+    });
+    res.json(updateData)
+    } catch(error) {
+    res.status(500).send("タスクの更新に失敗しました。")
+  }
+})
+
+//タスクの削除機能 river
+app.delete('/tasks',async(req, res)=>{
+  const delete_id=parseInt(req.query.id);
+  try{
+      const task = await prisma.task.delete({
+      where:{
+        id: delete_id,
+      }
+    });
+    res.json(task);
+  }catch(error){
+    console.error("削除に失敗しました",error)
+  }
+})
 
 // ジャンルの読み取り処理
 app.get("/genres", async(req, res) => {
@@ -76,7 +111,7 @@ app.get("/genres", async(req, res) => {
   console.log(error)
   }
 })
-
+//タスクの投稿
 app.post('/tasks', upload.fields([
   { name: 'image', maxCount: 1 }
 ]), async (req, res) => {
@@ -141,7 +176,7 @@ app.get('/search', async (req, res) => {
 });
 
 
-// ジャンルの追加　吉田
+// ジャンルの追加 吉田
 app.post('/genres', async(req, res) => {
   try {
     const savedData = await prisma.genre.create({data: req.body});
@@ -198,6 +233,22 @@ app.get('/users', async (_, res) => {
     res.status(500).send("ユーザーデータの取得に失敗しました")
   }
 });
+// ステータス変更処理の管理
+app.put(`/tasks/:id/status`, async(req, res) => {
+  try{
+    console.log(req.params.id)
+    console.log(req.body.status)
+    const tasksId = parseInt(req.params.id, 10);
+    const statusId = parseInt(req.body.status, 10);
+    const updateData = await prisma.task.update({
+      where: { id: tasksId },
+      data: { status: statusId }
+    });
+    res.json(updateData);
+  }catch(error){
+    res.status(500).send("ステータスの変更に失敗しました")
+  }
+})
 
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
