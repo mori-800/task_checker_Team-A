@@ -18,7 +18,6 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 app.use('/uploads', express.static('uploads'))
 
-// firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
 
@@ -71,8 +70,8 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
 
     if (savedData.image_url) {
       savedData.image_url = `http://localhost:3000/${savedData.image_url}`
-    } else if(req.body.image_url) {
-      savedData.image_url;
+    } else{
+      savedData.image_url=null;
     }
 
     res.json(savedData)
@@ -152,7 +151,6 @@ app.get('/search', async (req, res) => {
 });
 
 
-// ジャンルの追加 吉田
 app.post('/genres', async(req, res) => {
   try {
     const savedData = await prisma.genre.create({data: req.body});
@@ -162,7 +160,6 @@ app.post('/genres', async(req, res) => {
   }
 })
 
-// ジャンルの削除 吉田
 app.delete("/genres/:id", async (req, res) => {
   try {
     const genreId = parseInt(req.params.id, 10);
@@ -173,7 +170,6 @@ app.delete("/genres/:id", async (req, res) => {
   }
 })
 
-//firebaseにユーザーリストをリクエスト 森
 app.get('/users', async(req, res) => {
   // レスポンス返却する際に使用する配列を準備
   let allUsers = [];
