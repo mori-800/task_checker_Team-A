@@ -56,12 +56,12 @@ const DeleteTask =(async(taskId)=> {
     <div class="detail_modal_body">
       <div class="detail_modal_content">
         <h2 class="detail_modal_title">タイトル</h2>
-        <div class="detail_task_title">{{ task.name }}</div>
+        <div class="detail_task_title">{{ props.task.name }}</div>
         <h2 class="detail_modal_explanation">説明</h2>
-        <div class="detail_task_explanation">{{ task.explanation }}</div>
+        <div class="detail_task_explanation">{{ props.task.explanation }}</div>
         <h2 class="detail_modal_deadlineDate">期限</h2>
-        <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
-            <p class="assignee">担当者: {{ assigneeName }}</p>
+        <div class="detail_task_deadlineDate">{{ props.formattedDeadlineDate }}</div>
+            <p class="assignee">担当者: {{ props.assigneeName }}</p>
 
       </div>
       <button type="button" class="detail_edit_button" @click="showModal=true">

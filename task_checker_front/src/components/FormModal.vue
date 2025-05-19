@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import GenreBody from './FormModalBody/GenreBody.vue'
 import TaskBody from './FormModalBody/TaskBody.vue'
 import DetailBody from './FormModalBody/DetailBody.vue'
+import EditBody from './FormModalBody/EditBody.vue'
 
 const props = defineProps({
   body: String,
@@ -13,6 +14,7 @@ const component = computed(() => {
   if (props.body === 'taskBody') return TaskBody;
   else if (props.body === 'genreBody') return GenreBody;
   else if (props.body === 'detailBody') return DetailBody;
+  else if (props.body === 'editBody') return EditBody;
 });
 
 const emit = defineEmits('close-modal') 
