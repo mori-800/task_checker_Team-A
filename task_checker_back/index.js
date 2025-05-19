@@ -13,14 +13,10 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
-
 const multer = require('multer');
-
 // multerの初期化（例: storageなどは既に設定済みと仮定）
 const upload = multer();
-
 app.use('/uploads', express.static('uploads'))
-
 // firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
@@ -29,6 +25,7 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+//============================
 // JWT認証ミドルウェアの追加
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -48,13 +45,14 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
+//============================
+//タスクの取得 river
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
   const updatedTasks = AllTasks.map((task) => {
     if (task.image_url) {
       task.image_url = `http://localhost:3000/${task.image_url}`
-      console.log(task.image_url)
     } else {
       task.image_url = null;
     }
@@ -65,6 +63,31 @@ app.get("/tasks", async(req, res) => {
   console.log(error)
   }
 })
+//タスクの投稿
+app.post('/tasks', upload.fields([
+  { name: 'image', maxCount: 1 }
+]), async (req, res) => {
+  try {
+    const { name, explanation, deadlineDate, status, genreId, assigneeId, authorId } = req.body;
+
+  const newTask = await prisma.task.create({
+    data: {
+      name: req.body.name,
+      explanation: req.body.explanation,
+      deadlineDate: new Date(req.body.deadlineDate),
+      status: Number(req.body.status),
+      genreId: Number(req.body.genreId),
+      assigneeId: req.body.assigneeId,
+      makerId: req.body.authorId, // 🔥 ここで authorId の値を makerId に入れる
+      image_url: null, // または req.files.image[0].path 等
+    }
+  });
+  res.status(201).json(newTask);
+}catch (error) {
+    console.error("タスク作成失敗", error);
+    res.status(500).json("タスクの保存に失敗しました");
+  }
+});
 //タスクの編集 river
 app.put("/tasks/:id",async(req, res) => {
   const tasksId=parseInt(req.params.id);
@@ -86,7 +109,6 @@ app.put("/tasks/:id",async(req, res) => {
     res.status(500).send("タスクの更新に失敗しました。")
   }
 })
-
 //タスクの削除機能 river
 app.delete('/tasks',async(req, res)=>{
   const delete_id=parseInt(req.query.id);
@@ -102,51 +124,11 @@ app.delete('/tasks',async(req, res)=>{
   }
 })
 
-// ジャンルの読み取り処理
-app.get("/genres", async(req, res) => {
-  try {
-  const AllGenres = await prisma.genre.findMany();
-  res.json(AllGenres)
-  } catch(error) {
-  console.log(error)
-  }
-})
-//タスクの投稿
-app.post('/tasks', upload.fields([
-  { name: 'image', maxCount: 1 }
-]), async (req, res) => {
-  try {
-    const { name, explanation, deadlineDate, status, genreId, assigneeId, authorId } = req.body;
-
-    console.log("🔥 req.body:", req.body);
-    console.log("🔥🔥 req.files:", req.files);
-
-const newTask = await prisma.task.create({
-  data: {
-    name: req.body.name,
-    explanation: req.body.explanation,
-    deadlineDate: new Date(req.body.deadlineDate),
-    status: Number(req.body.status),
-    genreId: Number(req.body.genreId),
-    assigneeId: req.body.assigneeId,
-    makerId: req.body.authorId, // 🔥 ここで authorId の値を makerId に入れる
-    image_url: null, // または req.files.image[0].path 等
-  }
-});
-
-
-    res.status(201).json(newTask);
-  } catch (error) {
-    console.error("タスク作成失敗", error);
-    res.status(500).json("タスクの保存に失敗しました");
-  }
-});
-
+//============================
+//検索機能 river
 app.get('/search', async (req, res) => {
   const query = req.query.q || '';
-
   try {
-
     const tasks = await prisma.task.findMany({
       where: {
         name: {
@@ -158,7 +140,6 @@ app.get('/search', async (req, res) => {
         deadlineDate: 'desc'
       }
     });
-
     const updatedTasks = tasks.map((task) => {
       if (task.image_url) {
         task.image_url = `http://localhost:3000/${task.image_url}`
@@ -167,15 +148,23 @@ app.get('/search', async (req, res) => {
       }
       return task;
     });
-
     res.json(updatedTasks); // 検索結果を返す
-  } catch (error) {
+  }catch(error) {
     console.error("検索処理に失敗しました:", error);
     res.status(500).json({ message: "検索処理に失敗しました" });
   }
 });
 
-
+//============================
+// ジャンルの読み取り処理
+app.get("/genres", async(req, res) => {
+  try {
+  const AllGenres = await prisma.genre.findMany();
+  res.json(AllGenres)
+  } catch(error) {
+  console.log(error)
+  }
+})
 // ジャンルの追加 吉田
 app.post('/genres', async(req, res) => {
   try {
@@ -185,7 +174,6 @@ app.post('/genres', async(req, res) => {
     res.status(500).send("ジャンルの保存に失敗しました");
   }
 })
-
 // ジャンルの削除 吉田
 app.delete("/genres/:id", async (req, res) => {
   try {
@@ -197,6 +185,7 @@ app.delete("/genres/:id", async (req, res) => {
   }
 })
 
+//============================
 // POST /users
 app.post('/users', async (req, res) => {
   try {
@@ -215,8 +204,6 @@ app.post('/users', async (req, res) => {
     res.status(500).json({ error: "ユーザーの登録に失敗しました" });
   }
 });
-
-
 // ユーザー一覧取得エンドポイントの追加
 app.get('/users', async (_, res) => {
   try {
@@ -233,11 +220,11 @@ app.get('/users', async (_, res) => {
     res.status(500).send("ユーザーデータの取得に失敗しました")
   }
 });
+
+//============================
 // ステータス変更処理の管理
 app.put(`/tasks/:id/status`, async(req, res) => {
   try{
-    console.log(req.params.id)
-    console.log(req.body.status)
     const tasksId = parseInt(req.params.id, 10);
     const statusId = parseInt(req.body.status, 10);
     const updateData = await prisma.task.update({
@@ -250,10 +237,9 @@ app.put(`/tasks/:id/status`, async(req, res) => {
   }
 })
 
-app.listen(3000, () => {
-  console.log("listening on localhost 3000")
-})  
 
+//============================
+//マイページ
 app.get('/tasks/mypage', authenticateToken, async (req, res) => {
   try {
     const userId = req.user.uid; // JWTから取得
@@ -271,3 +257,36 @@ app.get('/tasks/mypage', authenticateToken, async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+//============================
+//コメント投稿 river
+app.post("/comment", async(req, res) => {
+  try{
+    const savedData = await prisma.comment.create({data: req.body });
+    res.json(savedData);
+  }catch(error){
+    res.status(500).send("コメントの保存に失敗しました");
+  }
+})
+//コメントの取得 river
+app.get("/comments", async(_, res) => {
+  try{
+    const AllComments = await prisma.comment.findMany();
+    res.json(AllComments);
+  }catch(error){
+    res.status(500).send("コメントの取得に失敗しました");
+  }
+})
+//コメントの削除機能 river
+app.delete("/comments/:id", async(req, res) => {
+  try{
+    const commentId = parseInt(req.params.id, 10);
+    const deleteComment = await prisma.comment.delete({where: {id: commentId}})
+    res.json(deleteComment)
+  }catch(error){
+    res.status(500).send("コメントの削除に失敗しました。")
+  }
+})
+app.listen(3000, () => {
+  console.log("listening on localhost 3000")
+})  

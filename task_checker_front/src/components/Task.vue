@@ -23,6 +23,7 @@ const assigneeName = computed(() => {
 
 // 初回取得（必要なら）森
 onMounted(() => {
+  
   if (userStore.users.length === 0) {
     userStore.fetchUsers()
   }
