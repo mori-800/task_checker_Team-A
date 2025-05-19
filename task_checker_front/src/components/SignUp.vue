@@ -1,27 +1,73 @@
 <script setup>
 import Header from './Header.vue'
+import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase'
+import { useRouter } from 'vue-router'
+import api from '../api/axios'
 import { ref } from 'vue'
-import { auth, createUserWithEmailAndPassword,updateProfile } from '../firebase';//updateProfileを追加　森
-import { useRouter } from 'vue-router';
-import api from '../api/axios' // ✅ API呼び出し用axiosインスタンスをインポート
 
-const email = ref('');
-const password = ref('');
-const nickname = ref(''); //ニックネーム登録機能追加用　森
-const router = useRouter();
+// vee-validate 関連
+import { defineRule, configure, useField } from 'vee-validate'
+import { required, email as emailRule } from '@vee-validate/rules'
 
+// 🔧 バリデーションルール定義
+defineRule('required', required)
+defineRule('email', emailRule)
+defineRule('min6', value => {
+  if (!value || value.length < 6) return 'password is not valid'
+  return true
+})
+defineRule('alphanumeric', value => {
+  if (!value) return true
+  const hasLetter = /[a-zA-Z]/.test(value)
+  const hasNumber = /[0-9]/.test(value)
+  if (!(hasLetter && hasNumber)) {
+    return 'password should be in mix of letters and numbers'
+  }
+  return true
+})
+defineRule('nicknameFormat', value => {
+  if (!value) return true
+  const regex = /^[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}0-9]+$/u
+  if (!regex.test(value)) {
+    return 'nickname should be in full-width Hiragana, Katakana, Kanji characters or Number'
+  }
+  return true
+})
+
+// ✉️ エラーメッセージのカスタマイズ
+configure({
+  generateMessage: (context) => {
+    const messages = {
+      required: 'This field is required',
+      email: 'email is not valid',
+    }
+    return messages[context.rule.name] || '入力エラーがあります'
+  }
+})
+
+// 📋 各フィールドとバリデーションルール
+const { value: email, errorMessage: emailError, validate: validateEmail } = useField('email', 'required|email')
+const { value: password, errorMessage: passwordError, validate: validatePassword } = useField('password', 'required|min6|alphanumeric')
+const { value: nickname, errorMessage: nicknameError, validate: validateNickname } = useField('nickname', 'required|nicknameFormat')
+
+const router = useRouter()
+
+// 🔐 登録処理
 const handleSignUp = async () => {
+  const emailValid = await validateEmail()
+  const passwordValid = await validatePassword()
+  const nicknameValid = await validateNickname()
+
+  if (!emailValid.valid || !passwordValid.valid || !nicknameValid.valid) return
+
   try {
-    // Firebase Auth に登録
     const credentialUser = await createUserWithEmailAndPassword(auth, email.value, password.value)
     const user = credentialUser.user
 
-    // Firebase に displayName を登録
     await updateProfile(user, {
       displayName: nickname.value
     })
 
-    // ✅ バックエンドのDBにユーザー情報を保存
     await api.post('/users', {
       uid: user.uid,
       email: user.email,
@@ -40,11 +86,18 @@ const handleSignUp = async () => {
   <Header />
   <div class="form-body">
     <h1>新規登録</h1>
-    <input type="text" id="email" v-model="email" placeholder="email">
-    <input type="password" id="password" v-model="password" placeholder="password">
-    <!-- ニックネーム登録機能追加用 森-->
-    <input type="text" id="nickname" placeholder="nickname" v-model="nickname">
-    <button value="新規登録" @click="handleSignUp">新規登録</button>
+
+    <input type="text" id="email" v-model="email" placeholder="email" />
+    <span style="color: red">{{ emailError }}</span>
+
+    <input type="password" id="password" v-model="password" placeholder="password" />
+    <span style="color: red">{{ passwordError }}</span>
+
+    <input type="text" id="nickname" v-model="nickname" placeholder="nickname" />
+    <span style="color: red">{{ nicknameError }}</span>
+
+    <button @click="handleSignUp">新規登録</button>
+
     <p>既にアカウントをお持ちの方はこちらへ<router-link to="/">こちら</router-link></p>
   </div>
 </template>
@@ -61,7 +114,7 @@ const handleSignUp = async () => {
 }
 
 input {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 button {
@@ -74,5 +127,4 @@ button {
   font-size: 15px;
   width: 246px;
 }
-
 </style>
