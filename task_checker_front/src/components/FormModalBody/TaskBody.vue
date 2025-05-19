@@ -5,6 +5,14 @@ import { useTaskStore } from '../../stores/taskStore';
 //ログインユーザー名をトップページに反映する　森
 import  api from '../../api/axios';
 
+import {Form, Field, defineRule, ErrorMessage } from 'vee-validate'; 
+import { required, email, min, confirmed } from '@vee-validate/rules';
+
+defineRule('required', required);
+defineRule('email', email);
+defineRule('min', min);
+defineRule('confirmed', confirmed);
+
 //ユーザーリストを定義
 const allUsers = ref([]);
 const selectedAssigneeId = ref('')
@@ -54,21 +62,32 @@ const submitTask = async () => {
 </script>
 
 <template>
-  <form class="modal_body">
+  <Form class="modal_body">
     <h2 class="input_menu">タスクを追加</h2>
     <div>
       <h4 class="input_title">ジャンル</h4>
       <div class="task_genre">
         <Select @change="genreSelect" :value="task.genreId"/>
       </div>
+      
       <h4 class="input_title">タイトル</h4>
-      <input type="text" v-model="task.name"/>
+       <Field type="text" id="name" class="input-field" name="name" rules="required" v-model="task.name"/>
+       <ErrorMessage as="div" name="name" >
+       <p>This field is required</p></ErrorMessage>
+       
       <h4 class="input_title">説明</h4>
-      <textarea v-model="task.explanation"/>
+      <Field type="text" id="explanation" class="input-field" name="explanation" rules="required" v-model="task.explanation"/>
+      <ErrorMessage as="div" name="explanation" >
+      <p>This field is required</p></ErrorMessage>
+
       <h4 class="input_title">期限</h4>
-      <input class="input_date" type="date" v-model="task.deadlineDate"/>
+      <Field type="date" id="deadlineDate" class="input-field" name="name" rules="required" v-model="task.deadlineDate"/>
+      <ErrorMessage as="div" name="name" >
+      <p>This field is required</p></ErrorMessage>
+
       <h4 class="input_title">画像</h4>
       <input type="file" @change="handleImageUpload" accept="image/*"/>
+
       <h4 class="input_title">担当者</h4>
       <select v-model="selectedAssigneeId">
         <option disabled value="">-- 担当者を選択 --</option>
@@ -77,7 +96,7 @@ const submitTask = async () => {
         </option>
       </select>
     </div>    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
-  </form>
+  </Form>
 </template>
 
 <style>
