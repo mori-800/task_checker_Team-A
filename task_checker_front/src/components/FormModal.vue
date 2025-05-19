@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import GenreBody from './GenreBody.vue'
+import GenreBody from './FormModalBody/GenreBody.vue'
 import TaskBody from './FormModalBody/TaskBody.vue'
 import DetailBody from './FormModalBody/DetailBody.vue'
 
