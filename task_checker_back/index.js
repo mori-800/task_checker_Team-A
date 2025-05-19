@@ -56,7 +56,7 @@ app.get("/genres", async(req, res) => {
 
 // タスクの保存処理
 app.post("/tasks", upload.single('image_url'), async (req, res) => {
-  
+
   try {
     const imagePath = req.file ? req.file.path : null;
     const deadlineDate = new Date(req.body.deadlineDate)
@@ -73,7 +73,7 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
 
     if (savedData.image_url) {
       savedData.image_url = `http://localhost:3000/${savedData.image_url}`
-    } else{
+    } else {
       savedData.image_url = null;
     }
 
@@ -153,6 +153,7 @@ app.get('/search', async (req, res) => {
     res.status(500).json({ message: "検索処理に失敗しました" });
   }
 });
+
 
 // ジャンルの追加　吉田
 app.post('/genres', async(req, res) => {
