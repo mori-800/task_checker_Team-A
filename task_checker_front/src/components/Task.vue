@@ -4,6 +4,9 @@ import { computed, ref, onMounted } from 'vue'
 import FormModal from './FormModal.vue';
 //UserStoreから取得する形に変更 森
 import { useUserStore } from '../stores/userStore'
+import { useTaskStore } from '../stores/taskStore';
+
+const taskStore = useTaskStore();
 
 const showModal=ref(false);
 const userStore = useUserStore()
