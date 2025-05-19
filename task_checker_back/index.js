@@ -56,7 +56,6 @@ app.get("/genres", async(req, res) => {
 
 // タスクの保存処理
 app.post("/tasks", upload.single('image_url'), async (req, res) => {
-  
   try {
     const imagePath = req.file ? req.file.path : null;
     const deadlineDate = new Date(req.body.deadlineDate)
@@ -96,6 +95,7 @@ app.put("/tasks/:id",async(req, res) => {
         deadlineDate: deadlineDate,
         status: Number(req.body.status),
         genreId: Number(req.body.genreId)
+        
       },
     });
     res.json(updateData)
@@ -140,7 +140,7 @@ app.get('/search', async (req, res) => {
       if (task.image_url) {
         task.image_url = `http://localhost:3000/${task.image_url}`
       } else {
-        task.image_url = null;
+        task.image_url=null;
       }
       return task;
     });
@@ -152,7 +152,7 @@ app.get('/search', async (req, res) => {
   }
 });
 
-
+// ジャンルの追加　吉田
 app.post('/genres', async(req, res) => {
   try {
     const savedData = await prisma.genre.create({data: req.body});
@@ -162,6 +162,7 @@ app.post('/genres', async(req, res) => {
   }
 })
 
+// ジャンルの削除 吉田
 app.delete("/genres/:id", async (req, res) => {
   try {
     const genreId = parseInt(req.params.id, 10);
@@ -172,6 +173,7 @@ app.delete("/genres/:id", async (req, res) => {
   }
 })
 
+//firebaseにユーザーリストをリクエスト　森
 app.get('/users', async(req, res) => {
   // レスポンス返却する際に使用する配列を準備
   let allUsers = [];
