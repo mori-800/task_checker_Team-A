@@ -1,5 +1,5 @@
 <script setup>
-import Select from './Select.vue'
+import StatusSelect from './StatusSelect.vue';
 import { computed, ref, onMounted } from 'vue'
 import FormModal from './FormModal.vue';
 //UserStoreから取得する形に変更 森
@@ -71,7 +71,7 @@ const taskStyle = computed(() => {
       <!-- 👇 担当者名表示エリアを追加 森 -->
     <p class="assignee">担当者: {{ assigneeName }}</p>
       <div className="task_input_contents">
-        <Select @change="genreSelect" :value="task.genreId"/>
+        <StatusSelect @change="genreSelect" :value="task.genreId"/>
       </div>
   </div>
 </template>
