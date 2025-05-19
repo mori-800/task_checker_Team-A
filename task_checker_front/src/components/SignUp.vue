@@ -60,14 +60,17 @@ const handleSignUp = async () => {
 
   if (!emailValid.valid || !passwordValid.valid || !nicknameValid.valid) return
 
+  //Firebase Auth に登録
   try {
     const credentialUser = await createUserWithEmailAndPassword(auth, email.value, password.value)
     const user = credentialUser.user
 
+    //Firebase にdisplayNameを登録
     await updateProfile(user, {
       displayName: nickname.value
     })
 
+    //バックエンドのDBにユーザー情報を保存
     await api.post('/users', {
       uid: user.uid,
       email: user.email,
