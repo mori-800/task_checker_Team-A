@@ -26,12 +26,14 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+// firebaseの初期化設定　森
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
   const updatedTasks = AllTasks.map((task) => {
     if (task.image_url) {
       task.image_url = `http://localhost:3000/${task.image_url}`
+      console.log(task.image_url)
     } else {
       task.image_url = null;
     }
