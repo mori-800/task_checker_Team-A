@@ -18,6 +18,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 app.use('/uploads', express.static('uploads'))
 
+// firebaseの初期化設定　森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
 
@@ -26,7 +27,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-// firebaseの初期化設定　森
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
