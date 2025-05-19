@@ -33,7 +33,7 @@ const formattedDeadlineDate = computed(() => {
   return date.toLocaleDateString('ja-JP')
 })
 
-const genreSelect = (e) => {
+const statusSelect = (e) => {
   props.task.status = Number(e.target.value)
   taskStore.changeTasksStatus(props.task)
 }
