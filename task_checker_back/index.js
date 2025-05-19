@@ -56,6 +56,7 @@ app.get("/genres", async(req, res) => {
 
 // タスクの保存処理
 app.post("/tasks", upload.single('image_url'), async (req, res) => {
+  
   try {
     const imagePath = req.file ? req.file.path : null;
     const deadlineDate = new Date(req.body.deadlineDate)
@@ -66,13 +67,14 @@ app.post("/tasks", upload.single('image_url'), async (req, res) => {
         deadlineDate: deadlineDate,
         status: Number(req.body.status),
         genreId: Number(req.body.genreId)
+
       },
     });
 
     if (savedData.image_url) {
       savedData.image_url = `http://localhost:3000/${savedData.image_url}`
     } else{
-      savedData.image_url=null;
+      savedData.image_url = null;
     }
 
     res.json(savedData)
@@ -95,7 +97,7 @@ app.put("/tasks/:id",async(req, res) => {
         deadlineDate: deadlineDate,
         status: Number(req.body.status),
         genreId: Number(req.body.genreId)
-        
+
       },
     });
     res.json(updateData)
@@ -140,7 +142,7 @@ app.get('/search', async (req, res) => {
       if (task.image_url) {
         task.image_url = `http://localhost:3000/${task.image_url}`
       } else {
-        task.image_url=null;
+        task.image_url = null;
       }
       return task;
     });
