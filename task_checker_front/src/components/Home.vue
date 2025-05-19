@@ -8,7 +8,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
 //ログインユーザー名をトップページに反映する　森
-import { auth, signOut } from '../firebase'
+import { auth  } from '../firebase'
 
 const showModal = ref(false);
 
