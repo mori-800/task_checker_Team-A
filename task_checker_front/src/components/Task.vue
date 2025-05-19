@@ -1,5 +1,5 @@
 <script setup>
-import Select from './Select.vue'
+import StatusSelect from './StatusSelect.vue';
 import { computed, ref, onMounted } from 'vue'
 import FormModal from './FormModal.vue';
 //UserStoreから取得する形に変更 森
@@ -33,8 +33,9 @@ const formattedDeadlineDate = computed(() => {
   return date.toLocaleDateString('ja-JP')
 })
 
-const genreSelect = (e) => {
-  task.value.genreId = Number(e.target.value)
+const statusSelect = (e) => {
+  props.task.status = Number(e.target.value)
+  taskStore.changeTasksStatus(props.task)
 }
 
 const closeModal = () => {
@@ -43,8 +44,10 @@ const closeModal = () => {
 
 
 const taskStyle = computed(() => {
+  // 現在の日時より deadlineDate が後であるかをチェック
   if (!props.task || !props.task.deadlineDate) return {};
   const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
+  // 条件に基づいてスタイルオブジェクトを返す
   return {
     backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
   };
@@ -53,13 +56,14 @@ const taskStyle = computed(() => {
 </script>
 
 <template>
-   <div class="task" :style="taskStyle">
+  <div class="task" :style="taskStyle">
     <FormModal v-model="showModal" body="detailBody" @close-modal="closeModal" :task="props.task"/>
     <span class="task_date">{{ formattedDeadlineDate }}</span>
-    <div class="task_text_contents" @click="showModal=true">
-      <h3 class="task_title">{{ task.name }}</h3>
-      <p class="task_sentence">{{ task.explanation}}</p>
-    </div>
+    <div @click="showModal=true">
+      <div class="task_text_contents">
+        <h3 class="task_title">{{ task.name }}</h3>
+        <p class="task_sentence">{{ task.explanation}}</p>
+      </div>
       <div v-if="task.image_url" class="image-container">
         <div class="image-wrapper">
           <img
@@ -69,10 +73,11 @@ const taskStyle = computed(() => {
         </div>
       </div>
       <!-- 👇 担当者名表示エリアを追加 森 -->
-    <p class="assignee">担当者: {{ assigneeName }}</p>
-      <div className="task_input_contents">
-        <Select @change="genreSelect" :value="task.genreId"/>
-      </div>
+      <p class="assignee">担当者: {{ assigneeName }}</p>
+    </div>
+    <div className="task_input_contents">
+      <StatusSelect @change="statusSelect":tasks="props.task"/>
+    </div>
   </div>
 </template>
 

@@ -18,7 +18,9 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
+  // ジャンルデータ変更に伴うタスクのフィルタリング
   async function filterTasks(genreId) {
+    //取得したGenreIdとtaskのidが同一だったらtasks.valueのデータを更新
     if (!genreId) {
       filteredTasks.value = [...tasks.value];
     } else {
@@ -39,8 +41,8 @@ export const useTaskStore = defineStore('task', () => {
       formData.append('image', newTask.image_url); // 必要に応じてimage_urlではなくimageなどに変更
     }
 
-formData.append('assigneeId', newTask.assigneeId);
-formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
+      formData.append('assigneeId', newTask.assigneeId);
+      formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
 
     const response = await api.post('/tasks', formData, {
       headers: {
@@ -49,12 +51,11 @@ formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バ
     });
     const addedTask = response.data;
     tasks.value.push(addedTask);
-  } catch (error) {
-    console.log('タスクデータの保存ができませんでした', error);
+    }catch(error){
+      console.log('タスクデータの保存ができませんでした', error);
+    }
   }
-}
-
-
+  //タスクを検索
   async function taskSearch(query) {
     if (!query) return;
     try {
@@ -67,14 +68,57 @@ formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バ
       console.error('検索に失敗しました:', error);
     }
   }
+  //タスクをアップデートする river
+  async function updateTasks(taskId, updateTask) {
+    if (!taskId) return;
+    try {
+      const response = await api.put(`/tasks/${taskId}`, updateTask);
 
-  return {
-    tasks,
-    filteredTasks,
-    fetchAllTasks,
-    filterTasks,
-    addTask,
-    taskSearch,
+      const index = tasks.value.findIndex((t) => t.id === taskId);
+      if (index !== -1) {
+        tasks.value[index] = response.data;
+      }
+    } catch (error) {
+      console.error("編集ミス", error);
+    }
+  }
+  //タスクの削除 river
+  async function deleteTasks(taskId) {
+    if(!taskId) return;
+    try{
+      const response = await api.delete('/tasks',{
+        params:{id: taskId},
+      })
+      const deletedTask = response.data;
+      const deleteTask=tasks.value.findIndex(t =>t.id === deletedTask.id);
+      tasks.value.splice(deleteTask,1);
+    }catch(error){
+      console.error("フロント側で削除の失敗",error)
+    }
+  }
+  //ステータスの変更 river
+  async function changeTasksStatus(task) {
+    try{
+      const response = await api.put(`/tasks/${task.id}/status`, {status: task.status});
+
+      // responseの商品idと合致する商品をgoods内から探してIndexを取得する
+      const index = tasks.value.findIndex(t => t.id === response.data.id)
+      // Indexが取得できたら、該当データのstatusIdを更新する。
+    }catch(error){
+      console.log('ステータス変更に失敗しました', error);
+    }
+  }
+
+ return { 
+    tasks, 
+    filteredTasks, 
+    fetchAllTasks, 
+    filterTasks, 
+    addTask, 
+    taskSearch, 
+    updateTasks, 
+    deleteTasks,
+    changeTasksStatus,
     searchResults
   }
 })

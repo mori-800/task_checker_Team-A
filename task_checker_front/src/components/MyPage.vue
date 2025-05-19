@@ -47,9 +47,12 @@ function formatDate(dateString) {
 
 function getStatusText(status) {
   const statuses = {
-    0: '未対応',
-    1: '対応中',
-    2: '完了'
+    0:"ToDo",
+    1:"Pending",
+    2:"Doing(ToDay)",
+    3:"WIP",
+    4:"Check",
+    5:"Done",
   }
   return statuses[status] ?? '不明'
 }

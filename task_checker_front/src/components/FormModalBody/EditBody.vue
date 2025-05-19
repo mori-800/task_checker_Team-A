@@ -3,58 +3,66 @@ import Select from '../Select.vue'
 import { ref } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
 
-//Taskから{task}を取得する
+//タスクストアの宣言 river
+const taskStore = useTaskStore();
+
+//Taskから{task}を取得する river
 const props = defineProps({
   task: Object
 })
-const emit = defineEmits('close-modal') 
-const taskStore = useTaskStore();
 
-//{task}の中身へ親要素からもらった{task}を代入
+//{task}の中身へ親要素からもらった{task}を代入 river
 const task = ref({
   name: props.task.name,
   explanation: props.task.explanation,
   deadlineDate: props.task.deadlineDate,
-  image_url: props.task.image_url,
+  image_url: '',
   status: props.task.status,
   genreId: props.task.genreId
 })
-
 const genreSelect = (e) => {
   task.value.genreId = Number(e.target.value)
 }
 
-const handleImageUpload = (event) => {
-  task.value.image_url = event.target.files[0];
-  console.log(event.target.files)
-};
 
+//送信ボタンを押したら編集モーダルを閉じる river
+const emit = defineEmits('close-modal') 
 const submitTask = async() => {
-  taskStore.addTask(task.value);
-  emit('close-modal')
+  try{
+    console.log("実行前",task.value)
+    //タスクストアにタスクを追加 river
+    await taskStore.updateTasks(
+      props.task.id,
+      task.value,
+    );
+    console.log("実行後",task.value)
+    emit('close-modal')
+  }catch(error){
+    console.error("データの入力に誤りあり",error)
+  }
+  
 }
 
 </script>
 
 <template>
-  <form class="modal_body">
-    <h2 class="input_menu">タスクを編集</h2>
-    <div>
-      <h4 class="input_title">ジャンル</h4>
-      <div class="task_genre">
-        <Select @change="genreSelect" :value="task.genreId"/>
+    <form class="modal_body">
+      <h2 class="input_menu">タスクを編集</h2>
+      <div>
+        <h4 class="input_title">ジャンル</h4>
+        <div class="task_genre">
+          <Select @change="genreSelect" :value="task.genreId"/>
+        </div>
+        <h4 class="input_title">タイトル</h4>
+        <input type="text" v-model="task.name"/>
+        <h4 class="input_title">説明</h4>
+        <textarea v-model="task.explanation"/>
+        <h4 class="input_title">期限</h4>
+        <input class="input_date" type="date" v-model="task.deadlineDate"/>
+        <div>※変更されない場合は前のが適用されます</div>
       </div>
-      <h4 class="input_title">タイトル</h4>
-      <input type="text" v-model="task.name"/>
-      <h4 class="input_title">説明</h4>
-      <textarea v-model="task.explanation"/>
-      <h4 class="input_title">期限</h4>
-      <input class="input_date" type="date" v-model="task.deadlineDate"/>
-      <h4 class="input_title">画像</h4>
-      <input type="file" @change="handleImageUpload" accept="image/*"/>
-    </div>
-    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
-  </form>
+      <input class="input_submit" type="button" value="送信" @click="submitTask"/>
+    </form>
 </template>
 
 <style>

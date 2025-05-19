@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useGenreStore } from '../stores/genreStore';
+import { useGenreStore } from '../../stores/genreStore';
 
 const genre = ref({ name: '' });
 const genreStore = useGenreStore();
@@ -10,7 +10,7 @@ const genreStore = useGenreStore();
 // ジャンルのリストを格納するための変数 吉田
 const genreList = ref([]);
 
-// ジャンル名を全て取得する関数　吉田
+// ジャンル名を全て取得する関数 吉田
 const fetchGenres = async () => {
   try {
     await genreStore.fetchAllGenres();  // 全ジャンルの取得
@@ -20,7 +20,7 @@ const fetchGenres = async () => {
   }
 };
 
-// ジャンルの追加処理　吉田
+// ジャンルの追加処理 吉田
 const submitGenre = async () => {
   try {
     await genreStore.addGenre(genre.value);
@@ -35,7 +35,7 @@ const submitGenre = async () => {
   }
 };
 
-// ジャンルの削除処理　吉田
+// ジャンルの削除処理 吉田
 const removeGenre = async(removeId) => {
   try{
     await genreStore.removeGenre(removeId);
@@ -44,7 +44,7 @@ const removeGenre = async(removeId) => {
   }
 }
 
-// モーダルが表示されるタイミングでジャンルを取得　吉田
+// モーダルが表示されるタイミングでジャンルを取得 吉田
 onMounted(fetchGenres);
 </script>
 

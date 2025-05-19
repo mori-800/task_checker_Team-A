@@ -1,9 +1,9 @@
 <script setup>
-import Select from './Select.vue'
+import Select from '../Select.vue'
 import { ref,onMounted } from 'vue'
-import { useTaskStore } from '../stores/taskStore';
+import { useTaskStore } from '../../stores/taskStore';
 //ログインユーザー名をトップページに反映する　森
-import  api from '../api/axios';
+import  api from '../../api/axios';
 
 //ユーザーリストを定義
 const allUsers = ref([]);
@@ -32,8 +32,8 @@ const handleImageUpload = (event) => {
 //ユーザーリストのプルダウン
 onMounted(async () => {
   try {
-    const res = await api.get('/users')
-    allUsers.value = res.data
+    const fetchAllUsers = await api.get('/users')
+    allUsers.value = fetchAllUsers.data
   } catch (error) {
     console.error("ユーザーデータの取得ができませんでした", error)
   }
