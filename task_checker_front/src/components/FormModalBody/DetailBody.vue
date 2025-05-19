@@ -1,6 +1,6 @@
 <script setup>
 import { ref , computed} from 'vue'
-import { useUserStore } from '../stores/userStore'
+import { useUserStore } from '../../stores/userStore'
 
 //Taskから{task}を取得する
 const props = defineProps({
