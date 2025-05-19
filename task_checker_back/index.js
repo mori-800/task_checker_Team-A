@@ -65,7 +65,21 @@ app.get("/tasks", async(req, res) => {
   console.log(error)
   }
 })
-//ブランチ機能確認のためテスト 森
+
+//ポストの削除機能 river
+app.delete('/tasks',async(req, res)=>{
+  const delete_id=parseInt(req.query.id);
+  try{
+      const task = await prisma.task.delete({
+      where:{
+        id: delete_id,
+      }
+    });
+    res.json(task);
+  }catch(error){
+    console.error("削除に失敗しました",error)
+  }
+})
 
 // ジャンルの読み取り処理
 app.get("/genres", async(req, res) => {
