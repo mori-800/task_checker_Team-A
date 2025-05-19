@@ -233,6 +233,22 @@ app.get('/users', async (_, res) => {
     res.status(500).send("ユーザーデータの取得に失敗しました")
   }
 });
+// ステータス変更処理の管理
+app.put(`/tasks/:id/status`, async(req, res) => {
+  try{
+    console.log(req.params.id)
+    console.log(req.body.status)
+    const tasksId = parseInt(req.params.id, 10);
+    const statusId = parseInt(req.body.status, 10);
+    const updateData = await prisma.task.update({
+      where: { id: tasksId },
+      data: { status: statusId }
+    });
+    res.json(updateData);
+  }catch(error){
+    res.status(500).send("ステータスの変更に失敗しました")
+  }
+})
 
 app.listen(3000, () => {
   console.log("listening on localhost 3000")
