@@ -23,7 +23,6 @@ model Task {
   genre        Genre    @relation(fields: [genreId], references: [id])
   makerId      String
   assigneeId   String
-  assignee     User     @relation(fields: [assigneeId], references: [uid]) // ✅ これを追加
   comments     Comment[]
 }
 
@@ -31,14 +30,6 @@ model Genre {
   id    Int    @default(autoincrement()) @id
   name  String
   tasks Task[]
-}
-
-model User {
-  uid         String   @id
-  displayName String?
-  email       String
-  photoURL    String?
-  tasks       Task[]   // ✅ 自動で assignee との関係が推論されます
 }
 
 model Comment {

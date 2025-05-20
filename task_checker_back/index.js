@@ -187,39 +187,63 @@ app.delete("/genres/:id", async (req, res) => {
 
 //============================
 // POST /users
-app.post('/users', async (req, res) => {
-  try {
-    const { uid, email, displayName, photoURL } = req.body;
-    const newUser = await prisma.user.create({
-      data: {
-        uid,
-        email,
-        displayName,
-        photoURL,
+// app.post('/users', async (req, res) => {
+//   try {
+//     const { uid, email, displayName, photoURL } = req.body;
+//     const newUser = await prisma.user.create({
+//       data: {
+//         uid,
+//         email,
+//         displayName,
+//         photoURL,
+//       }
+//     });
+//     res.status(201).json(newUser);
+//   } catch (err) {
+//     console.error("ユーザー登録エラー:", err);
+//     res.status(500).json({ error: "ユーザーの登録に失敗しました" });
+//   }
+// });
+// // ユーザー一覧取得エンドポイントの追加
+// app.get('/users', async (_, res) => {
+//   try {
+//     const users = await prisma.user.findMany({
+//       select: {
+//         uid: true,
+//         displayName: true,
+//         email: true,
+//         photoURL: true
+//       }
+//     });
+//     res.json(users)
+//   } catch (error) {
+//     res.status(500).send("ユーザーデータの取得に失敗しました")
+//   }
+// });
+app.get('/users', async(req, res) => {
+  // レスポンス返却する際に使用する配列を準備
+  let allUsers = [];
+
+  const listAllUsers = async (nextPageToken) => {
+    try {
+      const listUsersResult = await admin.auth().listUsers(1000, nextPageToken);
+      allUsers = allUsers.concat(listUsersResult.users.map(userRecord => userRecord.toJSON()));
+      if (listUsersResult.pageToken) {
+        await listAllUsers(listUsersResult.pageToken);
       }
-    });
-    res.status(201).json(newUser);
-  } catch (err) {
-    console.error("ユーザー登録エラー:", err);
-    res.status(500).json({ error: "ユーザーの登録に失敗しました" });
-  }
-});
-// ユーザー一覧取得エンドポイントの追加
-app.get('/users', async (_, res) => {
+    } catch (error) {
+      console.log('Error listing users:', error);
+      throw error; //エラーが発生したら、後続の処理を実施しない
+    }
+  };
+
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        uid: true,
-        displayName: true,
-        email: true,
-        photoURL: true
-      }
-    });
-    res.json(users)
-  } catch (error) {
-    res.status(500).send("ユーザーデータの取得に失敗しました")
+    await listAllUsers();
+    res.json(allUsers);
+  }catch(error){
+    res.status(500).send("ユーザーリストの取得に失敗しました。");
   }
-});
+})
 
 //============================
 // ステータス変更処理の管理

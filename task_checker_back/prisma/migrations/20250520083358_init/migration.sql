@@ -22,16 +22,6 @@ CREATE TABLE "Genre" (
 );
 
 -- CreateTable
-CREATE TABLE "User" (
-    "uid" TEXT NOT NULL,
-    "displayName" TEXT,
-    "email" TEXT NOT NULL,
-    "photoURL" TEXT,
-
-    CONSTRAINT "User_pkey" PRIMARY KEY ("uid")
-);
-
--- CreateTable
 CREATE TABLE "Comment" (
     "id" SERIAL NOT NULL,
     "content" TEXT NOT NULL,
@@ -42,9 +32,6 @@ CREATE TABLE "Comment" (
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES "Genre"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Task" ADD CONSTRAINT "Task_assigneeId_fkey" FOREIGN KEY ("assigneeId") REFERENCES "User"("uid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
