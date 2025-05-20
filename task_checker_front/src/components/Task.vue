@@ -25,7 +25,7 @@ const assigneeName = computed(() => {
 onMounted(() => {
   
   if (userStore.users.length === 0) {
-    userStore.fetchUsers()
+    userStore.fetchAllUsers()
   }
 })
 

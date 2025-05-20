@@ -7,12 +7,12 @@ import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import { ref, onMounted, computed } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
-//ログインユーザー名をトップページに反映する　森
+//ログインユーザー名をトップページに反映する 森
 import { auth  } from '../firebase'
 
 const showModal = ref(false);
 
-//homeに表示するニックネームを定義　森
+//homeに表示するニックネームを定義 森
 const displayName = computed(() => {
   return auth.currentUser.displayName;
 })
@@ -34,7 +34,6 @@ onMounted(async()=> {
   }catch(error){
     console.log(error)
   }
-
   try {
     await genreStore.fetchAllGenres();
   }catch(error){

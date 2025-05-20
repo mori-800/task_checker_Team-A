@@ -16,7 +16,6 @@ const task = ref({
   name: props.task.name,
   explanation: props.task.explanation,
   deadlineDate: props.task.deadlineDate,
-  image_url: '',
   status: props.task.status,
   genreId: props.task.genreId
 })

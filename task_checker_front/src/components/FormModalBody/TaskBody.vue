@@ -20,10 +20,9 @@ const task = ref({
   name: '',
   explanation: '',
   deadlineDate: '',
-  image_url: '',
   status: 0,
   genreId: null,
-  assigneeId: ''
+  assigneeId: '',
 })
 
 const taskStore = useTaskStore();
@@ -32,11 +31,6 @@ const emit = defineEmits(['close-modal'])
 const genreSelect = (e) => {
   task.value.genreId = Number(e.target.value)
 }
-
-const handleImageUpload = (event) => {
-  task.value.image_url = event.target.files[0];
-};
-
 //ユーザーリストのプルダウン
 onMounted(async () => {
   try {
@@ -81,8 +75,8 @@ const submitTask = async () => {
       <p>This field is required</p></ErrorMessage>
 
       <h4 class="input_title">期限</h4>
-      <Field type="date" id="deadlineDate" class="input-field" name="name" rules="required" v-model="task.deadlineDate"/>
-      <ErrorMessage as="div" name="name" >
+      <Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" v-model="task.deadlineDate"/>
+      <ErrorMessage as="div" name="deadlineDate" >
       <p>This field is required</p></ErrorMessage>
 
       <h4 class="input_title">担当者</h4>
@@ -92,7 +86,8 @@ const submitTask = async () => {
           {{ user.displayName || '名前未登録' }}
         </option>
       </select>
-    </div>    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
+    </div>    
+    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </Form>
 </template>
 

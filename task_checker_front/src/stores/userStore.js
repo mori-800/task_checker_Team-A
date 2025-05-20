@@ -6,15 +6,14 @@ import api from '../api/axios'
 
 export const useUserStore = defineStore('user', () => {
   const users = ref([])
-
-  const fetchUsers = async () => {
+  const fetchAllUsers = async() =>{
     try {
-      const response = await api.get('/users') // /users エンドポイントは別途作成する必要があります
-      users.value = response.data
-    } catch (error) {
-      console.error('ユーザー一覧の取得に失敗しました:', error)
+    const response = await api.get('/users');
+    users.value = response.data;
+    }catch(error) {
+      console.log("ユーザーデータの取得ができませんでした", error);
     }
   }
 
-  return { users, fetchUsers }
+  return { users, fetchAllUsers }
 })

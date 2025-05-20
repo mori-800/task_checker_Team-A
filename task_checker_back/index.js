@@ -51,43 +51,31 @@ app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
   const updatedTasks = AllTasks.map((task) => {
-    if (task.image_url) {
-      task.image_url = `http://localhost:3000/${task.image_url}`
-    } else {
-      task.image_url = null;
-    }
-    return task;
   });
   res.json(updatedTasks)
   } catch(error) {
   console.log(error)
   }
 })
-//タスクの投稿
-app.post('/tasks', upload.fields([
-  { name: 'image', maxCount: 1 }
-]), async (req, res) => {
+//タスクの投稿 river
+app.post("/tasks",upload.single('image_url'), async (req, res) => {
+  console.log("リクエストボディ",req.body)
   try {
-    const { name, explanation, deadlineDate, status, genreId, assigneeId, authorId } = req.body;
-
-  const newTask = await prisma.task.create({
-    data: {
-      name: req.body.name,
-      explanation: req.body.explanation,
-      deadlineDate: new Date(req.body.deadlineDate),
-      status: Number(req.body.status),
-      genreId: Number(req.body.genreId),
-      assigneeId: req.body.assigneeId,
-      makerId: req.body.authorId, // 🔥 ここで authorId の値を makerId に入れる
-      image_url: null, // または req.files.image[0].path 等
-    }
-  });
-  res.status(201).json(newTask);
-}catch (error) {
-    console.error("タスク作成失敗", error);
-    res.status(500).json("タスクの保存に失敗しました");
+    const deadlineDate = new Date(req.body.deadlineDate)
+    const savedData = await prisma.task.create({
+      data: {
+        ...req.body,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status), 
+        genreId: Number(req.body.genreId),  
+      },
+    });
+    res.json(savedData)
+  } catch(error) {
+    console.log(error)
+    res.status(500).send("タスクの保存に失敗しました")
   }
-});
+})
 //タスクの編集 river
 app.put("/tasks/:id",async(req, res) => {
   const tasksId=parseInt(req.params.id);
@@ -141,12 +129,6 @@ app.get('/search', async (req, res) => {
       }
     });
     const updatedTasks = tasks.map((task) => {
-      if (task.image_url) {
-        task.image_url = `http://localhost:3000/${task.image_url}`
-      } else {
-        task.image_url = null;
-      }
-      return task;
     });
     res.json(updatedTasks); // 検索結果を返す
   }catch(error) {
@@ -186,40 +168,30 @@ app.delete("/genres/:id", async (req, res) => {
 })
 
 //============================
-// POST /users
-app.post('/users', async (req, res) => {
-  try {
-    const { uid, email, displayName, photoURL } = req.body;
-    const newUser = await prisma.user.create({
-      data: {
-        uid,
-        email,
-        displayName,
-        photoURL,
+app.get('/users', async(req, res) => {
+  // レスポンス返却する際に使用する配列を準備
+  let allUsers = [];
+
+  const listAllUsers = async (nextPageToken) => {
+    try {
+      const listUsersResult = await admin.auth().listUsers(1000, nextPageToken);
+      allUsers = allUsers.concat(listUsersResult.users.map(userRecord => userRecord.toJSON()));
+      if (listUsersResult.pageToken) {
+        await listAllUsers(listUsersResult.pageToken);
       }
-    });
-    res.status(201).json(newUser);
-  } catch (err) {
-    console.error("ユーザー登録エラー:", err);
-    res.status(500).json({ error: "ユーザーの登録に失敗しました" });
-  }
-});
-// ユーザー一覧取得エンドポイントの追加
-app.get('/users', async (_, res) => {
+    } catch (error) {
+      console.log('Error listing users:', error);
+      throw error; //エラーが発生したら、後続の処理を実施しない
+    }
+  };
+
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        uid: true,
-        displayName: true,
-        email: true,
-        photoURL: true
-      }
-    });
-    res.json(users)
-  } catch (error) {
-    res.status(500).send("ユーザーデータの取得に失敗しました")
+    await listAllUsers();
+    res.json(allUsers);
+  }catch(error){
+    res.status(500).send("ユーザーリストの取得に失敗しました。");
   }
-});
+})
 
 //============================
 // ステータス変更処理の管理
