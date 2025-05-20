@@ -9,10 +9,8 @@ import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
 //ログインユーザー名をトップページに反映する 森
 import { auth  } from '../firebase'
-import api from '../api/axios'
 
 const showModal = ref(false);
-const allUsers = ref([]);
 
 //homeに表示するニックネームを定義 森
 const displayName = computed(() => {
@@ -35,13 +33,6 @@ onMounted(async()=> {
     await taskStore.fetchAllTasks();
   }catch(error){
     console.log(error)
-  }
-  try {
-    const fetchAllUsers = await api.get('/users');
-    allUsers.value = fetchAllUsers.data;
-    console.log(allUsers)
-  }catch(error) {
-    console.log("ユーザーデータの取得ができませんでした", error);
   }
   try {
     await genreStore.fetchAllGenres();
