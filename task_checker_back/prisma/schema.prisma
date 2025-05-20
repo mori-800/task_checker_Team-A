@@ -17,7 +17,6 @@ model Task {
   name         String
   explanation  String
   deadlineDate DateTime
-  image_url    String?
   status       Int
   genreId      Int
   genre        Genre    @relation(fields: [genreId], references: [id])

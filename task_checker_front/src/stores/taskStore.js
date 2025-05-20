@@ -27,30 +27,25 @@ export const useTaskStore = defineStore('task', () => {
       filteredTasks.value = tasks.value.filter(task => genreId === task.genreId);
     }
   }
-
+  //タスクの投稿 river
   async function addTask(newTask) {
-  try {
-    const formData = new FormData();
-    formData.append('name', newTask.name);
-    formData.append('explanation', newTask.explanation);
-    formData.append('deadlineDate', newTask.deadlineDate);
-    formData.append('status', newTask.status);
-    formData.append('genreId', newTask.genreId);
-
-    if (newTask.image_url) {
-      formData.append('image', newTask.image_url); // 必要に応じてimage_urlではなくimageなどに変更
-    }
-
+    try {
+      const formData = new FormData();
+      formData.append('name', newTask.name);
+      formData.append('explanation', newTask.explanation);
+      formData.append('deadlineDate', newTask.deadlineDate);
+      formData.append('status', newTask.status);
+      formData.append('genreId', newTask.genreId);
       formData.append('assigneeId', newTask.assigneeId);
-      formData.append('authorId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
+      formData.append('makerId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
 
-    const response = await api.post('/tasks', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    const addedTask = response.data;
-    tasks.value.push(addedTask);
+      const response = await api.post('/tasks', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      const addedTask = response.data;
+      tasks.value.push(addedTask);
     }catch(error){
       console.log('タスクデータの保存ができませんでした', error);
     }
