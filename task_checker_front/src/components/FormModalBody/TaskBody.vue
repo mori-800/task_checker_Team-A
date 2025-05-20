@@ -1,5 +1,5 @@
 <script setup>
-import Select from '../Select.vue'
+import Select from '../GenreSelect.vue'
 import { ref,onMounted } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
 //ログインユーザー名をトップページに反映する　森
