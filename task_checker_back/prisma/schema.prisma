@@ -24,6 +24,7 @@ model Task {
   makerId      String
   assigneeId   String
   assignee     User     @relation(fields: [assigneeId], references: [uid]) // ✅ これを追加
+  comments     Comment[]
 }
 
 model Genre {
@@ -38,4 +39,11 @@ model User {
   email       String
   photoURL    String?
   tasks       Task[]   // ✅ 自動で assignee との関係が推論されます
+}
+
+model Comment {
+  id      Int    @id @default(autoincrement())
+  content String // コメント内容
+  taskId  Int    // chatテーブルへの外部キーカラム
+  tasks    Task   @relation(fields: [taskId], references: [id])
 }

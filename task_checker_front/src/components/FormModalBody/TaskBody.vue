@@ -85,9 +85,6 @@ const submitTask = async () => {
       <ErrorMessage as="div" name="name" >
       <p>This field is required</p></ErrorMessage>
 
-      <h4 class="input_title">画像</h4>
-      <input type="file" @change="handleImageUpload" accept="image/*"/>
-
       <h4 class="input_title">担当者</h4>
       <select v-model="selectedAssigneeId">
         <option disabled value="">-- 担当者を選択 --</option>
