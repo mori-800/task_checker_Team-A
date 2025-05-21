@@ -79,13 +79,19 @@ const submitTask = async () => {
       <ErrorMessage as="div" name="deadlineDate" >
       <p>This field is required</p></ErrorMessage>
 
-      <h4 class="input_title">担当者</h4>
-      <select v-model="selectedAssigneeId">
-        <option disabled value="">-- 担当者を選択 --</option>
-        <option :value="user.uid" v-for="user in allUsers" :key="user.uid">
-          {{ user.displayName || '名前未登録' }}
-        </option>
-      </select>
+<h4 class="input_title">担当者</h4>
+<Field name="assigneeId" rules="required" v-slot="{ field }">
+  <select v-bind="field" class="select">
+    <option disabled value="">-- 担当者を選択 --</option>
+    <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
+      {{ user.displayName || '名前未登録' }}
+    </option>
+  </select>
+  <ErrorMessage as="div" name="assigneeId">
+    <p>This field must be selected</p>
+  </ErrorMessage>
+</Field>
+
     </div>    
     <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </Form>
