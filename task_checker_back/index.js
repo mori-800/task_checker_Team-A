@@ -1,6 +1,5 @@
 const express = require("express")
 const app = express();
-app.use(express.json());
 
 // prismaを読み込む記述
 const { PrismaClient } = require('@prisma/client');
@@ -13,10 +12,15 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
+
+
 const multer = require('multer');
 // multerの初期化（例: storageなどは既に設定済みと仮定）
 const upload = multer();
 app.use('/uploads', express.static('uploads'))
+app.use(express.json());
+
+
 // firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
@@ -50,9 +54,7 @@ const authenticateToken = async (req, res, next) => {
 app.get("/tasks", async(req, res) => {
   try {
   const AllTasks = await prisma.task.findMany();
-  const updatedTasks = AllTasks.map((task) => {
-  });
-  res.json(updatedTasks)
+  res.json(AllTasks)
   } catch(error) {
   console.log(error)
   }
@@ -128,9 +130,7 @@ app.get('/search', async (req, res) => {
         deadlineDate: 'desc'
       }
     });
-    const updatedTasks = tasks.map((task) => {
-    });
-    res.json(updatedTasks); // 検索結果を返す
+    res.json(tasks); // 検索結果を返す
   }catch(error) {
     console.error("検索処理に失敗しました:", error);
     res.status(500).json({ message: "検索処理に失敗しました" });
