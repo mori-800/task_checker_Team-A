@@ -65,43 +65,42 @@ const submitTask = async (values) => {
         <Select @change="genreSelect" :value="task.genreId"/>
       </div>
       
- <!-- タイトル -->
-<h4 class="input_title">タイトル</h4>
-<Field type="text" id="name" class="input-field" name="name" rules="required" />
-<ErrorMessage as="div" name="name">
-  <p>This field is required</p>
-</ErrorMessage>
+      <!-- タイトル -->
+      <h4 class="input_title">タイトル</h4>
+      <Field type="text" id="name" class="input-field" name="name" rules="required" />
+      <ErrorMessage as="div" name="name">
+        <p>This field is required</p>
+      </ErrorMessage>
 
-       
-<!-- 説明 -->
-<h4 class="input_title">説明</h4>
-<Field type="text" id="explanation" class="input-field" name="explanation" rules="required" />
-<ErrorMessage as="div" name="explanation">
-  <p>This field is required</p>
-</ErrorMessage>
+            
+      <!-- 説明 -->
+      <h4 class="input_title">説明</h4>
+      <Field type="text" id="explanation" class="input-field" name="explanation" rules="required" />
+      <ErrorMessage as="div" name="explanation">
+        <p>This field is required</p>
+      </ErrorMessage>
 
 
-<!-- 期限 -->
-<h4 class="input_title">期限</h4>
-<Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" />
-<ErrorMessage as="div" name="deadlineDate">
-  <p>This field is required</p>
-</ErrorMessage>
+      <!-- 期限 -->
+      <h4 class="input_title">期限</h4>
+      <Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" />
+      <ErrorMessage as="div" name="deadlineDate">
+        <p>This field is required</p>
+      </ErrorMessage>
 
-<!-- 担当者 -->
-<h4 class="input_title">担当者</h4>
-<Field name="assigneeId" rules="required" v-slot="{ field }">
-  <select v-bind="field" class="select">
-    <option disabled value="">-- 担当者を選択 --</option>
-    <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
-      {{ user.displayName || '名前未登録' }}
-    </option>
-  </select>
-  <ErrorMessage as="div" name="assigneeId">
-  <p>This field must be selected</p>
-</ErrorMessage>
-</Field>
-
+      <!-- 担当者 -->
+      <h4 class="input_title">担当者</h4>
+      <Field name="assigneeId" rules="required" v-slot="{ field }">
+        <select v-bind="field" class="select">
+          <option disabled value="">-- 担当者を選択 --</option>
+          <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
+            {{ user.displayName || '名前未登録' }}
+          </option>
+        </select>
+        <ErrorMessage as="div" name="assigneeId">
+          <p>This field must be selected</p>
+        </ErrorMessage>
+      </Field>
     </div>    
     <input class="input_submit" type="submit" value="送信"/>
   </Form>

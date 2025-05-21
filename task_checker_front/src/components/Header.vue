@@ -40,10 +40,12 @@ const handleSubmit = (e) => {
 
 <template>
   <div class="header">
+
     <div class="header-left">
       <CheckAll class="header_icon" fontsize="large" />
       <router-link to="/home" class="header_title">Task Checker</router-link>
     </div>
+
     <div class="header-search" v-if="currentUser" >
       <form class="search-container" @submit="handleSubmit">
         <input
@@ -53,21 +55,16 @@ const handleSubmit = (e) => {
           type="search"
           aria-label="検索"
         />
-        <button
-          type="submit"
-          class="search-button"
-        >
-          検索
-        </button>
+        <button type="submit" class="search-button">検索</button>
       </form>
     </div>
+
     <div class="header-right">
-      <button v-if="currentUser" @click="handleSignOut" class="logout-button">
-        ログアウト
-      </button>
+      <button v-if="currentUser" @click="handleSignOut" class="logout-button">ログアウト</button>
       <!-- マイページへの遷移ボタンを追加 森 -->
       <router-link to="/mypage" class="mypage-button">マイページ</router-link>
     </div>
+    
   </div>
 </template>
 

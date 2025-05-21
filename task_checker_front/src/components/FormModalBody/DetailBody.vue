@@ -74,14 +74,16 @@ onMounted(async()=> {
       <div class="detail_task_explanation">{{ task.explanation }}</div>
       <h2 class="detail_modal_deadlineDate">期限</h2>
       <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
-          <p class="assignee">担当者: {{ assigneeName }}</p>
-      </div>
+      <p class="assignee">担当者: {{ assigneeName }}</p>
+    </div>
+
     <button type="button" class="detail_edit_button" @click="showModal=true">
         編集
       <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
     </button>
     <button type="button" class="detail_delete_button" @click="DeleteTask(task.id)">削除</button>
   </div>
+
   <form class="comment-from">
     <label for="comment">コメント</label>
     <textarea v-model="comment.content" id="comment" placeholder="コメントを入力してください"></textarea>
@@ -89,10 +91,12 @@ onMounted(async()=> {
       <button @click.prevent="submitComment(task.id)" class="comment-submit-button">送信</button>
     </div>
   </form>
+
   <h2>コメント一覧</h2>
   <div v-for="comment in filterComment(task.id)" :key="comment.id">
     <Comment :comment="comment"/>
   </div>
+
 </template>
 
 <style scoped>

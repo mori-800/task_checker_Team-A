@@ -51,17 +51,19 @@ onMounted(fetchGenres);
 
 <template>
   <div class="modal_body">
-      <h2 class="input_menu">ジャンル編集</h2>
-      <ul>
-        <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
-          <span>{{ genre.name }}</span>
-          <input class="delete_btn" type="submit" value="×" @click="removeGenre(genre.id)">
-        </li>
-      </ul>
-      <form>
-        <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name"/>
-        <input class="input_submit" type="button" value="追加" @click="submitGenre" />
-      </form>
+    <h2 class="input_menu">ジャンル編集</h2>
+    
+    <ul>
+      <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
+        <span>{{ genre.name }}</span>
+        <input class="delete_btn" type="submit" value="×" @click="removeGenre(genre.id)">
+      </li>
+    </ul>
+
+    <form>
+      <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name"/>
+      <input class="input_submit" type="button" value="追加" @click="submitGenre" />
+    </form>
   </div>
 </template>
 

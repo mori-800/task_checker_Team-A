@@ -45,23 +45,23 @@ const submitTask = async() => {
 </script>
 
 <template>
-    <form class="modal_body">
-      <h2 class="input_menu">タスクを編集</h2>
-      <div>
-        <h4 class="input_title">ジャンル</h4>
-        <div class="task_genre">
-          <Select @change="genreSelect" :value="task.genreId"/>
-        </div>
-        <h4 class="input_title">タイトル</h4>
-        <input type="text" v-model="task.name"/>
-        <h4 class="input_title">説明</h4>
-        <textarea v-model="task.explanation"/>
-        <h4 class="input_title">期限</h4>
-        <input class="input_date" type="date" v-model="task.deadlineDate"/>
-        <div>※変更されない場合は前のが適用されます</div>
+  <form class="modal_body">
+    <h2 class="input_menu">タスクを編集</h2>
+    <div>
+      <h4 class="input_title">ジャンル</h4>
+      <div class="task_genre">
+        <Select @change="genreSelect" :value="task.genreId"/>
       </div>
-      <input class="input_submit" type="button" value="送信" @click="submitTask"/>
-    </form>
+      <h4 class="input_title">タイトル</h4>
+      <input type="text" v-model="task.name"/>
+      <h4 class="input_title">説明</h4>
+      <textarea v-model="task.explanation"/>
+      <h4 class="input_title">期限</h4>
+      <input class="input_date" type="date" v-model="task.deadlineDate"/>
+      <div>※変更されない場合は前のが適用されます</div>
+    </div>
+    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
+  </form>
 </template>
 
 <style>
