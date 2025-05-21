@@ -50,7 +50,9 @@ const filterTasksByStatus = (statusIndex) => {
   //statusで受け取った値がtaskStatusの配列の何番目の数値か調べる。
   const index = statusIndex
   //indexとtask.statusの値が同じ場合のみデータ取得する。
-  return taskStore.filteredTasks.filter(task => task.status == index);
+  return taskStore.filteredTasks.filter(
+     task => task && typeof task.status !== 'undefined' && task.status == index
+  );
 }
 
 
