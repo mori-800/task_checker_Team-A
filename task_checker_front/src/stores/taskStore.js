@@ -29,6 +29,7 @@ export const useTaskStore = defineStore('task', () => {
   }
   //タスクの投稿 river
   async function addTask(newTask) {
+    console.log(newTask)
     try {
       const formData = new FormData();
       formData.append('name', newTask.name);
@@ -36,8 +37,8 @@ export const useTaskStore = defineStore('task', () => {
       formData.append('deadlineDate', newTask.deadlineDate);
       formData.append('status', newTask.status);
       formData.append('genreId', newTask.genreId);
-      formData.append('assigneeId', newTask.assigneeId);
       formData.append('makerId', auth.currentUser.uid); // これは送ってOK！バックで makerId に変換して使う
+      formData.append('assigneeId', newTask.assigneeId);
 
       const response = await api.post('/tasks', formData, {
         headers: {
