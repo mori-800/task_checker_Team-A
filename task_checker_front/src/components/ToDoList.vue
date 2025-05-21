@@ -38,6 +38,7 @@ const closeModal = () => {
       />
       <FormModal v-model="showModal" body="taskBody" @close-modal="closeModal"/>
     </div>
+    
     <div class="task_field" v-for="task in props.tasks" :key="task.id" v-if="showTask">
       <Task :task="task"/>
     </div>

@@ -78,6 +78,7 @@ function getStatusText(status) {
         />
       </div>
     </div>
+    
     <div v-else>
       <p>投稿が見つかりませんでした。</p>
     </div>

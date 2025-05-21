@@ -62,23 +62,18 @@ const taskStyle = computed(() => {
 <template>
   <div class="task" :style="taskStyle">
     <FormModal v-model="showModal" body="detailBody" @close-modal="closeModal" :task="props.task"/>
+
     <span class="task_date">{{ formattedDeadlineDate }}</span>
+
     <div @click="showModal=true">
       <div class="task_text_contents">
         <h3 class="task_title">{{ task.name }}</h3>
         <p class="task_sentence">{{ task.explanation}}</p>
       </div>
-      <div v-if="task.image_url" class="image-container">
-        <div class="image-wrapper">
-          <img
-            :src="task.image_url"
-            class="task-image"
-          />
-        </div>
-      </div>
       <!-- 👇 担当者名表示エリアを追加 森 -->
       <p class="assignee">担当者: {{ assigneeName }}</p>
     </div>
+
     <div className="task_input_contents">
       <StatusSelect @change="statusSelect":tasks="props.task"/>
     </div>

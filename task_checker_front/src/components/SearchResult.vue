@@ -33,11 +33,13 @@ onMounted(async () => {
 <template>
   <div class="main">
     <Header />
+
     <div class="contents">
       <div class="task_field" v-for="task in taskStore.searchResults" :key="task.id" >
         <Task :task="task"/>
       </div>
     </div>
+    
   </div>
 </template>
 

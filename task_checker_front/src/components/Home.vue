@@ -61,20 +61,24 @@ const filterTasksByStatus = (statusIndex) => {
 <template>
   <div class="main">
     <Header />
+
     <!-- ニックネームを表示する 森-->
     <div class="user-name">
-    <span>こんにちは{{ displayName }}さん</span>
-  </div>
+      <span>こんにちは{{ displayName }}さん</span>
+    </div>
+
     <div class="genre">
       <Select @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
       <FormModal v-model="showModal" body="genreBody"/>
     </div>
+
     <div class="contents">
       <div v-for="(status, index) in taskStatusElements" :key="index">
         <ToDoList :tasks="filterTasksByStatus(index)" :status="status"/>
       </div>
     </div>
+    
   </div>
 </template>
 
