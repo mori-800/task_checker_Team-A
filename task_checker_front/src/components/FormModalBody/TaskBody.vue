@@ -15,7 +15,7 @@ defineRule('confirmed', confirmed);
 
 //ユーザーリストを定義
 const allUsers = ref([]);
-const selectedAssigneeId = ref('')
+const assigneeId = ref('')
 const task = ref({
   name: '',
   explanation: '',
@@ -43,8 +43,7 @@ onMounted(async () => {
 
 const submitTask = async () => {
   // ✅ 担当者IDを設定
-  task.value.assigneeId = selectedAssigneeId.value
-
+  task.value.assigneeId = assigneeId.value
   try {
     await taskStore.addTask(task.value)
     emit('close-modal')
@@ -78,20 +77,18 @@ const submitTask = async () => {
       <Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" v-model="task.deadlineDate"/>
       <ErrorMessage as="div" name="deadlineDate" >
       <p>This field is required</p></ErrorMessage>
-
-<h4 class="input_title">担当者</h4>
-<Field name="assigneeId" rules="required" v-slot="{ field }">
-  <select v-bind="field" class="select">
-    <option disabled value="">-- 担当者を選択 --</option>
-    <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
-      {{ user.displayName || '名前未登録' }}
-    </option>
-  </select>
-  <ErrorMessage as="div" name="assigneeId">
-    <p>This field must be selected</p>
-  </ErrorMessage>
-</Field>
-
+      <h4 class="input_title">担当者</h4>
+      <Field name="assigneeId" rules="required">
+        <select v-model="assigneeId" class="select">
+          <option disabled value="">-- 担当者を選択 --</option>
+          <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
+            {{ user.displayName || '名前未登録' }}
+          </option>
+        </select>
+        <ErrorMessage as="div" name="assigneeId">
+          <p>This field must be selected</p>
+        </ErrorMessage>
+      </Field>
     </div>    
     <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </Form>

@@ -61,7 +61,6 @@ app.get("/tasks", async(req, res) => {
 })
 //タスクの投稿 river
 app.post("/tasks",upload.single('image_url'), async (req, res) => {
-  console.log("リクエストボディ",req.body)
   try {
     const deadlineDate = new Date(req.body.deadlineDate)
     const savedData = await prisma.task.create({
