@@ -43,11 +43,7 @@ onMounted(async () => {
 
 const submitTask = async () => {
   // ✅ 担当者IDを設定
-  //怪しい
-  console.log("元データ:",assigneeId.value)
-  console.log("空と表示される予定のデータ:",task.value.assigneeId)
   task.value.assigneeId = assigneeId.value
-  console.log("元データと同じになるデータ:",task.value.assigneeId)
   try {
     await taskStore.addTask(task.value)
     emit('close-modal')

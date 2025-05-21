@@ -29,7 +29,6 @@ export const useTaskStore = defineStore('task', () => {
   }
   //タスクの投稿 river
   async function addTask(newTask) {
-    console.log(newTask)
     try {
       const formData = new FormData();
       formData.append('name', newTask.name);
