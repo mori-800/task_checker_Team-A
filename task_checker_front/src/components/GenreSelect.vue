@@ -13,6 +13,18 @@ const genreStore = useGenreStore();
 </script>
 
 <template>
+<!-- <Field name="genreId" rules="required" v-slot="{ field, ErrorMessage }">
+  <select v-bind="field" class="select">
+    <option disabled value="">---</option>
+    <option v-for="genre in genreStore.genres" :key="genre.id" :value="genre.id">
+      {{ genre.name }}
+    </option>
+  </select>
+  <ErrorMessage as="div" name="genreId">
+    <p>This field must be selected</p>
+  </ErrorMessage> 
+</Field>-->
+
 <Field name="genreId" rules="required" v-slot="{ field, ErrorMessage }">
   <select v-bind="field" class="select">
     <option disabled value="">---</option>
@@ -22,7 +34,7 @@ const genreStore = useGenreStore();
   </select>
   <ErrorMessage as="div" name="genreId">
     <p>This field must be selected</p>
-  </ErrorMessage>
+  </ErrorMessage> 
 </Field>
 
 </template>

@@ -15,7 +15,6 @@ defineRule('confirmed', confirmed);
 
 //ユーザーリストを定義
 const allUsers = ref([]);
-const assigneeId = ref('')
 const task = ref({
   name: '',
   explanation: '',
@@ -41,11 +40,14 @@ onMounted(async () => {
   }
 })
 
-const submitTask = async () => {
-  // ✅ 担当者IDを設定
-  task.value.assigneeId = assigneeId.value
+const submitTask = async (values) => {
   try {
-    await taskStore.addTask(task.value)
+    // values にフォームのすべての入力値が入っている！
+    const taskData = {
+      ...task.value,
+      ...values // name, explanation, deadlineDate, assigneeId を上書き
+    }
+    await taskStore.addTask(taskData)
     emit('close-modal')
   } catch (error) {
     console.error("タスクの登録に失敗しました", error)
@@ -55,7 +57,7 @@ const submitTask = async () => {
 </script>
 
 <template>
-  <Form class="modal_body">
+  <Form class="modal_body" @submit="submitTask">
     <h2 class="input_menu">タスクを追加</h2>
     <div>
       <h4 class="input_title">ジャンル</h4>
@@ -63,34 +65,45 @@ const submitTask = async () => {
         <Select @change="genreSelect" :value="task.genreId"/>
       </div>
       
-      <h4 class="input_title">タイトル</h4>
-       <Field type="text" id="name" class="input-field" name="name" rules="required" v-model="task.name"/>
-       <ErrorMessage as="div" name="name" >
-       <p>This field is required</p></ErrorMessage>
-       
-      <h4 class="input_title">説明</h4>
-      <Field type="text" id="explanation" class="input-field" name="explanation" rules="required" v-model="task.explanation"/>
-      <ErrorMessage as="div" name="explanation" >
-      <p>This field is required</p></ErrorMessage>
+ <!-- タイトル -->
+<h4 class="input_title">タイトル</h4>
+<Field type="text" id="name" class="input-field" name="name" rules="required" />
+<ErrorMessage as="div" name="name">
+  <p>This field is required</p>
+</ErrorMessage>
 
-      <h4 class="input_title">期限</h4>
-      <Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" v-model="task.deadlineDate"/>
-      <ErrorMessage as="div" name="deadlineDate" >
-      <p>This field is required</p></ErrorMessage>
-      <h4 class="input_title">担当者</h4>
-      <Field name="assigneeId" rules="required">
-        <select v-model="assigneeId" class="select">
-          <option disabled value="">-- 担当者を選択 --</option>
-          <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
-            {{ user.displayName || '名前未登録' }}
-          </option>
-        </select>
-        <ErrorMessage as="div" name="assigneeId">
-          <p>This field must be selected</p>
-        </ErrorMessage>
-      </Field>
+       
+<!-- 説明 -->
+<h4 class="input_title">説明</h4>
+<Field type="text" id="explanation" class="input-field" name="explanation" rules="required" />
+<ErrorMessage as="div" name="explanation">
+  <p>This field is required</p>
+</ErrorMessage>
+
+
+<!-- 期限 -->
+<h4 class="input_title">期限</h4>
+<Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" />
+<ErrorMessage as="div" name="deadlineDate">
+  <p>This field is required</p>
+</ErrorMessage>
+
+<!-- 担当者 -->
+<h4 class="input_title">担当者</h4>
+<Field name="assigneeId" rules="required" v-slot="{ field }">
+  <select v-bind="field" class="select">
+    <option disabled value="">-- 担当者を選択 --</option>
+    <option v-for="user in allUsers" :key="user.uid" :value="user.uid">
+      {{ user.displayName || '名前未登録' }}
+    </option>
+  </select>
+  <ErrorMessage as="div" name="assigneeId">
+  <p>This field must be selected</p>
+</ErrorMessage>
+</Field>
+
     </div>    
-    <input class="input_submit" type="button" value="送信" @click="submitTask"/>
+    <input class="input_submit" type="submit" value="送信"/>
   </Form>
 </template>
 
