@@ -2,7 +2,6 @@
 import { auth, signInWithEmailAndPassword } from '../firebase'
 import Header from './Header.vue'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 
 // vee-validate 関連のインポート
 import { defineRule, configure, useField } from 'vee-validate'
@@ -98,11 +97,11 @@ input {
 button {
   background-color: rgb(66, 163, 247);
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
   margin-bottom: 8px;
   font-size: 15px;
-  width: 246px;
+  width: 180px;
 }
 </style>

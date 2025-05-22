@@ -1,5 +1,5 @@
 <script setup>
-import { ref , computed , onMounted} from 'vue';
+import { ref , computed , onMounted } from 'vue';
 import FormModal from '../FormModal.vue';
 import { useTaskStore } from '../../stores/taskStore';
 import { useUserStore } from '../../stores/userStore';
