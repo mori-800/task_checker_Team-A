@@ -101,7 +101,7 @@ const handleSignUp = async () => {
 
     <button @click="handleSignUp">新規登録</button>
 
-    <p>既にアカウントをお持ちの方はこちらへ<router-link to="/">こちら</router-link></p>
+    <p>既にアカウントをお持ちの方は<router-link to="/">こちら</router-link></p>
   </div>
 </template>
 
@@ -123,11 +123,11 @@ input {
 button {
   background-color: rgb(66, 163, 247);
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
   margin-bottom: 8px;
   font-size: 15px;
-  width: 246px;
+  width: 180px;
 }
 </style>
