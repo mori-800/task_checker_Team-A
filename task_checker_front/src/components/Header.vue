@@ -2,16 +2,16 @@
 import CheckAll from 'vue-material-design-icons/CheckAll.vue';
 import { auth, signOut, onAuthStateChanged } from '../firebase';
 import { useRouter } from 'vue-router';
-import { ref, onMounted,computed } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const router = useRouter();
 const currentUser = ref(null);
 const searchKeyword = ref('');
 
-//homeに表示するニックネームを定義 森
-const displayName = computed(() => {
-  return auth.currentUser.displayName;
+const props = defineProps({
+  displayName:String,
 })
+
 
 const handleSignOut = async() => {
   try{
@@ -31,6 +31,7 @@ onMounted(() => {
     }
   })
 })
+
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -55,7 +56,7 @@ const handleMypage = async() =>{
   <div class="header">
     <div class="header-top">
       <div class="header-left">
-        <CheckAll class="header_icon" :size="30"/>
+        <CheckAll class="header_icon" :size="25"/>
         <router-link to="/home" class="header_title">Task Checker</router-link>
       </div>
 
@@ -89,7 +90,7 @@ const handleMypage = async() =>{
 
 <style scoped>
 .header {
-  height: 110px;
+  height: 100px;
   background-color: white;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -112,7 +113,7 @@ const handleMypage = async() =>{
 
 .header_title {
   color: rgb(70, 70, 70);
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   text-decoration: none;
 }
@@ -171,7 +172,7 @@ const handleMypage = async() =>{
 .header-user {
  display: flex;
  justify-content:space-between;
- margin: 5px 1% 1% 1%;
+ margin: 5px 1% 5px 1%;
 }
 .user-name{
   font-size: 15px;
