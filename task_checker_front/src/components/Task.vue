@@ -163,6 +163,7 @@ const taskStyle = computed(() => {
 
 .task_input_contents {
   padding: 0 20px 20px 20px;
+
 }
 
 
@@ -177,6 +178,7 @@ const taskStyle = computed(() => {
 /* 完了ボタン 実装未定 森 */
 .complete-button {
   margin-top: 10px;
+  margin-left: 50px;
   background-color: #4caf50;
   color: white;
   border: none;
