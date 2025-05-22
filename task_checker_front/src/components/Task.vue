@@ -15,6 +15,18 @@ const props = defineProps({
   task: Object
 })
 
+//タスクの完了機能 追加機能なので今後残せるかは不明 森
+const completeTask = async () => {
+  const farFutureDate = new Date()
+  farFutureDate.setFullYear(farFutureDate.getFullYear() + 1000)
+
+  props.task.deadlineDate = farFutureDate.toISOString()
+
+  // 🛠️ 修正ポイント: タスクIDと更新内容を明示的に渡す
+  await taskStore.updateTasks(props.task.id, props.task)
+}
+
+
 // 担当者名の算出（userStore.usersから一致するIDを探す）森
 const assigneeName = computed(() => {
   const user = userStore.users.find(u => u.uid === props.task.assigneeId)
@@ -31,11 +43,26 @@ onMounted(() => {
 
 //taskがnullやundefinedの場合のガード 森
 
+// const formattedDeadlineDate = computed(() => {
+//   if (!props.task || !props.task.deadlineDate) return '';
+//   const date = new Date(props.task.deadlineDate)
+//   return date.toLocaleDateString('ja-JP')
+// })
+
+//以下はタスク完了機能を実装する場合のformattedDeadlineDateの記述 実装しない場合は上記のものを採用 森
 const formattedDeadlineDate = computed(() => {
   if (!props.task || !props.task.deadlineDate) return '';
-  const date = new Date(props.task.deadlineDate)
-  return date.toLocaleDateString('ja-JP')
-})
+
+  const deadline = new Date(props.task.deadlineDate);
+  const farFuture = new Date();
+  farFuture.setFullYear(farFuture.getFullYear() + 500); // 目安として500年後以降は完了扱い
+
+  if (deadline > farFuture) {
+    return '完了済み'
+  }
+
+  return deadline.toLocaleDateString('ja-JP');
+});
 
 const statusSelect = (e) => {
   props.task.status = Number(e.target.value)
@@ -74,8 +101,10 @@ const taskStyle = computed(() => {
       <p class="assignee">担当者: {{ assigneeName }}</p>
     </div>
 
-    <div className="task_input_contents">
-      <StatusSelect @change="statusSelect":tasks="props.task"/>
+    <div class="task_input_contents">
+      <StatusSelect @change="statusSelect" :tasks="props.task" />
+      <!-- タスクの完了ボタン 追加機能なので今後残せるかは不明 森 -->
+      <button class="complete-button" @click.stop="completeTask">完了</button>
     </div>
   </div>
 </template>
@@ -144,4 +173,23 @@ const taskStyle = computed(() => {
   padding-left: 20px;
   margin-top: 10px;
 }
+
+/* 完了ボタン 実装未定 森 */
+.complete-button {
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.complete-button:hover {
+  background-color: #45a049;
+}
+/* ここまで */
+
 </style>

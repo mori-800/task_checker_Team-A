@@ -86,7 +86,7 @@ const closeModal = () => {
     <div v-if="showWarningModal" class="modal-overlay" @click.self="closeModal">
     <div class="warning-modal">
   <div class="warning-content">
-    ⚠️ 期限切れのタスクがあります！至急対応してください！
+    ⚠️ 期限切レノ要件アリ。至急対応サレタシ。
   </div>
 </div>
 
