@@ -7,16 +7,8 @@ import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import { ref, onMounted, computed } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
-//ログインユーザー名をトップページに反映する 森
-import { auth  } from '../firebase'
 
 const showModal = ref(false);
-
-//homeに表示するニックネームを定義 森
-const displayName = computed(() => {
-  return auth.currentUser.displayName;
-})
-
 const taskStore = useTaskStore();
 const genreStore = useGenreStore();
 const taskStatusElements = [
@@ -61,12 +53,6 @@ const filterTasksByStatus = (statusIndex) => {
 <template>
   <div class="main">
     <Header />
-
-    <!-- ニックネームを表示する 森-->
-    <div class="user-name">
-      <span>こんにちは{{ displayName }}さん</span>
-    </div>
-
     <div class="genre">
       <Select @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
@@ -87,6 +73,7 @@ const filterTasksByStatus = (statusIndex) => {
   width: 100vw;
   height: 100vh;
   background-color: #f6f8f9;
+  overflow: hidden;
 }
 
 .genre {
@@ -108,4 +95,7 @@ const filterTasksByStatus = (statusIndex) => {
   width: 100%;
   overflow: auto;
 }
+/* .user-name{
+  width: 100%;
+} */
 </style>
