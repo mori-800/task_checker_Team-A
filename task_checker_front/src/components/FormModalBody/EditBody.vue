@@ -3,14 +3,14 @@ import Select from '../Select.vue'
 import { ref } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
 
-// vee-validateのインポート river
+// vee-validateのインポート 吉田
 import { Form, Field, defineRule, ErrorMessage, configure } from 'vee-validate';
 import { required } from '@vee-validate/rules';
 
-// バリデーションルール定義 river
+// バリデーションルール定義 吉田
 defineRule('required', required);
 
-// デフォルトのバリデーションメッセージ設定 river
+// デフォルトのバリデーションメッセージ設定 吉田
 configure({
   generateMessage: (ctx) => {
     const messages = {
@@ -45,7 +45,7 @@ const genreSelect = (e) => {
 // 編集モーダルを閉じる river
 const emit = defineEmits('close-modal')
 
-// バリデーション成功時の送信処理 river
+// バリデーション成功時の送信処理 吉田
 const onSubmit = async (values) => {
   task.value.name = values.name
   task.value.explanation = values.explanation
@@ -62,7 +62,7 @@ const onSubmit = async (values) => {
 </script>
 
 <template>
-  <!-- vee-validateのFormを使用 river -->
+  <!-- vee-validateのFormを使用 吉田 -->
   <Form class="modal_body" @submit="onSubmit">
 
     <h2 class="input_menu">タスクを編集</h2>
