@@ -189,5 +189,7 @@ const handleMypage = async() =>{
   color: #9966cc;
   display: flex;
   align-items: center;
+  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', 'Arial Rounded MT Bold', sans-serif;
+  text-shadow: 1px 1px 2px #ffd6fa, 0 0 4px #ffccf9;
 }
 </style>

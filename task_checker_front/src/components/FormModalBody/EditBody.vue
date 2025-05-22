@@ -91,9 +91,9 @@ const onSubmit = async (values) => {
       />
       <ErrorMessage name="explanation" class="error-message" />
 
-      <h4 class="input_title">期限</h4>
-      <input class="input_date" type="date" v-model="task.deadlineDate" />
-      <div>※変更されない場合は現在の期限を反映</div>
+<h4 class="input_title">期限</h4>
+<input class="input_date" type="date" v-model="task.deadlineDate" />
+<div class="deadline-note">※変更されない場合は現在の期限を反映</div>
     </div>
 
     <input class="input_submit" type="submit" value="送信" />
@@ -115,12 +115,16 @@ const onSubmit = async (values) => {
 }
 
 .input_menu {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
-  color: #703c85;
+  color: #ff66b2; /* ふんわりとしたピンク */
   margin-bottom: 24px;
-  text-shadow: 2px 2px 5px rgba(255, 182, 255, 0.5);
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* 可愛さ重視 */
+  text-shadow: 3px 3px 6px rgba(255, 182, 255, 0.6), 0 0 8px rgba(255, 153, 204, 0.4); /* ふわっと感、キラキラ光るような効果 */
+  letter-spacing: 1px; /* 文字の間隔を少し広げて柔らかさを出す */
+  white-space: nowrap; /* テキストが折り返さないように */
 }
+
 
 .input_title {
   font-size: 18px;
@@ -171,4 +175,17 @@ textarea {
   margin: 4px 0 12px 0; /* 上下に余白 */
   display: block;
 }
+
+.deadline-note {
+  font-size: 14px;
+  color: #ff66b2; /* 柔らかいピンク色 */
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  margin-top: 8px;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 8px;
+
+}
+
+
 </style>

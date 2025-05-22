@@ -30,12 +30,17 @@ const genreStore = useGenreStore();
 <style scoped>
 .select {
   width: 150px;
-  height: 25px;
-  font-size: 15px;
-  color: rgb(70, 70, 70);
+  height: 35px;
+  font-size: 16px;
+  color: #703c85;
+  background-color: #fdf5ff; /* 明るいピンクの背景 */
   border: none;
-  border-bottom: thin solid #cfcfcf;
+  border-radius: 12px; /* 丸みを持たせた角 */
+  border-bottom: 2px solid #ffccf9; /* ピンクのボーダー */
   outline: none;
+  padding: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3); /* 柔らかい影 */
+  transition: transform 0.2s ease;
 }
 </style>

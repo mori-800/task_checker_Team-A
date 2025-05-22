@@ -45,7 +45,7 @@ onMounted(fetchGenres);
 
 <template>
   <div class="modal_body">
-    <h2 class="input_menu">ジャンル編集</h2>
+  <h2 class="input_title">ジャンル編集</h2>
 
     <ul class="genre_list">
       <li class="genre_item" v-for="genre in genreStore.genres" :key="genre.id">
@@ -64,14 +64,22 @@ onMounted(fetchGenres);
 <style scoped>
 /* ジャンル編集の文字 */
 .input_title {
-  font-size: 18px;
+  font-size: 26px;
   font-weight: bold;
-  color: #703c85;
-  text-align: left;
-  margin-bottom: 12px;
-  text-shadow: 1px 1px 2px #ffccf9;
-  font-family: 'Comic Sans MS', cursive; /* 夢かわいいフォント */
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Kiwi Maru', 'Comic Sans MS', cursive;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #ffaaff, #ffccf9, #d5bfff);
+  border-radius: 12px;
+  box-shadow:
+    0 0 10px #ffccf9,
+    0 0 20px #ffc5ec,
+    0 0 30px rgba(255, 192, 203, 0.4);
+  display: inline-block;
 }
+
 
 /* ジャンル追加フォームのタイトルも */
 .add-genre-form {

@@ -109,6 +109,23 @@ const submitTask = async (values) => {
 
 <style scoped>
 /* モーダルボディ */
+.input_menu {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #ffaaff, #ffccf9, #d5bfff);
+  border-radius: 16px;
+  box-shadow:
+    0 0 10px #ffccf9,
+    0 0 20px #ffc5ec,
+    0 0 30px rgba(255, 192, 203, 0.4);
+  display: inline-block;
+}
+
 .modal_body {
   display: flex;
   flex-direction: column;

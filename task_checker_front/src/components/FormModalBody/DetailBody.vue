@@ -111,64 +111,78 @@ h2 {
   margin: 20px 0 10px 0;
   color: #cc66ff;
   font-family: 'Comic Sans MS', cursive, sans-serif;
-  text-shadow: 1px 1px #ffe6fa;
+  text-shadow: 2px 2px 4px #ffd6fa, 0 0 6px #ffe6fb;
 }
 
+/* モーダル全体 */
 .detail_modal_body {
   align-items: flex-start;
   text-align: left;
   margin-bottom: 30px;
-  background-color: #fff0fa;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.2);
+  background: linear-gradient(145deg, #fff0fa, #fdf0ff);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(255, 182, 255, 0.3);
+  border: 2px dashed #ffc8f9;
 }
 
+/* ヘッダー部分（タスク名 + ボタン） */
 .detail_modal_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
 }
 
+/* 編集ボタン */
 .detail_edit_button {
   background: linear-gradient(to right, #d0f0ff, #c7eaff);
   color: #2c2c72;
-  border-radius: 12px;
-  border-style: none;
-  padding: 8px 20px;
-  text-decoration: none;
-  margin-left: 10px;
+  border-radius: 14px;
+  padding: 10px 24px;
   font-weight: bold;
-  box-shadow: 0 2px 4px rgba(180, 220, 255, 0.5);
+  font-family: 'Comic Sans MS', cursive;
+  box-shadow: 0 4px 10px rgba(180, 220, 255, 0.4);
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
+.detail_edit_button:hover {
+  transform: scale(1.05);
+}
+
+/* 削除ボタン */
 .detail_delete_button {
   background: linear-gradient(to right, #fcd5ce, #f9c0c0);
   color: #6d2932;
-  border-radius: 12px;
-  border-style: none;
-  padding: 8px 20px;
-  text-decoration: none;
-  margin-left: 10px;
+  border-radius: 14px;
+  padding: 10px 24px;
   font-weight: bold;
-  box-shadow: 0 2px 4px rgba(255, 160, 160, 0.4);
+  font-family: 'Comic Sans MS', cursive;
+  box-shadow: 0 4px 10px rgba(255, 160, 160, 0.4);
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
+.detail_delete_button:hover {
+  transform: scale(1.05);
+}
+
+/* タスクタイトル */
 .detail_task_title {
-  font-size: 22px;
+  font-size: 24px;
   color: #9966cc;
   font-weight: bold;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive;
+  text-shadow: 1px 1px 2px #ffd6fa;
 }
 
+/* 期限・担当者 */
 .detail_modal_DateAndAssignee {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
   color: #999;
+  margin-top: 8px;
 }
 
 .detail_task_assignee {
@@ -176,44 +190,57 @@ h2 {
   font-style: italic;
 }
 
+/* コメントフォーム全体 */
 .comment-from {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   border-top: 2px dotted #ffc8f9;
-  margin-top: 20px;
-  padding-top: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
 }
 
+/* コメント入力欄 */
 #comment {
   width: 95%;
   background-color: #fdf0ff;
   border: 2px dashed #ffccf9;
-  border-radius: 10px;
-  padding: 8px;
+  border-radius: 12px;
+  padding: 10px;
   font-family: 'Comic Sans MS', cursive;
   color: #703c85;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.2);
 }
 
+/* コメント送信ボタン */
 .comment-submit-button {
   background: linear-gradient(to right, #ffccf9, #ffebf9);
   color: #703c85;
-  border-radius: 12px;
-  border-style: none;
-  padding: 8px 20px;
-  text-decoration: none;
-  margin: 10px 10px;
+  border-radius: 14px;
+  padding: 10px 24px;
   font-weight: bold;
-  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3);
+  font-family: 'Comic Sans MS', cursive;
+  box-shadow: 0 4px 10px rgba(255, 182, 255, 0.3);
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
+.comment-submit-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #ffb7eb, #ffe3f4);
+}
+
+/* コメントタイトル */
 .comment-title {
   border-top: 2px dotted #ffc8f9;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #cc66ff;
   margin-top: 15px;
-  padding-top: 10px;
+  padding-top: 12px;
   font-family: 'Comic Sans MS', cursive;
+  text-shadow: 1px 1px 2px #ffe6fa;
 }
 </style>
+

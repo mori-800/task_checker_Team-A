@@ -31,10 +31,12 @@ onMounted(async () => {
 </script>
 
 <template>
+  
   <div class="main">
     <Header />
 
     <div class="contents">
+      <h2 class="search-title">検索結果</h2> <!-- ここを追加 -->
       <div class="task_field" v-for="task in taskStore.searchResults" :key="task.id" >
         <Task :task="task"/>
       </div>
@@ -44,4 +46,33 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.contents {
+  padding: 0 24px; /* 左右に余白を追加 */
+}
+
+/* 検索結果タイトル */
+.search-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9966cc;
+  margin: 24px 0 16px 0;
+  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
+  text-shadow: 1px 1px 3px #ffccf9, 0 0 6px #ffc5ec;
+  background-color: #fceaff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(255, 204, 249, 0.4);
+  margin-left: 8px; /* ←少し右にずらす */
+}
+
+/* タスクフィールド */
+.task_field {
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #fff0fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(255, 204, 249, 0.2);
+}
+
 </style>
