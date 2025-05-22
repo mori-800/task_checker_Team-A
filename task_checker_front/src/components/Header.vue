@@ -73,13 +73,13 @@ const handleMypage = async() =>{
         </form>
       </div>
     </div>
-    <div class="header-user">
+    <div class="header-user" v-if="currentUser">
       <!-- ニックネームを表示する 森-->
       <div class="user-name">
         😊こんにちは！ {{ displayName }} さん
       </div>
         <div class="header-right">
-        <button v-if="currentUser" @click="handleSignOut" class="logout-button">ログアウト</button>
+        <button @click="handleSignOut" class="logout-button">ログアウト</button>
         <!-- マイページへの遷移ボタンを追加 森 -->
         <button @click="handleMypage" class="mypage-button">マイページ</button>
       </div>
