@@ -5,16 +5,14 @@ import { useGenreStore } from '../../stores/genreStore';
 const genre = ref({ name: '' });
 const genreStore = useGenreStore();
 
-
-
 // ジャンルのリストを格納するための変数 吉田
 const genreList = ref([]);
 
 // ジャンル名を全て取得する関数 吉田
 const fetchGenres = async () => {
   try {
-    await genreStore.fetchAllGenres();  // 全ジャンルの取得
-    genreList.value = genreStore.genres;  // store から取得したジャンルを表示用変数にセット
+    await genreStore.fetchAllGenres();
+    genreList.value = genreStore.genres;
   } catch (error) {
     console.log('ジャンルの取得に失敗しました', error);
   }
@@ -24,80 +22,98 @@ const fetchGenres = async () => {
 const submitGenre = async () => {
   try {
     await genreStore.addGenre(genre.value);
-
-    // 入力フォームのリセット
     genre.value = { name: '' };
-
-    // ジャンルの再取得
-    await fetchGenres();  // 追加後に再度ジャンルリストを取得
+    await fetchGenres();
   } catch (error) {
     console.log('ジャンルの保存に失敗しました', error);
   }
 };
 
 // ジャンルの削除処理 吉田
-const removeGenre = async(removeId) => {
-  try{
+const removeGenre = async (removeId) => {
+  try {
     await genreStore.removeGenre(removeId);
-  }catch(error){
+    await fetchGenres();
+  } catch (error) {
     console.log('ジャンルの削除に失敗しました', error);
   }
-}
+};
 
 // モーダルが表示されるタイミングでジャンルを取得 吉田
 onMounted(fetchGenres);
 </script>
 
-
 <template>
   <div class="modal_body">
     <h2 class="input_menu">ジャンル編集</h2>
-    
-    <ul>
-      <li class="genre_title" v-for="genre in genreStore.genres" :key="genre.id">
-        <span>{{ genre.name }}</span>
-        <input class="delete_btn" type="submit" value="×" @click="removeGenre(genre.id)">
+
+    <ul class="genre_list">
+      <li class="genre_item" v-for="genre in genreStore.genres" :key="genre.id">
+        <span class="genre_name">{{ genre.name }}</span>
+        <input class="delete_btn" type="submit" value="×" @click="removeGenre(genre.id)" />
       </li>
     </ul>
 
-    <form>
-      <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name"/>
+    <form class="add-genre-form">
+      <input class="input_genre" type="text" placeholder="ジャンル名" v-model="genre.name" />
       <input class="input_submit" type="button" value="追加" @click="submitGenre" />
     </form>
   </div>
 </template>
 
 <style scoped>
-form {
+/* ジャンル追加フォーム（横並び） */
+.add-genre-form {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
 }
 
 .input_genre {
   padding: 8px;
-  margin-bottom: 8px;
+  margin-right: 8px;
+  flex-grow: 1;
 }
 
 .input_submit {
-  width: 160px;
-  margin-left: auto;
+  width: 100px;
+  padding: 8px;
 }
 
+/* ジャンルリスト */
 .genre_list {
   margin-top: 20px;
-}
-
-.genre_list ul {
   list-style-type: none;
   padding: 0;
 }
 
-.genre_list li {
-  padding: 5px 0;
+.genre_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
   border-bottom: 1px solid #ddd;
 }
 
-.delete_btn {
-  margin-left: 24px;
+.genre_name {
+  font-size: 16px;
+  margin-right: 12px; /* ← この行を追加 */
+  flex-shrink: 1;
 }
+
+.delete_btn {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 20px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
 </style>

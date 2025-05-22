@@ -1,5 +1,5 @@
 <script setup>
-import Select from '../Select.vue'
+import Select from '../GenreSelect.vue'
 import { ref } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
 
@@ -72,24 +72,25 @@ const onSubmit = async (values) => {
         <Select @change="genreSelect" :value="task.genreId" />
       </div>
 
-      <h4 class="input_title">タイトル</h4>
-      <Field
-        name="name"
-        as="input"
-        type="text"
-        v-model="task.name"
-        rules="required"
-      />
-      <ErrorMessage name="name" class="error-message" />
+ <h4 class="input_title">タイトル</h4>
+<Field
+  name="name"
+  as="input"
+  type="text"
+  v-model="task.name"
+  rules="required"
+/>
+<ErrorMessage name="name" class="error-message" />
 
-      <h4 class="input_title">説明</h4>
-      <Field
-        name="explanation"
-        as="textarea"
-        v-model="task.explanation"
-        rules="required"
-      />
-      <ErrorMessage name="explanation" class="error-message" />
+<h4 class="input_title">説明</h4>
+<Field
+  name="explanation"
+  as="textarea"
+  v-model="task.explanation"
+  rules="required"
+/>
+<ErrorMessage name="explanation" class="error-message" />
+
 
       <h4 class="input_title">期限</h4>
       <input class="input_date" type="date" v-model="task.deadlineDate" />
@@ -111,6 +112,7 @@ const onSubmit = async (values) => {
 .error-message {
   color: red;
   font-size: 0.85rem;
-  margin-top: 4px;
+  margin: 4px 0 12px 0; /* 上下に余白 */
+  display: block;
 }
 </style>
