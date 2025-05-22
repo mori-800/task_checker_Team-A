@@ -9,7 +9,6 @@ import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
 
 const showModal = ref(false);
-
 const taskStore = useTaskStore();
 const genreStore = useGenreStore();
 const taskStatusElements = [
@@ -54,7 +53,6 @@ const filterTasksByStatus = (statusIndex) => {
 <template>
   <div class="main">
     <Header />
-
     <div class="genre">
       <Select @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
@@ -75,7 +73,7 @@ const filterTasksByStatus = (statusIndex) => {
   width: 100vw;
   height: 100vh;
   background-color: #f6f8f9;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .genre {
@@ -97,4 +95,7 @@ const filterTasksByStatus = (statusIndex) => {
   width: 100%;
   overflow: auto;
 }
+/* .user-name{
+  width: 100%;
+} */
 </style>

@@ -67,32 +67,39 @@ onMounted(async()=> {
 
 <template>
   <div class="detail_modal_body">
-    <div class="detail_modal_content">
+    <div class="detail_modal_header">
       <h2 class="detail_modal_title">タイトル</h2>
+      <div class="buttons">
+        <button type="button" class="detail_edit_button" @click="showModal=true">
+          編集
+          <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
+        </button>
+        <button type="button" class="detail_delete_button" @click="DeleteTask(task.id)">削除</button>
+      </div>
+    </div>
+    <div class="detail_modal_center">
       <div class="detail_task_title">{{ task.name }}</div>
       <h2 class="detail_modal_explanation">説明</h2>
       <div class="detail_task_explanation">{{ task.explanation }}</div>
-      <h2 class="detail_modal_deadlineDate">期限</h2>
-      <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
-      <p class="assignee">担当者: {{ assigneeName }}</p>
+      <div class="detail_modal_center-bottom">
+        <h2 class="detail_modal_deadlineDate">期限</h2>
+        <div class="detail_modal_DateAndAssignee">
+          <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
+          <div class="detail_task_assignee">担当者: {{ assigneeName }}</div>
+        </div>
+      </div>
+      
     </div>
-
-    <button type="button" class="detail_edit_button" @click="showModal=true">
-        編集
-      <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
-    </button>
-    <button type="button" class="detail_delete_button" @click="DeleteTask(task.id)">削除</button>
   </div>
-
   <form class="comment-from">
-    <label for="comment">コメント</label>
+    <h2><label for="comment">コメント投稿</label></h2>
     <textarea v-model="comment.content" id="comment" placeholder="コメントを入力してください"></textarea>
     <div>
       <button @click.prevent="submitComment(task.id)" class="comment-submit-button">送信</button>
     </div>
   </form>
 
-  <h2>コメント一覧</h2>
+  <h2 class="comment-title">コメント一覧</h2>
   <div v-for="comment in filterComment(task.id)" :key="comment.id">
     <Comment :comment="comment"/>
   </div>
@@ -100,60 +107,66 @@ onMounted(async()=> {
 </template>
 
 <style scoped>
-
-.detail_modal_body{
-  display: flex;
-  align-items:flex-start;
-  justify-content: center;
-  text-align: left;
+h2{
+  margin: 20px 0 10px 0;
 }
-.detail_modal_content{
-  width: 250px;
+.detail_modal_body{
+  align-items:flex-start;
+  text-align: left;
+  margin-bottom: 30px;
+}
+.detail_modal_header{
+  display: flex;
+  justify-content: space-between;
 }
 .detail_edit_button{
   background-color: rgb(66, 163, 247);
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  margin: 15px 10px 15px 30px;
+  text-decoration: none;
+  margin-left: 10px;
 }
 .detail_delete_button{
   background-color: rgb(233, 77, 77);
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  margin: 15px 10px;
+  text-decoration: none;
+  margin-left: 10px;
 }
-.detail_close_button{
-  background-color: rgb(66, 163, 247);
-  color: white;
-  border-radius: 25px;
-  border-style: none;
-  padding: 8px 20px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  margin: 15px 10px;
+.detail_task_title{
+  font-size: 20px;
+}
+.detail_modal_DateAndAssignee{
+  display: flex;
+  justify-content: space-between;
+}
+.detail_task_assignee{
+  color: slategray
 }
 .comment-from{
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border-top: 1px solid slategray;
+}
+#comment{
+  width: 95%;
 }
 .comment-submit-button{
-   background-color: rgb(66, 163, 247);
+  background-color: rgb(66, 163, 247);
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  margin: 15px 10px; 
+  text-decoration: none;
+  margin: 10px 10px;
+}
+.comment-title{
+  border-top: 1px solid slategray;
 }
 </style>
