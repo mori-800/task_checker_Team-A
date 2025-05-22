@@ -4,7 +4,7 @@ import Select from './Select.vue'
 import ToDoList from './ToDoList.vue'
 import FormModal from './FormModal.vue'
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
 
