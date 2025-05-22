@@ -58,7 +58,7 @@ const submitTask = async() => {
       <textarea v-model="task.explanation"/>
       <h4 class="input_title">期限</h4>
       <input class="input_date" type="date" v-model="task.deadlineDate"/>
-      <div>※変更されない場合は前のが適用されます</div>
+      <div>※変更されない場合は現在の期限を反映</div>
     </div>
     <input class="input_submit" type="button" value="送信" @click="submitTask"/>
   </form>
