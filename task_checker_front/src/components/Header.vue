@@ -7,11 +7,7 @@ import { ref, onMounted } from 'vue';
 const router = useRouter();
 const currentUser = ref(null);
 const searchKeyword = ref('');
-
-const props = defineProps({
-  displayName:String,
-})
-
+const displayName = ref('')
 
 const handleSignOut = async() => {
   try{
@@ -26,6 +22,7 @@ onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     if(user) {
       currentUser.value = auth.currentUser;
+      displayName.value=auth.currentUser.displayName;
     }else{
       currentUser.value = null;
     }
@@ -79,9 +76,9 @@ const handleMypage = async() =>{
         😊こんにちは！ {{ displayName }} さん
       </div>
         <div class="header-right">
-        <button @click="handleSignOut" class="logout-button">ログアウト</button>
         <!-- マイページへの遷移ボタンを追加 森 -->
         <button @click="handleMypage" class="mypage-button">マイページ</button>
+        <button @click="handleSignOut" class="logout-button">ログアウト</button>
       </div>
     </div>
   </div>
@@ -140,7 +137,7 @@ const handleMypage = async() =>{
 
 .search-button {
   padding: 0.5rem 0.8rem;
-  background-color: #4f83f2;
+  background-color: rgb(66, 163, 247);
   color: white;
   border: none;
   border-radius: 6px;
@@ -152,11 +149,12 @@ const handleMypage = async() =>{
 }
 
 .logout-button {
-  background-color: rgb(66, 163, 247);
+  background-color: rgb(233, 77, 77);
   color: white;
   border-radius: 6px;
   border-style: none;
   padding: 8px 20px;
+  margin-left: 10px;
 }
 
 /* マイページへの遷移ボタン 森 */
@@ -167,8 +165,8 @@ const handleMypage = async() =>{
   border-style: none;
   padding: 8px 20px;
   text-decoration: none;
-  margin-left: 10px;
 }
+
 .header-user {
  display: flex;
  justify-content:space-between;

@@ -77,12 +77,16 @@ function getStatusText(status) {
     </div>
     
     <div v-else>
-      <p>投稿が見つかりませんでした。</p>
+      <p class="not-found">投稿が見つかりませんでした。</p>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* .my-page {
+  margin-left: 5%;
+} */
+
 .mp_title {
   font-size: medium;
   margin-left: 2%;
@@ -91,16 +95,20 @@ function getStatusText(status) {
 .task-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 15px;
+  margin-left: 5%;
 }
 
 .task-card {
   border: 1px solid #ddd;
   padding: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 2rem;
-  width: calc(20% - 16px); /* 4個で1列にしたいので25%、gap分を引く */
+  margin-left: 5px;
+  width: calc(23% - 15px); /* 4個で1列にしたいので25%、gap分を引く */
   border-radius: 8px;
   box-sizing: border-box;
+}
+
+.not-found {
+  margin-left: 3%;
 }
 </style>
