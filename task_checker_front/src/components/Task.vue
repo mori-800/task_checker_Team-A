@@ -137,24 +137,6 @@ const taskStyle = computed(() => {
 }
 
 
-.image-container {
-  width: 100px;
-  height: 100px;
-  overflow: hidden;
-  margin-left: 20px;
-}
-
-.image-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.task-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 /* 👇 担当者名のスタイル追加 */
 .assignee {
   font-size: 12px;

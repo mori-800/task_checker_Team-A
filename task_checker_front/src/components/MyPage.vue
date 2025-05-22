@@ -29,10 +29,6 @@ onMounted(() => {
   })
 })
 
-function getImageUrl(imagePath) {
-  return `http://localhost:3000${imagePath}`
-}
-
 function formatDate(dateString) {
   const date = new Date(dateString)
   return date.toLocaleDateString('ja-JP', {
@@ -67,12 +63,6 @@ function getStatusText(status) {
         <p>締切: {{ formatDate(task.deadlineDate) }}</p>
         <p>詳細: {{ task.explanation }}</p>
         <p>ステータス: {{ getStatusText(task.status) }}</p>
-        <img
-          v-if="task.image_url"
-          :src="getImageUrl(task.image_url)"
-          alt="task image"
-          style="width: 190.5px; height: 133.5px;"
-        />
       </div>
     </div>
     
