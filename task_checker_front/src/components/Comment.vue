@@ -37,10 +37,10 @@ const deleteComment = async(commentId) => {
 }
 
 .btn {
-  background-color: rgb(121, 117, 117);
+  background-color: rgb(233, 77, 77);
   color: white;
   width: 40px;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 8px 15px;
   margin-bottom: 8px;

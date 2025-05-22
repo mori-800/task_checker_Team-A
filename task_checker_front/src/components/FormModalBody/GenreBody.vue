@@ -64,7 +64,6 @@ onMounted(fetchGenres);
 <style scoped>
 /* ジャンル追加フォーム（横並び） */
 .add-genre-form {
-  display: flex;
   align-items: center;
   margin-top: 16px;
 }
@@ -78,6 +77,7 @@ onMounted(fetchGenres);
 .input_submit {
   width: 100px;
   padding: 8px;
+  border-radius: 6px;
 }
 
 /* ジャンルリスト */
@@ -105,7 +105,7 @@ onMounted(fetchGenres);
   width: 24px;
   height: 24px;
   font-size: 14px;
-  background-color: #ff4d4d;
+  background-color: rgb(233, 77, 77);
   color: white;
   border: none;
   border-radius: 4px;

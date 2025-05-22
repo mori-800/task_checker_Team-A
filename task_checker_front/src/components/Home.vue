@@ -4,10 +4,9 @@ import Select from './Select.vue'
 import ToDoList from './ToDoList.vue'
 import FormModal from './FormModal.vue'
 import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
-import { ref, onMounted, computed} from 'vue'
+import { ref, onMounted } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
-import { auth } from '../firebase';
 
 const showModal = ref(false);
 const taskStore = useTaskStore();
@@ -34,11 +33,6 @@ onMounted(async()=> {
   }
 })
 
-//homeに表示するニックネームを定義 森
-const displayName = computed(() => {
-  return auth.currentUser.displayName
-})
-
 const changeSelectedGenreId = (e) => {
   const selectGenreId = Number(e.target.value);
   taskStore.filterTasks(selectGenreId);
@@ -58,7 +52,7 @@ const filterTasksByStatus = (statusIndex) => {
 
 <template>
   <div class="main">
-    <Header :displayName="displayName"/>
+    <Header/>
     <div class="genre">
       <Select @change="changeSelectedGenreId"/>
       <AddCircleIcon class="add_circle_outline_icon" @click="showModal = true"/>
