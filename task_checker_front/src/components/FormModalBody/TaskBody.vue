@@ -2,7 +2,7 @@
 import Select from '../GenreSelect.vue'
 import { ref,onMounted } from 'vue'
 import { useTaskStore } from '../../stores/taskStore';
-//ログインユーザー名をトップページに反映する　森
+//ログインユーザー名をトップページに反映する 森
 import  api from '../../api/axios';
 
 import {Form, Field, defineRule, ErrorMessage } from 'vee-validate'; 

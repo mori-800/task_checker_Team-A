@@ -2,7 +2,6 @@
 import { auth, signInWithEmailAndPassword } from '../firebase'
 import Header from './Header.vue'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 
 // vee-validate 関連のインポート
 import { defineRule, configure, useField } from 'vee-validate'

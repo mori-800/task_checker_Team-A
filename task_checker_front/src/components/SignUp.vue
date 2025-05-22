@@ -3,7 +3,6 @@ import Header from './Header.vue'
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase'
 import { useRouter } from 'vue-router'
 import api from '../api/axios'
-import { ref } from 'vue'
 
 // vee-validate 関連
 import { defineRule, configure, useField } from 'vee-validate'
