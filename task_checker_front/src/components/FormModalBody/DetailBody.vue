@@ -107,66 +107,113 @@ onMounted(async()=> {
 </template>
 
 <style scoped>
-h2{
+h2 {
   margin: 20px 0 10px 0;
+  color: #cc66ff;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-shadow: 1px 1px #ffe6fa;
 }
-.detail_modal_body{
-  align-items:flex-start;
+
+.detail_modal_body {
+  align-items: flex-start;
   text-align: left;
   margin-bottom: 30px;
+  background-color: #fff0fa;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.2);
 }
-.detail_modal_header{
+
+.detail_modal_header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
-.detail_edit_button{
-  background-color: rgb(66, 163, 247);
-  color: white;
-  border-radius: 6px;
+
+.detail_edit_button {
+  background: linear-gradient(to right, #d0f0ff, #c7eaff);
+  color: #2c2c72;
+  border-radius: 12px;
   border-style: none;
   padding: 8px 20px;
   text-decoration: none;
   margin-left: 10px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(180, 220, 255, 0.5);
+  transition: all 0.2s ease;
 }
-.detail_delete_button{
-  background-color: rgb(233, 77, 77);
-  color: white;
-  border-radius: 6px;
+
+.detail_delete_button {
+  background: linear-gradient(to right, #fcd5ce, #f9c0c0);
+  color: #6d2932;
+  border-radius: 12px;
   border-style: none;
   padding: 8px 20px;
   text-decoration: none;
   margin-left: 10px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(255, 160, 160, 0.4);
+  transition: all 0.2s ease;
 }
-.detail_task_title{
-  font-size: 20px;
+
+.detail_task_title {
+  font-size: 22px;
+  color: #9966cc;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
-.detail_modal_DateAndAssignee{
+
+.detail_modal_DateAndAssignee {
   display: flex;
   justify-content: space-between;
+  font-size: 0.9rem;
+  color: #999;
 }
-.detail_task_assignee{
-  color: slategray
+
+.detail_task_assignee {
+  color: #9999cc;
+  font-style: italic;
 }
-.comment-from{
+
+.comment-from {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-top: 1px solid slategray;
+  border-top: 2px dotted #ffc8f9;
+  margin-top: 20px;
+  padding-top: 15px;
 }
-#comment{
+
+#comment {
   width: 95%;
+  background-color: #fdf0ff;
+  border: 2px dashed #ffccf9;
+  border-radius: 10px;
+  padding: 8px;
+  font-family: 'Comic Sans MS', cursive;
+  color: #703c85;
 }
-.comment-submit-button{
-  background-color: rgb(66, 163, 247);
-  color: white;
-  border-radius: 6px;
+
+.comment-submit-button {
+  background: linear-gradient(to right, #ffccf9, #ffebf9);
+  color: #703c85;
+  border-radius: 12px;
   border-style: none;
   padding: 8px 20px;
   text-decoration: none;
   margin: 10px 10px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3);
 }
-.comment-title{
-  border-top: 1px solid slategray;
+
+.comment-title {
+  border-top: 2px dotted #ffc8f9;
+  font-size: 1rem;
+  color: #cc66ff;
+  margin-top: 15px;
+  padding-top: 10px;
+  font-family: 'Comic Sans MS', cursive;
 }
 </style>

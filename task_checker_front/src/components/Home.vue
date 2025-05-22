@@ -68,34 +68,54 @@ const filterTasksByStatus = (statusIndex) => {
   </div>
 </template>
 
-<style>
+<style scoped>
+/* メインコンテナ */
 .main {
   width: 100vw;
   height: 100vh;
   background-color: #f6f8f9;
   overflow: hidden;
+  background: linear-gradient(to top, #f6f8f9, #fff9fb); /* やさしいグラデーション */
+  font-family: 'Comic Sans MS', cursive; /* 夢かわフォント */
 }
 
+/* ジャンルセクション */
 .genre {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
   padding-top: 20px;
+  background-color: #ffe1fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.2);
+  margin-bottom: 20px;
 }
 
 .add_circle_outline_icon {
   margin-left: 10px;
   color: rgb(70, 70, 70);
+  font-size: 1.2rem;
 }
 
+/* コンテンツセクション */
 .contents {
   display: flex;
   height: calc(100vh - 120px);
   width: 100%;
   overflow: auto;
+  background-color: #c9f8fe6c;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 10px rgba(255, 182, 255, 0.3);
 }
-/* .user-name{
+
+/* ユーザー名セクション（コメントアウト解除で可愛い感じに追加可） */
+/* .user-name {
   width: 100%;
+  font-size: 18px;
+  text-align: center;
+  color: #703c85;
+  font-family: 'Comic Sans MS', cursive;
 } */
 </style>

@@ -80,43 +80,48 @@ const taskStyle = computed(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
+/* タスクカード */
 .task {
-  background-color: white;
+  background-color: #fff5f8; /* やさしいピンク */
   max-height: 350px;
   width: 300px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 20px; /* 角を丸く */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   position: relative;
   cursor: pointer;
   top: 0;
-  transition: top left ease 0.2s;
+  transition: top 0.2s ease, left 0.2s ease, box-shadow 0.2s ease;
 }
 
 .task:hover {
-  top: -2px;
-  left: -2px;
-  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+  top: -4px;
+  left: -4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* より強調した影 */
 }
 
+/* タスクのテキスト */
 .task_text_contents {
-  padding: 30px 45px 0 20px;
+  padding: 25px 35px 0 25px; /* 内側の余白を調整 */
 }
 
 .task_title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: rgb(70, 70, 70);
-  font-size: 15px;
-  margin-bottom: 10px;
+  color: #947386; /* ゆめかわいピンク */
+  font-size: 18px; /* タイトル少し大きめ */
+  font-family: 'Dancing Script', cursive; /* 夢かわいいフォント */
+  margin-bottom: 12px;
+  font-weight: bold; /* 太めの文字 */
 }
 
+/* タスクの説明 */
 .task_sentence {
   overflow: hidden;
   color: rgb(70, 70, 70);
-  font-size: 12px;
+  font-size: 13px;
   text-align: start;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -124,24 +129,28 @@ const taskStyle = computed(() => {
   -webkit-box-orient: vertical;
 }
 
+/* 日付のスタイル */
 .task_date {
   position: absolute;
-  top: 20px;
+  top: 15px;
   left: 20px;
   color: rgb(133, 133, 133);
-  font-size: 11px;
+  font-size: 12px;
+  font-family: 'Cursive', sans-serif; /* 優しい手書き風 */
 }
 
+/* タスクの入力部分 */
 .task_input_contents {
   padding: 0 20px 20px 20px;
 }
 
-
+/* 画像コンテナ */
 .image-container {
   width: 100px;
   height: 100px;
   overflow: hidden;
   margin-left: 20px;
+  border-radius: 12px; /* 画像の角を丸める */
 }
 
 .image-wrapper {
@@ -155,11 +164,20 @@ const taskStyle = computed(() => {
   height: 100%;
   object-fit: cover;
 }
-/* 👇 担当者名のスタイル追加 */
+
+/* 担当者名のスタイル */
 .assignee {
   font-size: 12px;
   color: rgb(70, 70, 70);
   padding-left: 20px;
-  margin-top: 10px;
+  margin-top: 12px;
+  font-family: 'Dancing Script', cursive; /* かわいいフォント */
+}
+
+/* 背景とアイコンの追加 */
+.task .task_title::before {
+  content: '🐰'; /* タイトルの前に小さなアイコンを追加 */
+  margin-right: 10px;
+  font-size: 18px;
 }
 </style>

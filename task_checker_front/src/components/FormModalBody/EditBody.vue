@@ -72,25 +72,24 @@ const onSubmit = async (values) => {
         <Select @change="genreSelect" :value="task.genreId" />
       </div>
 
- <h4 class="input_title">タイトル</h4>
-<Field
-  name="name"
-  as="input"
-  type="text"
-  v-model="task.name"
-  rules="required"
-/>
-<ErrorMessage name="name" class="error-message" />
+      <h4 class="input_title">タイトル</h4>
+      <Field
+        name="name"
+        as="input"
+        type="text"
+        v-model="task.name"
+        rules="required"
+      />
+      <ErrorMessage name="name" class="error-message" />
 
-<h4 class="input_title">説明</h4>
-<Field
-  name="explanation"
-  as="textarea"
-  v-model="task.explanation"
-  rules="required"
-/>
-<ErrorMessage name="explanation" class="error-message" />
-
+      <h4 class="input_title">説明</h4>
+      <Field
+        name="explanation"
+        as="textarea"
+        v-model="task.explanation"
+        rules="required"
+      />
+      <ErrorMessage name="explanation" class="error-message" />
 
       <h4 class="input_title">期限</h4>
       <input class="input_date" type="date" v-model="task.deadlineDate" />
@@ -101,12 +100,69 @@ const onSubmit = async (values) => {
   </Form>
 </template>
 
-<style>
-.vm {
-  height: 75vh;
-  padding: 2vw 10vw;
-  text-align: center;
-  overflow-y: auto;
+<style scoped>
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4vh 8vw;
+  background: #fff0fa;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(255, 182, 255, 0.5);
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.input_menu {
+  font-size: 24px;
+  font-weight: bold;
+  color: #703c85;
+  margin-bottom: 24px;
+  text-shadow: 2px 2px 5px rgba(255, 182, 255, 0.5);
+}
+
+.input_title {
+  font-size: 18px;
+  color: #703c85;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 2px #ffccf9;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 2px dashed #ffccf9;
+  border-radius: 10px;
+  background-color: #fdf5ff;
+  color: #703c85;
+  font-size: 16px;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.input_date {
+  font-size: 16px;
+}
+
+.input_submit {
+  width: 120px;
+  padding: 12px;
+  background: linear-gradient(to right, #ffccf9, #ffebf9);
+  color: #703c85;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.input_submit:hover {
+  transform: scale(1.1);
+  background-color: #ff99cc;
 }
 
 .error-message {

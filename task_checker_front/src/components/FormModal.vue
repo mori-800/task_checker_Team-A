@@ -34,8 +34,12 @@ const closeModal = () => {
 <style>
 .vm {
   height: 75vh;
-  padding: 2vw 10vw;
+  padding: 4vh 8vw;
   text-align: center;
+  background-color: #f2f5f9eb; /* パステルピンク */
+  border-radius: 20px; /* 丸みを持たせた角 */
+  box-shadow: 0 5px 15px rgba(197, 237, 249, 0.3); /* やわらかい影 */
   overflow-y: auto;
 }
+
 </style>

@@ -87,6 +87,7 @@ const submitTask = async (values) => {
       <ErrorMessage as="div" name="deadlineDate">
         <p>This field is required</p>
       </ErrorMessage>
+      
 
       <!-- 担当者 -->
       <h4 class="input_title">担当者</h4>
@@ -106,37 +107,91 @@ const submitTask = async (values) => {
   </Form>
 </template>
 
-<style>
-  .modal_body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .genre_title {
-    width: 200px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .input_title {
-    height: 3px;
-  }
-  input,
-  textarea {
-    border: none;
-    background-color: #f3f3f3;
-    padding: 16px;
-    border-radius: 5px;
-    width: 230px;
-    line-height: 1.5em;
-  }
-  .input_submit {
-    margin-top: 30px;
-    background-color: rgb(66, 163, 247);
-    color: white;
-    border-radius: 25px;
-    border-style: none;
-    padding: 16px 40px;
-    font-size: 15px;
-  }
+<style scoped>
+/* モーダルボディ */
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fdf2fb;
+  border-radius: 16px;
+  padding: 16px;  /* パディングを縮小 */
+  box-shadow: 0 6px 16px rgba(255, 182, 255, 0.3);
+  max-width: 70vw;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* 各入力欄のタイトル */
+.input_title {
+  font-size: 14px;
+  color: #ff7f9d;
+  font-family: 'Dancing Script', cursive;
+  margin-bottom: 6px; /* 上下余白を縮小 */
+  text-shadow: 1px 1px 2px #ffccf9;
+  font-weight: bold;
+}
+
+/* 入力フィールド */
+input,
+textarea {
+  border: none;
+  background-color: #f9f9f9;
+  padding: 8px;  /* 少し小さめに */
+  border-radius: 8px;
+  width: 200px;
+  line-height: 1.4em;
+  font-size: 12px;
+  font-family: 'Dancing Script', cursive;
+  color: #6a3f7e;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
+  margin-bottom: 8px; /* 上下の余白をさらに縮小 */
+}
+
+/* 選択式フィールド */
+.select {
+  width: 200px;
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #6a3f7e;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
+  margin-bottom: 8px; /* 上下の余白を縮小 */
+  border: none;
+}
+
+/* エラーメッセージ */
+.error-message {
+  color: #f76262;
+  font-size: 0.8rem;
+  margin-top: 2px; /* 少し余白を減らして、ギュッと */
+}
+
+/* 送信ボタン */
+.input_submit {
+  margin-top: 20px;
+  background-color: #ff82c3;
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  padding: 12px 30px;
+  font-size: 13px;
+  font-family: 'Dancing Script', cursive;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.input_submit:hover {
+  transform: scale(1.05);
+  background-color: #ff4fa7;
+}
+
+/* 送信ボタン: フォーカス時 */
+.input_submit:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 182, 255, 0.5);
+}
 </style>

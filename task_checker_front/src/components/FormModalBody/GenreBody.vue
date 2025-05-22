@@ -62,22 +62,54 @@ onMounted(fetchGenres);
 </template>
 
 <style scoped>
-/* ジャンル追加フォーム（横並び） */
+/* ジャンル編集の文字 */
+.input_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #703c85;
+  text-align: left;
+  margin-bottom: 12px;
+  text-shadow: 1px 1px 2px #ffccf9;
+  font-family: 'Comic Sans MS', cursive; /* 夢かわいいフォント */
+}
+
+/* ジャンル追加フォームのタイトルも */
 .add-genre-form {
+  display: flex;
   align-items: center;
   margin-top: 16px;
+  background-color: #fff0fa;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.2);
 }
 
 .input_genre {
-  padding: 8px;
-  margin-right: 8px;
+  padding: 10px;
+  margin-right: 10px;
   flex-grow: 1;
+  border: 2px dashed #ffccf9;
+  border-radius: 10px;
+  background-color: #fdf5ff;
+  font-family: 'Comic Sans MS', cursive;
+  color: #703c85;
 }
 
 .input_submit {
   width: 100px;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px;
+  background: linear-gradient(to right, #ffccf9, #ffebf9);
+  color: #703c85;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(255, 182, 255, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.input_submit:hover {
+  transform: scale(1.05);
 }
 
 /* ジャンルリスト */
@@ -91,29 +123,42 @@ onMounted(fetchGenres);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid #ddd;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  background: #fceaff;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(255, 182, 255, 0.2);
 }
 
 .genre_name {
   font-size: 16px;
-  margin-right: 12px; /* ← この行を追加 */
+  margin-right: 12px;
   flex-shrink: 1;
+  color: #703c85;
+  font-family: 'Comic Sans MS', cursive;
 }
 
+/* 削除ボタン */
 .delete_btn {
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-  background-color: rgb(233, 77, 77);
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  background-color: #ff99aa;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 50%;
   cursor: pointer;
   text-align: center;
-  line-height: 20px;
+  line-height: 28px;
   padding: 0;
   flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(255, 182, 193, 0.4);
+  transition: transform 0.2s ease;
 }
 
+.delete_btn:hover {
+  transform: rotate(10deg) scale(1.1);
+}
 </style>
+
+
