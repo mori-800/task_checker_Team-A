@@ -4,4 +4,4 @@ node_modules
 .env.production
 #firebaseの秘密鍵 森
 serviceAccountKey.json
-upload
+uploads
