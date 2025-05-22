@@ -1,12 +1,9 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import Header from './Header.vue'
-import Task from './Task.vue'
 import api from '../api/axios'
 import { auth, onAuthStateChanged } from '../firebase'
-import { useTaskStore } from '../stores/taskStore'
 
-const taskStore = useTaskStore()
 const currentUser = ref(null)
 const myTasks = ref([])
 
@@ -64,7 +61,7 @@ function getStatusText(status) {
   <div class="my-page">
     <h2 class="mp_title">マイページ - 投稿タスク一覧</h2>
 
-    <div v-if="myTasks.length">
+    <div v-if="myTasks.length" class="task-container">
       <div v-for="task in myTasks" :key="task.id" class="task-card">
         <h3>{{ task.name }}</h3>
         <p>締切: {{ formatDate(task.deadlineDate) }}</p>
@@ -86,10 +83,24 @@ function getStatusText(status) {
 </template>
 
 <style scoped>
+.mp_title {
+  font-size: medium;
+  margin-left: 2%;
+}
+
+.task-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .task-card {
   border: 1px solid #ddd;
   padding: 1rem;
   margin-bottom: 1rem;
+  margin-left: 2rem;
+  width: calc(20% - 16px); /* 4個で1列にしたいので25%、gap分を引く */
   border-radius: 8px;
+  box-sizing: border-box;
 }
 </style>
