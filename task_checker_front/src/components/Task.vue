@@ -46,13 +46,6 @@ onMounted(() => {
 })
 
 //taskがnullやundefinedの場合のガード 森
-
-// const formattedDeadlineDate = computed(() => {
-//   if (!props.task || !props.task.deadlineDate) return '';
-//   const date = new Date(props.task.deadlineDate)
-//   return date.toLocaleDateString('ja-JP')
-// })
-
 //以下はタスク完了機能を実装する場合のformattedDeadlineDateの記述 実装しない場合は上記のものを採用 森
 const formattedDeadlineDate = computed(() => {
   if (!props.task || !props.task.deadlineDate) return '';

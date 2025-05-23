@@ -72,15 +72,7 @@ const handleSignUp = async () => {
     await updateProfile(user, {
       displayName: nickname.value
     })
-
-    //バックエンドのDBにユーザー情報を保存
-    await api.post('/users', {
-      uid: user.uid,
-      email: user.email,
-      displayName: nickname.value,
-      photoURL: user.photoURL || null,
-    })
-
+    
     router.push("/home")
   } catch (error) {
     console.log('ユーザー登録できませんでした', error)
