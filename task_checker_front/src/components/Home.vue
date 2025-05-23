@@ -118,11 +118,27 @@ const closeModal = () => {
   margin-bottom: 20px;
 }
 
+
 .add_circle_outline_icon {
-  margin-left: 10px;
-  color: rgb(70, 70, 70);
-  font-size: 1.2rem;
+  font-size: 28px;
+  color: #a3dfff; /* パステルブルー */
+  border-radius: 50%; /* まんまるに */
+  padding: 8px;
+  margin-left: 12px;
+
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  /* ふわふわ浮いてる感じ */
+  animation: floaty 3s ease-in-out infinite;
 }
+
+/* ホバー時にちょっときらめく */
+.add_circle_outline_icon:hover {
+  transform: rotate(15deg) scale(1.2);
+  color: #ffb3ef;
+}
+
 
 /* コンテンツセクション */
 .contents {
@@ -150,44 +166,56 @@ const closeModal = () => {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(176, 174, 176, 0.6); /* 淡いピンクパープルの半透明 */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 999;
+  backdrop-filter: blur(3px);
 }
 
 .warning-modal {
   padding: 20px;
   background: repeating-linear-gradient(
     45deg,
-    red,
-    red 20px,
-    black 20px,
-    black 40px
+    #ffe6f7,
+    #ffe6f7 20px,
+    #e6f0ff 20px,
+    #e6f0ff 40px
   );
-  border-radius: 12px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(255, 182, 255, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 3px dashed #ffccf9;
 }
 
 .warning-content {
-  background-color: black;
-  color: white;
+  background-color: #fff0fb;
+  color: #452d3c;
   font-weight: bold;
   padding: 30px 40px;
-  border-radius: 8px;
+  border-radius: 16px;
   text-align: center;
   font-size: 1.5rem;
-  animation: blinkText 1s infinite alternate;
+  animation: sparkleFade 1.5s infinite alternate;
   text-shadow:
-    -1px -1px 0 #ff0000,
-     1px -1px 0 #ff0000,
-    -1px  1px 0 #ff0000,
-     1px  1px 0 #ff0000;
+    1px 1px 3px #ffb6f9,
+    -1px -1px 2px #b5e0ff;
 }
 
+/* キラキラアニメーション風 */
+@keyframes sparkleFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.03);
+  }
+}
 
 .blink {
   animation: blink 1s step-start 0s infinite;
@@ -209,4 +237,5 @@ const closeModal = () => {
   font-weight: bold;
 }
 /* ここまで */
+
 </style>

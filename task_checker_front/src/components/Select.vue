@@ -17,7 +17,7 @@ const genreStore = useGenreStore();
   width: 150px;
   height: 35px;
   font-size: 16px;
-  color: #703c85;
+  color: #852ca8;
   background-color: #fdf5ff; /* 明るいピンクの背景 */
   border: none;
   border-radius: 12px; /* 丸みを持たせた角 */
@@ -29,18 +29,6 @@ const genreStore = useGenreStore();
   transition: transform 0.2s ease;
 }
 
-.section > .add_circle_outline_icon {
-  position: absolute;
-  right: 10px;
-  font-size: 25px;
-  color: #ff94d6;
-  transition: transform 0.3s ease;
-}
-
-.section > .add_circle_outline_icon:hover {
-  transform: rotate(15deg) scale(1.2);
-  color: #ffb3ef;
-}
 
 
 </style>

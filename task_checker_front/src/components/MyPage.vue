@@ -47,53 +47,51 @@ const sortedTasks = computed(() => {
     </div>
 
     <div v-else>
-      <p class="not-found">投稿が見つかりませんでした。</p>
+      <p class="not-found">投稿が見つかりませんでした😿</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-.mp_title {
-  font-size: 1.2rem;
-  margin-left: 2%;
-  color: #cc66ff;
-  font-weight: bold;
-  text-shadow: 1px 1px #fff0f5;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+.my-page {
+  background: linear-gradient( #dcf2fc);
+  min-height: 100vh;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 20px rgba(255, 200, 255, 0.2);
 }
 
+/* 見出し */
+.mp_title {
+  font-size: 1.6rem;
+  margin-left: 5%;
+  color: #d276d2;
+  font-weight: bold;
+  text-shadow: 2px 2px #fceaff;
+  font-family: 'Dancing Script', 'Comic Sans MS', cursive, sans-serif;
+}
+
+/* タスク一覧 */
 .task-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
   margin-left: 5%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
-
-.task-card {
-  background: linear-gradient(to bottom right, #ffe6fa, #e0f7ff);
-  border: 2px dashed #ffccf9;
-  padding: 1rem;
-  margin-left: 5px;
-  width: calc(23% - 15px); /* 4列表示を維持 */
-  border-radius: 16px;
-  box-sizing: border-box;
-  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  color: #703c85;
-}
-
-.task-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 12px rgba(255, 182, 255, 0.4);
-}
-
+/* タスクがない場合の表示 */
 .not-found {
-  margin-left: 3%;
-  color: #9999cc;
+  margin-left: 5%;
+  color: #b499ff;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  background-color: #fdf5ff;
+  padding: 12px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(210, 180, 255, 0.3);
+  font-family: 'Dancing Script', 'Comic Sans MS', cursive, sans-serif;
 }
+
 </style>

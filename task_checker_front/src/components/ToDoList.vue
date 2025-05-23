@@ -94,7 +94,7 @@ const closeModal = () => {
   position: absolute;
   right: 10px;
   font-size: 25px;
-  color: #ff94d6;
+  color: #a3dfff; /* パステルブルー */
   transition: transform 0.3s ease;
 }
 

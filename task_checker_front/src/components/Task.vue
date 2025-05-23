@@ -194,24 +194,37 @@ const taskStyle = computed(() => {
   font-size: 18px;
 }
 
+.task_input_contents {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 20px 20px;
+  gap: 10px; /* ボタンとセレクトの間隔 */
+}
+
 /* 完了ボタン 実装未定 森 */
 .complete-button {
-  margin-top: 10px;
-  margin-left: 50px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  /* 不要な margin を削除 */
+  background: linear-gradient(135deg, #ffd9f7, #d9eaff); /* ピンク〜水色グラデ */
+  color: #a64ac9; /* ラベンダーパープル */
+  border: 2px solid #fcdfff;
+  padding: 8px 16px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 12px;
-  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 182, 255, 0.4);
+  transition: all 0.3s ease;
+  font-family: 'Comic Sans MS', 'Segoe UI', cursive;
 }
 
 .complete-button:hover {
-  background-color: #45a049;
+  background: linear-gradient(135deg, #ffe6fa, #e0f0ff); /* 少し明るめに */
+  color: #ff69b4;
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 6px 12px rgba(255, 182, 255, 0.6);
 }
-/* ここまで */
+
 
 </style>
 

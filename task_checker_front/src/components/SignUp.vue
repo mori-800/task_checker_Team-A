@@ -105,74 +105,77 @@ const handleSignUp = async () => {
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Rock+Salt&display=swap');
-
 .form-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 60vh; /* フォームの高さを調整 */
-  padding: 4vw 8vw; /* 内側の余白を広げる */
+  height: auto;
+  padding: 4vw 8vw;
   text-align: center;
-  background-color: #fdf4ff; /* 明るいパステルピンク背景 */
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* ソフトな影を追加 */
-  width: 90%; /* 幅を90%に設定 */
-  max-width: 380px;
-  margin-top: 30px; /* ヘッダーとの隙間を確保 */
-  margin-left: auto;
-  margin-right: auto;
-  font-family: 'Poppins', sans-serif; /* ポップなフォント */
+  background: linear-gradient(145deg, #dcf2fc, #fef4fb); /* パステルブルーとピンクのグラデ */
+  border-radius: 24px;
+  box-shadow: 0 10px 20px rgba(255, 182, 255, 0.2), 0 6px 12px rgba(172, 216, 230, 0.3);
+  width: 90%;
+  max-width: 400px;
+  margin: 40px auto 0;
+  font-family: 'Yu Gothic UI', 'Hiragino Maru Gothic Pro', sans-serif;
+  border: 2px dashed #fdd7f3; /* ゆるふわ感を出すためにダッシュボーダー */
 }
 
 h2 {
   font-size: 26px;
-  color: #ff66b3; /* タイトルのピンク色 */
+  color: #ff88c2; /* パステルピンク */
   margin-bottom: 20px;
-  font-family: 'Rock Salt', cursive; /* 手書き風のフォントで可愛さアップ */
+  font-weight: bold;
+  text-shadow: 1px 1px 3px #ffe6f2;
+  letter-spacing: 1px;
 }
 
 input {
   margin-bottom: 16px;
-  padding: 12px 20px;
+  padding: 14px 20px;
   width: 100%;
-  border-radius: 25px;
-  border: 2px solid #ffb3d9; /* 優しいピンク色の枠線 */
-  font-size: 14px;
-  background-color: #fff0f6; /* 柔らかいピンクの背景 */
-  color: #6c4f8c; /* 落ち着いた紫色 */
+  border-radius: 28px;
+  border: 2px solid #fcbde6; /* ピンクのボーダー */
+  background-color: #f7fbff; /* ふんわりブルー */
+  font-size: 15px;
+  color: #5f4b8b; /* ちょっと甘めな紫文字 */
+  box-shadow: inset 0 2px 6px rgba(255, 182, 255, 0.2);
   transition: all 0.3s ease;
-  font-family: 'Poppins', sans-serif;
 }
 
 input:focus {
   outline: none;
-  border-color: #ff80c0; /* フォーカス時のピンク色 */
-  box-shadow: 0 0 10px rgba(255, 128, 192, 0.5);
+  border-color: #ffa8d3;
+  box-shadow: 0 0 8px rgba(255, 160, 200, 0.5);
 }
 
 button {
-  background-color: #ff80c0; /* 明るいピンク色のボタン */
-  color: white;
-  border-radius: 6px;
-  border-style: none;
+  background: linear-gradient(to right, #ffd6f7, #cceeff); /* ピンク×ブルーの夢グラデ */
+  color: #944ba1;
+  font-weight: bold;
+  border-radius: 30px;
+  border: none;
   padding: 14px 32px;
-  margin-top: 10px;
   font-size: 16px;
   width: 100%;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(255, 200, 255, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif; /* ボタンのフォント */
 }
 
 button:hover {
-  background-color: #ff66b3; /* ホバー時に色が少し濃くなる */
+  background: linear-gradient(to right, #ffe9fb, #e6f9ff);
+  transform: scale(1.03);
+  color: #ff69b4;
+  box-shadow: 0 6px 12px rgba(255, 182, 255, 0.5);
 }
 
 button:active {
-  transform: scale(0.98); /* 押したときに少し小さくなるエフェクト */
-
+  transform: scale(0.96);
 }
+
 </style>
 
