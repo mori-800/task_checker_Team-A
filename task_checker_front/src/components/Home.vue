@@ -118,11 +118,27 @@ const closeModal = () => {
   margin-bottom: 20px;
 }
 
+
 .add_circle_outline_icon {
-  margin-left: 10px;
-  color: rgb(70, 70, 70);
-  font-size: 1.2rem;
+  font-size: 28px;
+  color: #a3dfff; /* パステルブルー */
+  border-radius: 50%; /* まんまるに */
+  padding: 8px;
+  margin-left: 12px;
+
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  /* ふわふわ浮いてる感じ */
+  animation: floaty 3s ease-in-out infinite;
 }
+
+/* ホバー時にちょっときらめく */
+.add_circle_outline_icon:hover {
+  transform: rotate(15deg) scale(1.2);
+  color: #ffb3ef;
+}
+
 
 /* コンテンツセクション */
 .contents {
@@ -221,4 +237,5 @@ const closeModal = () => {
   font-weight: bold;
 }
 /* ここまで */
+
 </style>
