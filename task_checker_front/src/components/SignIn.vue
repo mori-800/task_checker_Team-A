@@ -3,6 +3,10 @@ import { auth, signInWithEmailAndPassword } from '../firebase'
 import Header from './Header.vue'
 import { useRouter } from 'vue-router'
 
+//ログイン失敗表示用 森
+import { ref } from 'vue'
+const errorMessage = ref('')
+
 // vee-validate 関連のインポート
 import { defineRule, configure, useField } from 'vee-validate'
 import { required, email as emailRule } from '@vee-validate/rules'
@@ -53,12 +57,13 @@ const handleSignIn = async () => {
 
   if (!emailValid.valid || !passwordValid.valid) return
 
-  try {
-    await signInWithEmailAndPassword(auth, email.value, password.value)
-    router.push("/home")
-  } catch (error) {
-    console.log('ログインに失敗しました')
-  }
+ try {
+  await signInWithEmailAndPassword(auth, email.value, password.value)
+  router.push("/home")
+} catch (error) {
+  console.log('ログインに失敗しました')
+  errorMessage.value = 'ログインに失敗しました。\nメールアドレスまたはパスワードが間違っています。'
+}
 }
 </script>
 
@@ -66,6 +71,9 @@ const handleSignIn = async () => {
   <Header />
   <div class="form-body">
     <h1>ログイン</h1>
+
+    <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
+
 
     <input type="text" id="email" v-model="email" placeholder="email" />
     <span style="color: red">{{ emailError }}</span>
@@ -97,6 +105,14 @@ const handleSignIn = async () => {
   font-family: 'Yu Gothic UI', 'Hiragino Maru Gothic Pro', sans-serif;
   border: 2px dashed #fce5ff; /* やわらかピンクでゆめかわボーダー */
 }
+
+.errorMessage{
+  color: red;
+  margin-bottom: 10px;
+  white-space: pre-line;
+  width: 120%;
+}
+
 
 h2 {
   font-size: 26px;

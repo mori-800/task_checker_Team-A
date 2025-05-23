@@ -2,6 +2,7 @@
 import { ref , computed , onMounted } from 'vue';
 import FormModal from '../FormModal.vue';
 import { useTaskStore } from '../../stores/taskStore';
+import { useGenreStore } from '../../stores/genreStore'
 import { useUserStore } from '../../stores/userStore';
 import { useCommentStore } from '../../stores/comment';
 import Comment from '../Comment.vue';
@@ -20,13 +21,15 @@ const submitComment = (taskId, values) => {
 
 const commentStore = useCommentStore();
 const taskStore=useTaskStore();
+const genreStore = useGenreStore()
+const userStore = useUserStore()
+
 const showModal=ref(false)
 //Taskから{task}を取得する
 const props = defineProps({
   task: Object
 })
 
-const userStore = useUserStore()
 const comment = ref({});
 
 const assigneeName = computed(() => {
@@ -65,6 +68,12 @@ const DeleteTask =(async(taskId)=> {
 
 onMounted(async()=> {
   await commentStore.fetchComment();
+  await genreStore.fetchAllGenres()
+})
+
+const genreName = computed(() => {
+  const genre = genreStore.genres.find(g => g.id === props.task.genreId)
+  return genre ? genre.name : 'ジャンル未設定'
 })
 </script>
 
@@ -85,7 +94,10 @@ onMounted(async()=> {
       <h2 class="detail_modal_explanation">説明</h2>
       <div class="detail_task_explanation">{{ task.explanation }}</div>
       <div class="detail_modal_center-bottom">
-        <h2 class="detail_modal_deadlineDate">期限</h2>
+        <div class="detail_modal_DeadAndGenre">
+          <h2 class="detail_modal_deadlineDate">期限</h2>
+          <div class="detail_task_genre">ジャンル: {{ genreName }}</div>
+        </div>
         <div class="detail_modal_DateAndAssignee">
           <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
           <div class="detail_task_assignee">担当者: {{ assigneeName }}</div>
@@ -189,6 +201,18 @@ h2 {
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
   text-shadow: 1px 1px 2px #ffd6fa;
+}
+
+/* 「期限」の文字とジャンル表示機能 */
+.detail_modal_DeadAndGenre{
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail_task_genre{
+  margin-top: 10%;
+  color: #9999cc;
+  font-style: italic;
 }
 
 /* 期限・担当者 */

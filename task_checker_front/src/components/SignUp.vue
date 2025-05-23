@@ -4,6 +4,10 @@ import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase
 import { useRouter } from 'vue-router'
 import api from '../api/axios'
 
+//サインアップ失敗表示用 森
+import { ref } from 'vue'
+const errorMessage = ref('')
+
 // vee-validate 関連
 import { defineRule, configure, useField } from 'vee-validate'
 import { required, email as emailRule } from '@vee-validate/rules'
@@ -80,6 +84,7 @@ const handleSignUp = async () => {
     router.push("/home")
   } catch (error) {
     console.log('ユーザー登録できませんでした', error)
+    errorMessage.value = '登録に失敗しました。\nメールアドレスまたはパスワードが間違っています。'
   }
 }
 </script>
@@ -88,6 +93,8 @@ const handleSignUp = async () => {
   <Header />
   <div class="form-body">
     <h1>新規登録</h1>
+
+     <p v-if="errorMessage" class="errorMessage">{{ errorMessage }}</p>
 
     <input type="text" id="email" v-model="email" placeholder="email" />
     <span style="color: red">{{ emailError }}</span>
@@ -121,6 +128,14 @@ const handleSignUp = async () => {
   margin: 40px auto 0;
   font-family: 'Yu Gothic UI', 'Hiragino Maru Gothic Pro', sans-serif;
   border: 2px dashed #fdd7f3; /* ゆるふわ感を出すためにダッシュボーダー */
+}
+
+.errorMessage{
+  color: red;
+  margin-bottom: 10px;
+  white-space: pre-line;
+  width: 120%;
+
 }
 
 h2 {
