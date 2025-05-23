@@ -33,14 +33,14 @@ const genreStore = useGenreStore();
   height: 35px;
   font-size: 16px;
   color: #703c85;
-  background-color: #fdf5ff; /* 明るいピンクの背景 */
+  background-color: #fdf5ff;
   border: none;
-  border-radius: 12px; /* 丸みを持たせた角 */
-  border-bottom: 2px solid #ffccf9; /* ピンクのボーダー */
+  border-radius: 12px; 
+  border-bottom: 2px solid #ffccf9; 
   outline: none;
   padding: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3); /* 柔らかい影 */
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3); 
   transition: transform 0.2s ease;
 }
 </style>

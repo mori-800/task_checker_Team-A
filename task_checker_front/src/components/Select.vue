@@ -29,5 +29,18 @@ const genreStore = useGenreStore();
   transition: transform 0.2s ease;
 }
 
+.section > .add_circle_outline_icon {
+  position: absolute;
+  right: 10px;
+  font-size: 25px;
+  color: #ff94d6;
+  transition: transform 0.3s ease;
+}
+
+.section > .add_circle_outline_icon:hover {
+  transform: rotate(15deg) scale(1.2);
+  color: #ffb3ef;
+}
+
 
 </style>

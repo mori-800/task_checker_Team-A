@@ -132,6 +132,9 @@ const onSubmit = async (values) => {
   margin-bottom: 12px;
   text-shadow: 1px 1px 2px #ffccf9;
   font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
 }
 
 input,
@@ -154,14 +157,14 @@ textarea {
 .input_submit {
   width: 120px;
   padding: 12px;
-  background: linear-gradient(to right, #ffccf9, #ffebf9);
   color: #703c85;
   font-weight: bold;
   border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
+  background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
 }
 
 .input_submit:hover {

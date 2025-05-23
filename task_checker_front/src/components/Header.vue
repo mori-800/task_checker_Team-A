@@ -73,7 +73,7 @@ const handleMypage = async() =>{
     <div class="header-user" v-if="currentUser">
       <!-- ニックネームを表示する 森-->
       <div class="user-name">
-        😊こんにちは！ {{ displayName }} さん
+        🐰やっほー！ {{ displayName }} さん
       </div>
         <div class="header-right">
         <!-- マイページへの遷移ボタンを追加 森 -->
@@ -192,4 +192,5 @@ const handleMypage = async() =>{
   font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', 'Arial Rounded MT Bold', sans-serif;
   text-shadow: 1px 1px 2px #ffd6fa, 0 0 4px #ffccf9;
 }
+
 </style>

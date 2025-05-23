@@ -112,17 +112,14 @@ const submitTask = async (values) => {
 .input_menu {
   font-size: 20px;
   font-weight: bold;
-  color: #fff;
+  color: #bd7bab;
   text-align: center;
   margin-bottom: 24px;
   font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
   padding: 10px 20px;
-  background: linear-gradient(90deg, #ffaaff, #ffccf9, #d5bfff);
-  border-radius: 16px;
-  box-shadow:
-    0 0 10px #ffccf9,
-    0 0 20px #ffc5ec,
-    0 0 30px rgba(255, 192, 203, 0.4);
+  background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
   display: inline-block;
 }
 
@@ -190,14 +187,16 @@ textarea {
 .input_submit {
   margin-top: 20px;
   background-color: #ff82c3;
-  color: white;
+  color: rgb(97, 68, 68);
   border-radius: 25px;
   border-style: none;
   padding: 12px 30px;
   font-size: 13px;
   font-family: 'Dancing Script', cursive;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
+  background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
   transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
