@@ -181,6 +181,7 @@ h2 {
   background: linear-gradient(to right, #d0f0ff, #c7eaff);
   color: #2c2c72;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
@@ -198,7 +199,9 @@ h2 {
   background: linear-gradient(to right, #fcd5ce, #f9c0c0);
   color: #6d2932;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
+  margin-left: 3px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
   box-shadow: 0 4px 10px rgba(255, 160, 160, 0.4);
@@ -273,6 +276,7 @@ h2 {
   background: linear-gradient(to right, #ffccf9, #ffebf9);
   color: #703c85;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;

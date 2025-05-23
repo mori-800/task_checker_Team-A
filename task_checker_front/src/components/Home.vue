@@ -143,7 +143,7 @@ const closeModal = () => {
 /* コンテンツセクション */
 .contents {
   display: flex;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 200px);
   width: 100%;
   overflow: auto;
   background-color: #c9f8fe6c;
