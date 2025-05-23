@@ -175,7 +175,7 @@ const taskStyle = computed(() => {
 /* タスクの入力部分 */
 .task_input_contents {
   padding: 0 20px 20px 20px;
-
+}
 
 
 /* 担当者名のスタイル */
