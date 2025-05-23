@@ -80,28 +80,73 @@ const handleSignIn = async () => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Rock+Salt&display=swap');
+
 .form-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-  padding: 2vw 10vw;
+  height: 60vh; /* フォームの高さ調整 */
+  padding: 4vw 8vw; /* スペース調整 */
   text-align: center;
+  background-color: #fdf4ff; /* 明るいパステルピンク背景 */
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* ソフトな影 */
+  width: 90%; /* 幅調整 */
+  max-width: 380px;
+  margin-top: 30px; /* ヘッダーとの隙間を確保 */
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Poppins', sans-serif; /* フォームの全体的なフォント */
+}
+
+h2 {
+  font-size: 26px;
+  color: #ff66b3; /* タイトルの色をピンクに */
+  margin-bottom: 20px;
+  font-family: 'Rock Salt', cursive; /* タイトルを手書き風で可愛く */
 }
 
 input {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  width: 100%;
+  border-radius: 25px;
+  border: 2px solid #ffb3d9; /* 優しいピンク色の枠 */
+  font-size: 14px;
+  background-color: #fff0f6; /* 優しい白ピンク */
+  color: #6c4f8c; /* 柔らかい紫 */
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif; /* 入力フィールドのフォント */
+}
+
+input:focus {
+  outline: none;
+  border-color: #ff80c0; /* フォーカス時のピンク */
+  box-shadow: 0 0 10px rgba(255, 128, 192, 0.5);
 }
 
 button {
-  background-color: rgb(66, 163, 247);
+  background-color: #ff80c0; /* 明るいピンクボタン */
   color: white;
   border-radius: 6px;
   border-style: none;
-  padding: 8px 20px;
-  margin-bottom: 8px;
-  font-size: 15px;
-  width: 180px;
+  padding: 14px 32px;
+  margin-top: 10px;
+  font-size: 16px;
+  width: 100%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; /* ボタンのフォント */
+}
+
+button:hover {
+  background-color: #ff66b3; /* ホバー時に色が少し濃くなる */
+}
+
+button:active {
+  transform: scale(0.98); /* 押したときのアニメーション */
+
 }
 </style>

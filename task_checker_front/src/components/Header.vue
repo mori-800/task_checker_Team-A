@@ -73,7 +73,7 @@ const handleMypage = async() =>{
     <div class="header-user" v-if="currentUser">
       <!-- ニックネームを表示する 森-->
       <div class="user-name">
-        😊こんにちは！ {{ displayName }} さん
+        🐰やっほー！ {{ displayName }} さん
       </div>
         <div class="header-right">
         <!-- マイページへの遷移ボタンを追加 森 -->
@@ -87,12 +87,16 @@ const handleMypage = async() =>{
 
 <style scoped>
 .header {
-  height: 100px;
-  background-color: white;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  /* height: 100px; ← これを削除 or コメントアウト */
+  background: linear-gradient(to right, #fceaff, #e0f7ff);
+  box-shadow: 0 4px 6px rgba(255, 182, 255, 0.3);
+  border-bottom: 2px dashed #ffc8f9;
   overflow: hidden;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+
+  padding-bottom: 10px; /* 下に少し余白をつけておくとGood◎ */
 }
-.header-top{
+.header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -105,77 +109,88 @@ const handleMypage = async() =>{
 }
 
 .header_icon {
-  color: rgb(170, 1, 1);
+  color: #ff99cc;
 }
 
 .header_title {
-  color: rgb(70, 70, 70);
-  font-size: 25px;
+  color: #cc66ff;
+  font-size: 28px;
   font-weight: bold;
   text-decoration: none;
+  text-shadow: 1px 1px #fff0f5;
 }
-
 
 .search-container {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
   width: 100%;
   max-width: 400px;
 }
 
 .search-input {
   flex: 1;
-  padding: 0.4rem 0.6rem;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  color: #1f2937;
-  transition: all 0.2s ease;
+  padding: 0.5rem 0.7rem;
+  background-color: #fff0fa;
+  border: 2px dashed #ffccf9;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #703c85;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(255, 182, 255, 0.3);
 }
 
 .search-button {
-  padding: 0.5rem 0.8rem;
-  background-color: rgb(66, 163, 247);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #ffccf9, #ffebf9);
+  color: #703c85;
+  border: 2px solid #ffc8f9;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .logout-button {
-  background-color: rgb(233, 77, 77);
-  color: white;
-  border-radius: 6px;
-  border-style: none;
+  background: linear-gradient(to right, #fcd5ce, #f9c0c0);
+  color: #6d2932;
+  border-radius: 12px;
+  border: none;
   padding: 8px 20px;
   margin-left: 10px;
+  font-weight: bold;
 }
 
-/* マイページへの遷移ボタン 森 */
 .mypage-button {
-  background-color: rgb(66, 163, 247);
-  color: white;
-  border-radius: 6px;
-  border-style: none;
+  background: linear-gradient(to right, #d0f0ff, #c7eaff);
+  color: #2c2c72;
+  border-radius: 12px;
+  border: none;
   padding: 8px 20px;
-  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
 }
 
 .header-user {
- display: flex;
- justify-content:space-between;
- margin: 5px 1% 5px 1%;
-}
-.user-name{
-  font-size: 15px;
   display: flex;
-  text-align: center;
+  justify-content: space-between;
+  margin: 5px 1% 5px 1%;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 2px dotted #ffccf9;
+  border-bottom: 2px dotted #ffccf9;
+  padding: 5px 10px;
+  border-radius: 10px;
 }
+
+.user-name {
+  font-size: 16px;
+  color: #9966cc;
+  display: flex;
+  align-items: center;
+  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', 'Arial Rounded MT Bold', sans-serif;
+  text-shadow: 1px 1px 2px #ffd6fa, 0 0 4px #ffccf9;
+}
+
 </style>

@@ -23,29 +23,48 @@ const deleteComment = async(commentId) => {
 </template>
 
 <style scoped>
-.comment_wrapper{
+.comment_wrapper {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   margin-bottom: 8px;
+  background: #fff0fa;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(255, 182, 255, 0.2);
 }
 
 .comment_content {
   margin: 8px 0;
   width: 100%;
   font-size: 15px;
+  color: #703c85;
+  font-family: 'Comic Sans MS', cursive;
+  background-color: #fdf5ff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px dashed #ffccf9;
+  box-shadow: inset 0 1px 2px rgba(255, 182, 255, 0.2);
 }
 
 .btn {
-  background-color: rgb(233, 77, 77);
-  color: white;
-  width: 40px;
-  border-radius: 6px;
-  border-style: none;
-  padding: 8px 15px;
-  margin-bottom: 8px;
-  font-size: 15px;
+  background: linear-gradient(to right, #fcd5ce, #f9c0c0);
+  color: #6d2932;
+  width: auto;
+  border-radius: 12px;
+  border: none;
+  padding: 8px 20px;
   margin: 15px 10px;
+  font-size: 15px;
+  font-weight: bold;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(255, 182, 193, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #f9c0c0, #fcd5ce);
 }
 </style>
+
