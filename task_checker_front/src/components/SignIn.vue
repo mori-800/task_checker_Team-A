@@ -62,7 +62,7 @@ const handleSignIn = async () => {
   router.push("/home")
 } catch (error) {
   console.log('ログインに失敗しました')
-  errorMessage.value = 'ログインに失敗しました。メールアドレスまたはパスワードが間違っています。'
+  errorMessage.value = 'ログインに失敗しました。\nメールアドレスまたはパスワードが間違っています。'
 }
 }
 </script>
@@ -112,6 +112,8 @@ const handleSignIn = async () => {
 .errorMessage{
   color: red;
   margin-bottom: 10px;
+  white-space: pre-line;
+  width: 120%;
 }
 
 

@@ -84,7 +84,7 @@ const handleSignUp = async () => {
     router.push("/home")
   } catch (error) {
     console.log('ユーザー登録できませんでした', error)
-    errorMessage.value = '登録に失敗しました。メールアドレスまたはパスワードが間違っています。'
+    errorMessage.value = '登録に失敗しました。\nメールアドレスまたはパスワードが間違っています。'
   }
 }
 </script>
@@ -136,6 +136,9 @@ const handleSignUp = async () => {
 .errorMessage{
   color: red;
   margin-bottom: 10px;
+  white-space: pre-line;
+  width: 120%;
+
 }
 
 h2 {
