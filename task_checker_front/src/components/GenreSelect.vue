@@ -1,6 +1,6 @@
 <script setup>
 import { useGenreStore } from '../stores/genreStore';
-import { Form, Field, defineRule, ErrorMessage } from 'vee-validate';
+import { Field, defineRule, ErrorMessage } from 'vee-validate';
 import { required, email, min, confirmed } from '@vee-validate/rules';
 
 defineRule('required', required);

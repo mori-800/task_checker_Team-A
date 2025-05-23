@@ -3,7 +3,6 @@ import Header from './Header.vue'
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../firebase'
 import { useRouter } from 'vue-router'
 import api from '../api/axios'
-import { ref } from 'vue'
 
 // vee-validate 関連
 import { defineRule, configure, useField } from 'vee-validate'
@@ -101,7 +100,7 @@ const handleSignUp = async () => {
 
     <button @click="handleSignUp">新規登録</button>
 
-    <p>既にアカウントをお持ちの方はこちらへ<router-link to="/">こちら</router-link></p>
+    <p>既にアカウントをお持ちの方は<router-link to="/">こちら</router-link></p>
   </div>
 </template>
 
@@ -156,7 +155,7 @@ input:focus {
 button {
   background-color: #ff80c0; /* 明るいピンク色のボタン */
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 14px 32px;
   margin-top: 10px;
@@ -173,6 +172,7 @@ button:hover {
 
 button:active {
   transform: scale(0.98); /* 押したときに少し小さくなるエフェクト */
+
 }
 </style>
 

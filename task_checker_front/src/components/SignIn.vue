@@ -2,7 +2,6 @@
 import { auth, signInWithEmailAndPassword } from '../firebase'
 import Header from './Header.vue'
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
 
 // vee-validate 関連のインポート
 import { defineRule, configure, useField } from 'vee-validate'
@@ -131,7 +130,7 @@ input:focus {
 button {
   background-color: #ff80c0; /* 明るいピンクボタン */
   color: white;
-  border-radius: 25px;
+  border-radius: 6px;
   border-style: none;
   padding: 14px 32px;
   margin-top: 10px;
@@ -148,5 +147,6 @@ button:hover {
 
 button:active {
   transform: scale(0.98); /* 押したときのアニメーション */
+
 }
 </style>

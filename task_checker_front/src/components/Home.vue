@@ -7,6 +7,10 @@ import AddCircleIcon from 'vue-material-design-icons/PlusCircleOutline.vue'
 import { ref, onMounted } from 'vue'
 import { useTaskStore } from '../stores/taskStore'
 import { useGenreStore } from '../stores/genreStore'
+//森の遊び 後で消す
+import api from '../api/axios'
+const showWarningModal = ref(false)
+const overdueTasks = ref([])
 
 const showModal = ref(false);
 const taskStore = useTaskStore();
@@ -31,6 +35,15 @@ onMounted(async()=> {
   }catch(error){
     console.log(error)
   }
+
+  //森の遊び 後で消す
+  const res = await api.get('/tasks') // APIで全タスク取得
+  const now = new Date()
+  overdueTasks.value = res.data.filter(task => new Date(task.deadlineDate) < now)
+
+  if (overdueTasks.value.length > 0) {
+    showWarningModal.value = true
+  }
 })
 
 const changeSelectedGenreId = (e) => {
@@ -47,6 +60,10 @@ const filterTasksByStatus = (statusIndex) => {
   );
 }
 
+//森の遊び 後で消す
+const closeModal = () => {
+  showWarningModal.value = false
+}
 
 </script>
 
@@ -64,7 +81,18 @@ const filterTasksByStatus = (statusIndex) => {
         <ToDoList :tasks="filterTasksByStatus(index)" :status="status"/>
       </div>
     </div>
-    
+    <!-- 森の遊び 後で消す -->
+     <!-- ⚠️ 警告モーダル -->
+    <div v-if="showWarningModal" class="modal-overlay" @click.self="closeModal">
+    <div class="warning-modal">
+      <h2 class="blink outlined-text" style="font-size: 2rem; color: red;">
+        ⚠️ 危険警告 ⚠️
+      </h2>
+      <p class="outlined-text">
+        期限切れのタスクが {{ overdueTasks.length }} 件あります！
+      </p>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -118,4 +146,53 @@ const filterTasksByStatus = (statusIndex) => {
   color: #703c85;
   font-family: 'Comic Sans MS', cursive;
 } */
+
+ /* 森の遊び 後で消す */
+ .modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.warning-modal {
+  padding: 30px;
+  border: 5px solid red;
+  text-align: center;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  background: repeating-linear-gradient(
+    45deg,
+    #f7e600,
+    #f7e600 20px,
+    #000 20px,
+    #000 40px
+  );
+}
+
+.blink {
+  animation: blink 1s step-start 0s infinite;
+}
+
+.outlined-text {
+  /* 白文字 + 黒い縁取り */
+  color: white;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.warning-modal p {
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+/* ここまで */
 </style>
