@@ -20,12 +20,16 @@ const completeTask = async () => {
   const farFutureDate = new Date()
   farFutureDate.setFullYear(farFutureDate.getFullYear() + 1000)
 
+  // 期限を未来に設定
   props.task.deadlineDate = farFutureDate.toISOString()
 
-  // 🛠️ 修正ポイント: タスクIDと更新内容を明示的に渡す
+  // ✅ ステータスを Done に設定（インデックス5）
+  props.task.status = 5
+
+  // 保存処理
   await taskStore.updateTasks(props.task.id, props.task)
 }
-
+//ここまで
 
 // 担当者名の算出（userStore.usersから一致するIDを探す）森
 const assigneeName = computed(() => {
