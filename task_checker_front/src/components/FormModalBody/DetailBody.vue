@@ -13,9 +13,16 @@ import { defineRule } from 'vee-validate'
 
 defineRule('required', required)
 
-const submitComment = (taskId, values) => {
+const handleSubmitComment = (values) => {
+  submitComment(props.task.id, values)
+}
+const submitComment = async (taskId, values) => {
   console.log('コメント送信:', values.content, 'taskId:', taskId)
-  // ここに送信処理を入れてください
+  await commentStore.addComment({
+    taskId,
+    content: values.content
+  })
+  await commentStore.fetchComment()  // 再取得して反映
 }
 
 
@@ -122,7 +129,8 @@ const genreName = computed(() => {
       
     </div>
   </div>
-<Form @submit="submitComment(task.id)" class="comment-form">
+<Form @submit="handleSubmitComment" class="comment-form">
+
     <h2><label for="comment">コメント投稿</label></h2>
 
     <Field
