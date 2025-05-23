@@ -44,8 +44,24 @@ const filterComment = (taskId) => {
 
 //時間をjpの表示に変更
 const formattedDeadlineDate = computed(() => {
-  const date = new Date(props.task.deadlineDate)
-  return date.toLocaleDateString('ja-JP')
+  if (!props.task || !props.task.deadlineDate) return ''
+
+  const deadline = new Date(props.task.deadlineDate)
+  /* ---------------------------------------------
+     「完了」ボタンを押すと＋1000 年で保存される設計なので、
+     500 年より後（≒未来日付として明らかにおかしい） を
+     「完了」とみなし、表示上は ‐1000 年して元の期限日に戻す。
+  ----------------------------------------------*/
+const farFutureBorder = new Date()
+  farFutureBorder.setFullYear(farFutureBorder.getFullYear() + 500)
+
+  // 500 年後より未来 ＝ 完了扱い
+if (deadline > farFutureBorder) {
+    const display = new Date(deadline)
+    display.setFullYear(display.getFullYear() - 1000)
+    return display.toLocaleDateString('ja-JP')
+  }
+  return deadline.toLocaleDateString('ja-JP')
 })
 
 //編集モーダルを閉じる river
