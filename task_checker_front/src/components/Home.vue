@@ -85,13 +85,11 @@ const closeModal = () => {
      <!-- ⚠️ 警告モーダル -->
     <div v-if="showWarningModal" class="modal-overlay" @click.self="closeModal">
     <div class="warning-modal">
-      <h2 class="blink outlined-text" style="font-size: 2rem; color: red;">
-        ⚠️ 危険警告 ⚠️
-      </h2>
-      <p class="outlined-text">
-        期限切れのタスクが {{ overdueTasks.length }} 件あります！
-      </p>
-    </div>
+  <div class="warning-content">
+    ⚠️ 期限切レノ要件アリ。至急対応サレタシ。
+  </div>
+</div>
+
   </div>
   </div>
 </template>
@@ -160,20 +158,36 @@ const closeModal = () => {
 }
 
 .warning-modal {
-  padding: 30px;
-  border: 5px solid red;
-  text-align: center;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
+  padding: 20px;
   background: repeating-linear-gradient(
     45deg,
-    #f7e600,
-    #f7e600 20px,
-    #000 20px,
-    #000 40px
+    red,
+    red 20px,
+    black 20px,
+    black 40px
   );
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.warning-content {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 30px 40px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  animation: blinkText 1s infinite alternate;
+  text-shadow:
+    -1px -1px 0 #ff0000,
+     1px -1px 0 #ff0000,
+    -1px  1px 0 #ff0000,
+     1px  1px 0 #ff0000;
+}
+
 
 .blink {
   animation: blink 1s step-start 0s infinite;

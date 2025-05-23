@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import Header from './Header.vue'
+import Task from './Task.vue'
 import api from '../api/axios'
 import { auth, onAuthStateChanged } from '../firebase'
 
@@ -29,30 +30,10 @@ onMounted(() => {
   })
 })
 
-function getImageUrl(imagePath) {
-  return `http://localhost:3000${imagePath}`
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  })
-}
-
-function getStatusText(status) {
-  const statuses = {
-    0:"ToDo",
-    1:"Pending",
-    2:"Doing(ToDay)",
-    3:"WIP",
-    4:"Check",
-    5:"Done",
-  }
-  return statuses[status] ?? '不明'
-}
+// タスクを期限順でソートした表示用リスト
+const sortedTasks = computed(() => {
+  return [...myTasks.value].sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate))
+})
 </script>
 
 <template>
@@ -61,21 +42,10 @@ function getStatusText(status) {
   <div class="my-page">
     <h2 class="mp_title">マイページ - 投稿タスク一覧</h2>
 
-    <div v-if="myTasks.length" class="task-container">
-      <div v-for="task in myTasks" :key="task.id" class="task-card">
-        <h3>{{ task.name }}</h3>
-        <p>締切: {{ formatDate(task.deadlineDate) }}</p>
-        <p>詳細: {{ task.explanation }}</p>
-        <p>ステータス: {{ getStatusText(task.status) }}</p>
-        <img
-          v-if="task.image_url"
-          :src="getImageUrl(task.image_url)"
-          alt="task image"
-          style="width: 190.5px; height: 133.5px;"
-        />
-      </div>
+    <div v-if="sortedTasks.length" class="task-container">
+      <Task v-for="task in sortedTasks" :key="task.id" :task="task" />
     </div>
-    
+
     <div v-else>
       <p class="not-found">投稿が見つかりませんでした。</p>
     </div>
@@ -99,6 +69,7 @@ function getStatusText(status) {
   margin-left: 5%;
   margin-top: 10px;
 }
+
 
 .task-card {
   background: linear-gradient(to bottom right, #ffe6fa, #e0f7ff);
