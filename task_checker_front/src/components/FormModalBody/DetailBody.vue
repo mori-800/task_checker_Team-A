@@ -44,8 +44,24 @@ const filterComment = (taskId) => {
 
 //時間をjpの表示に変更
 const formattedDeadlineDate = computed(() => {
-  const date = new Date(props.task.deadlineDate)
-  return date.toLocaleDateString('ja-JP')
+  if (!props.task || !props.task.deadlineDate) return ''
+
+  const deadline = new Date(props.task.deadlineDate)
+  /* ---------------------------------------------
+     「完了」ボタンを押すと＋1000 年で保存される設計なので、
+     500 年より後（≒未来日付として明らかにおかしい） を
+     「完了」とみなし、表示上は ‐1000 年して元の期限日に戻す。
+  ----------------------------------------------*/
+const farFutureBorder = new Date()
+  farFutureBorder.setFullYear(farFutureBorder.getFullYear() + 500)
+
+  // 500 年後より未来 ＝ 完了扱い
+if (deadline > farFutureBorder) {
+    const display = new Date(deadline)
+    display.setFullYear(display.getFullYear() - 1000)
+    return display.toLocaleDateString('ja-JP')
+  }
+  return deadline.toLocaleDateString('ja-JP')
 })
 
 //編集モーダルを閉じる river
@@ -165,6 +181,7 @@ h2 {
   background: linear-gradient(to right, #d0f0ff, #c7eaff);
   color: #2c2c72;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
@@ -182,7 +199,9 @@ h2 {
   background: linear-gradient(to right, #fcd5ce, #f9c0c0);
   color: #6d2932;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
+  margin-left: 3px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
   box-shadow: 0 4px 10px rgba(255, 160, 160, 0.4);
@@ -257,6 +276,7 @@ h2 {
   background: linear-gradient(to right, #ffccf9, #ffebf9);
   color: #703c85;
   border-radius: 14px;
+  border: none;
   padding: 10px 24px;
   font-weight: bold;
   font-family: 'Comic Sans MS', cursive;
