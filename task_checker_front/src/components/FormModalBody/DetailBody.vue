@@ -6,6 +6,18 @@ import { useUserStore } from '../../stores/userStore';
 import { useCommentStore } from '../../stores/comment';
 import Comment from '../Comment.vue';
 
+import { Form, Field, ErrorMessage } from 'vee-validate'
+import { required } from '@vee-validate/rules'
+import { defineRule } from 'vee-validate'
+
+defineRule('required', required)
+
+const submitComment = (taskId, values) => {
+  console.log('コメント送信:', values.content, 'taskId:', taskId)
+  // ここに送信処理を入れてください
+}
+
+
 const commentStore = useCommentStore();
 const taskStore=useTaskStore();
 const showModal=ref(false)
@@ -50,15 +62,6 @@ const DeleteTask =(async(taskId)=> {
   }
 });
 
-const submitComment = async(taskId) => {
-  comment.value.taskId = taskId
-  try{
-    await commentStore.addComment(comment.value);
-    comment.value = {content: '', taskId: ''}
-  }catch(error){
-    console.log('コメントの保存に失敗しました');
-  }
-}
 
 onMounted(async()=> {
   await commentStore.fetchComment();
@@ -91,18 +94,30 @@ onMounted(async()=> {
       
     </div>
   </div>
-  <form class="comment-from">
+<Form @submit="submitComment(task.id)" class="comment-form">
     <h2><label for="comment">コメント投稿</label></h2>
-    <textarea v-model="comment.content" id="comment" placeholder="コメントを入力してください"></textarea>
-    <div>
-      <button @click.prevent="submitComment(task.id)" class="comment-submit-button">送信</button>
-    </div>
-  </form>
+
+    <Field
+      as="textarea"
+      id="comment"
+      name="content"
+      placeholder="コメントを入力してください"
+      rules="required"
+      class="input-field"
+    />
+    <ErrorMessage name="content" v-slot="{ message }">
+      <p class="error-message">何も書いてないと送信できないよ😿</p>
+    </ErrorMessage>
+
+    <button type="submit" class="comment-submit-button">送信</button>
+  </Form>
 
   <h2 class="comment-title">コメント一覧</h2>
   <div v-for="comment in filterComment(task.id)" :key="comment.id">
-    <Comment :comment="comment"/>
+    <Comment :comment="comment" />
   </div>
+
+
 
 </template>
 

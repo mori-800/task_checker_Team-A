@@ -46,15 +46,18 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.contents {
-  padding: 0 24px; /* 左右に余白を追加 */
+.main {
+  background-color: #dcf2fc;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 /* 検索結果タイトル */
 .search-title {
   font-size: 24px;
   font-weight: bold;
-  color: #9966cc;
+  color: #604d72;
   margin: 24px 0 16px 0;
   font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
   text-shadow: 1px 1px 3px #ffccf9, 0 0 6px #ffc5ec;
@@ -70,7 +73,6 @@ onMounted(async () => {
 .task_field {
   margin-bottom: 16px;
   padding: 12px;
-  background-color: #fff0fa;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(255, 204, 249, 0.2);
 }
