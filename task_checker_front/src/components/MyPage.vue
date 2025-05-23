@@ -54,8 +54,12 @@ const sortedTasks = computed(() => {
 
 <style scoped>
 .mp_title {
-  font-size: medium;
+  font-size: 1.2rem;
   margin-left: 2%;
+  color: #cc66ff;
+  font-weight: bold;
+  text-shadow: 1px 1px #fff0f5;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .task-container {
@@ -63,9 +67,33 @@ const sortedTasks = computed(() => {
   flex-wrap: wrap;
   gap: 15px;
   margin-left: 5%;
+  margin-top: 10px;
+}
+
+
+.task-card {
+  background: linear-gradient(to bottom right, #ffe6fa, #e0f7ff);
+  border: 2px dashed #ffccf9;
+  padding: 1rem;
+  margin-left: 5px;
+  width: calc(23% - 15px); /* 4列表示を維持 */
+  border-radius: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #703c85;
+}
+
+.task-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(255, 182, 255, 0.4);
 }
 
 .not-found {
   margin-left: 3%;
+  color: #9999cc;
+  font-style: italic;
+  font-size: 1rem;
 }
 </style>

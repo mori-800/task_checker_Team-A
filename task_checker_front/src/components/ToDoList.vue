@@ -51,6 +51,10 @@ const closeModal = () => {
   width: auto;
   padding: 30px;
   padding-top: 50px;
+  /* background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3); */
+  font-family: 'Comic Sans MS', 'Segoe UI', cursive;
 }
 
 .section {
@@ -59,15 +63,18 @@ const closeModal = () => {
   align-items: center;
   height: 50px;
   width: 300px;
-  background-color: white;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  background-color: #fff0fb;
+  box-shadow: 0 5px 10px rgba(255, 200, 250, 0.3);
+  border-radius: 12px;
+  border: 2px dashed #ffd9f7;
 }
 
 .section_ele {
-  color: rgb(70, 70, 70);
-  margin-left: 10px;
+  color: #a060c0;
+  margin-left: 15px;
   font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #f9e0ff;
 }
 
 .task_field {
@@ -76,16 +83,24 @@ const closeModal = () => {
   max-height: 65vh;
   margin-top: 10px;
   overflow: auto;
+  border-radius: 10px;
 }
 
 .task_field::-webkit-scrollbar {
-  display:none;
+  display: none;
 }
 
 .section > .add_circle_outline_icon {
   position: absolute;
   right: 10px;
   font-size: 25px;
-  color: rgb(70, 70, 70);
+  color: #ff94d6;
+  transition: transform 0.3s ease;
+}
+
+.section > .add_circle_outline_icon:hover {
+  transform: rotate(15deg) scale(1.2);
+  color: #ffb3ef;
 }
 </style>
+
