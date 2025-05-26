@@ -1,11 +1,27 @@
 <script setup>
 import { useCommentStore } from '../stores/comment';
+import { useUserStore } from '../stores/userStore';
+import { computed } from 'vue';
 
 const props = defineProps({
   comment: Object
 })
 const commentStore = useCommentStore();
+const userStore = useUserStore();
 
+const MakerName = computed(() => {
+  const user = userStore.users.find(u => u.uid === props.comment.makerId)
+  return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
+})
+
+//JP時間に変更する関数
+function toJPDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 const deleteComment = async(commentId) => {
   try{
     await commentStore.removeComment(commentId);
@@ -17,7 +33,9 @@ const deleteComment = async(commentId) => {
 
 <template>
   <div class="comment_wrapper">
+    <p class="comment_content">{{ MakerName }}</p>
     <p class="comment_content">{{ comment.content }}</p>
+    <p class="comment_content">{{ comment.content_dt }}</p>
     <button @click="deleteComment(comment.id)" class="btn">×</button>
   </div>
 </template>

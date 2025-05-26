@@ -1,26 +1,29 @@
 <script setup>
-import { ref , computed , onMounted } from 'vue';
+
 import FormModal from '../FormModal.vue';
+import Comment from '../Comment.vue';
+import { ref , computed , onMounted } from 'vue';
 import { useTaskStore } from '../../stores/taskStore';
 import { useGenreStore } from '../../stores/genreStore'
 import { useUserStore } from '../../stores/userStore';
 import { useCommentStore } from '../../stores/comment';
-import Comment from '../Comment.vue';
-
+import { auth,onAuthStateChanged } from '../../firebase';
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { defineRule } from 'vee-validate'
 
 defineRule('required', required)
 
+//コメントの投稿
+const makerId=ref('');
 const handleSubmitComment = (values) => {
-  submitComment(props.task.id, values)
+  submitComment(props.task.id, makerId.value,values)
 }
-const submitComment = async (taskId, values) => {
-  console.log('コメント送信:', values.content, 'taskId:', taskId)
+const submitComment = async (taskId, makerId, values) => {
   await commentStore.addComment({
     taskId,
-    content: values.content
+    content: values.content,
+    makerId,
   })
   await commentStore.fetchComment()  // 再取得して反映
 }
@@ -36,8 +39,6 @@ const showModal=ref(false)
 const props = defineProps({
   task: Object
 })
-
-const comment = ref({});
 
 const assigneeName = computed(() => {
   const user = userStore.users.find(u => u.uid === props.task.assigneeId)
@@ -92,6 +93,13 @@ const DeleteTask =(async(taskId)=> {
 onMounted(async()=> {
   await commentStore.fetchComment();
   await genreStore.fetchAllGenres()
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      makerId.value=auth.currentUser.uid;
+    }else{
+      makerId = null;
+    }
+  })
 })
 
 const genreName = computed(() => {

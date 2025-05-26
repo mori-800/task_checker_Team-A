@@ -24,6 +24,7 @@ app.use(express.json());
 // firebaseの初期化設定 森
 const admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
+const e = require("express");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -266,7 +267,7 @@ app.get('/tasks/mypage', authenticateToken, async (req, res) => {
 //コメント投稿 river
 app.post("/comments", async(req, res) => {
   try{
-    const content_dt = new Date(req.body.content_dt)
+    const content_dt = new Date()
     const savedData = await prisma.comment.create({
       data:{
         ...req.body, 
@@ -276,6 +277,7 @@ app.post("/comments", async(req, res) => {
     res.json(savedData);
   }catch(error){
     res.status(500).send("コメントの保存に失敗しました");
+    console.error(error)
   }
 })
 //コメントの取得 river
