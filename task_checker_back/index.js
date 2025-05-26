@@ -264,9 +264,15 @@ app.get('/tasks/mypage', authenticateToken, async (req, res) => {
 
 //============================
 //コメント投稿 river
-app.post("/comment", async(req, res) => {
+app.post("/comments", async(req, res) => {
   try{
-    const savedData = await prisma.comment.create({data: req.body });
+    const content_dt = new Date(req.body.content_dt)
+    const savedData = await prisma.comment.create({
+      data:{
+        ...req.body, 
+        content_dt: content_dt,
+    }
+  });
     res.json(savedData);
   }catch(error){
     res.status(500).send("コメントの保存に失敗しました");
