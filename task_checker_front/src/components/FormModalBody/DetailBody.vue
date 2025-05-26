@@ -16,10 +16,13 @@ defineRule('required', required)
 
 //コメントの投稿
 const makerId=ref('');
+// コメント送信ボタンが押されたときに呼ばれる
 const handleSubmitComment = (values) => {
   submitComment(props.task.id, makerId.value,values)
 }
+
 const submitComment = async (taskId, makerId, values) => {
+// コメントをstoreに送信し、再取得して一覧に反映
   await commentStore.addComment({
     taskId,
     content: values.content,
@@ -27,7 +30,6 @@ const submitComment = async (taskId, makerId, values) => {
   })
   await commentStore.fetchComment()  // 再取得して反映
 }
-
 
 const commentStore = useCommentStore();
 const taskStore=useTaskStore();
@@ -45,26 +47,33 @@ const assigneeName = computed(() => {
   return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
 })
 
+// ✅ 追加：作成者の名前をユーザー一覧から取得する
+const makerName = computed(() => {
+  const user = userStore.users.find(u => u.uid === props.task.makerId)
+  return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
+})
+
+// 全コメントデータの中から taskId が合致するものだけを取得する
 const filterComment = (taskId) => {
-  //全コメントデータの中からchatIdが合致するものだけを取得する
   return commentStore.comments.filter(comment => comment.taskId == taskId)
 }
 
-//時間をjpの表示に変更
+// 時間を日本語表示に変換
 const formattedDeadlineDate = computed(() => {
   if (!props.task || !props.task.deadlineDate) return ''
 
   const deadline = new Date(props.task.deadlineDate)
+
   /* ---------------------------------------------
      「完了」ボタンを押すと＋1000 年で保存される設計なので、
      500 年より後（≒未来日付として明らかにおかしい） を
      「完了」とみなし、表示上は ‐1000 年して元の期限日に戻す。
   ----------------------------------------------*/
-const farFutureBorder = new Date()
+  const farFutureBorder = new Date()
   farFutureBorder.setFullYear(farFutureBorder.getFullYear() + 500)
 
   // 500 年後より未来 ＝ 完了扱い
-if (deadline > farFutureBorder) {
+  if (deadline > farFutureBorder) {
     const display = new Date(deadline)
     display.setFullYear(display.getFullYear() - 1000)
     return display.toLocaleDateString('ja-JP')
@@ -72,24 +81,25 @@ if (deadline > farFutureBorder) {
   return deadline.toLocaleDateString('ja-JP')
 })
 
-//編集モーダルを閉じる river
+// 編集モーダルを閉じる
 const closeModal = () => {
   showModal.value = false
 }
 
-//閉じるボタンを押されたらモーダルを閉じる river
+// 閉じるボタンを押されたらモーダルを閉じる
 const emit = defineEmits('close-modal');
 
-const DeleteTask =(async(taskId)=> {
-  try{
+// タスクを削除する処理
+const DeleteTask = async (taskId) => {
+  try {
     await taskStore.deleteTasks(taskId)
     emit('close-modal')
-  }catch(error){
+  } catch (error) {
     console.error(error);
   }
-});
+}
 
-
+// 初回マウント時にコメントとジャンル、ユーザー情報を取得
 onMounted(async()=> {
   await commentStore.fetchComment();
   await genreStore.fetchAllGenres()
@@ -100,8 +110,10 @@ onMounted(async()=> {
       makerId = null;
     }
   })
+  await userStore.fetchAllUsers() // ✅ 担当者・作成者名の取得に必要
 })
 
+// ジャンルIDから名前を取得する
 const genreName = computed(() => {
   const genre = genreStore.genres.find(g => g.id === props.task.genreId)
   return genre ? genre.name : 'ジャンル未設定'
@@ -127,18 +139,20 @@ const genreName = computed(() => {
       <div class="detail_modal_center-bottom">
         <div class="detail_modal_DeadAndGenre">
           <h2 class="detail_modal_deadlineDate">期限</h2>
-          <div class="detail_task_genre">ジャンル: {{ genreName }}</div>
-        </div>
-        <div class="detail_modal_DateAndAssignee">
+          <!-- 期限はそのままに -->
           <div class="detail_task_deadlineDate">{{ formattedDeadlineDate }}</div>
+        </div>
+        <div class="detail_modal_genre_assignee_maker">
+          <!-- ジャンル、担当者、作成者を右寄せで縦に並べる -->
+          <div class="detail_task_genre">ジャンル: {{ genreName }}</div>
           <div class="detail_task_assignee">担当者: {{ assigneeName }}</div>
+          <div class="detail_task_maker">作成者: {{ makerName }}</div>
         </div>
       </div>
-      
     </div>
   </div>
-<Form @submit="handleSubmitComment" class="comment-form">
 
+  <Form @submit="handleSubmitComment" class="comment-form">
     <h2><label for="comment">コメント投稿</label></h2>
 
     <Field
@@ -160,10 +174,34 @@ const genreName = computed(() => {
   <div v-for="comment in filterComment(task.id)" :key="comment.id">
     <Comment :comment="comment" />
   </div>
-
-
-
 </template>
+
+<style scoped>
+.detail_task_maker {
+  margin-top: 4px;
+  color: #444;
+  font-size: 14px;
+}
+
+/* ジャンル・担当者・作成者を縦に並べて右寄せ */
+.detail_modal_genre_assignee_maker {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: flex-end; /* 右寄せ */
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.detail_task_genre,
+.detail_task_assignee,
+.detail_task_maker {
+  color: #666699;
+  font-style: italic;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 2px #dde6fa;
+}
+</style>
 
 <style scoped>
 h2 {
@@ -238,30 +276,10 @@ h2 {
   text-shadow: 1px 1px 2px #ffd6fa;
 }
 
-/* 「期限」の文字とジャンル表示機能 */
-.detail_modal_DeadAndGenre{
-  display: flex;
+/* 「期限」と期限日付はそのまま */
+.detail_modal_DeadAndGenre {
   justify-content: space-between;
-}
-
-.detail_task_genre{
-  margin-top: 10%;
-  color: #9999cc;
-  font-style: italic;
-}
-
-/* 期限・担当者 */
-.detail_modal_DateAndAssignee {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #999;
-  margin-top: 8px;
-}
-
-.detail_task_assignee {
-  color: #9999cc;
-  font-style: italic;
+  align-items: center;
 }
 
 /* コメントフォーム全体 */
@@ -318,4 +336,3 @@ h2 {
   text-shadow: 1px 1px 2px #ffe6fa;
 }
 </style>
-
