@@ -64,55 +64,23 @@ app.get("/tasks", async(req, res) => {
   }
 })
 //タスクの投稿 river
-// app.post("/tasks",upload.single('image_url'), async (req, res) => {
-//   try {
-//     const deadlineDate = new Date(req.body.deadlineDate)
-//     const savedData = await prisma.task.create({
-//       data: {
-//         ...req.body,
-//         deadlineDate: deadlineDate,
-//         status: Number(req.body.status), 
-//         genreId: Number(req.body.genreId),  
-//       },
-//     });
-//     res.json(savedData)
-//   } catch(error) {
-//     console.log(error)
-//     res.status(500).send("タスクの保存に失敗しました")
-//   }
-// })
-
-//タスク完了機能実装版のapp.post 実装しないなら上記のものを採用 森
-app.post("/tasks", upload.single('image_url'), async (req, res) => {
+app.post("/tasks",upload.single('image_url'), async (req, res) => {
   try {
-    const {
-      name,
-      explanation,
-      deadlineDate,
-      genreId,
-      status,
-      makerId,
-      assigneeId
-    } = req.body;
-
+    const deadlineDate = new Date(req.body.deadlineDate)
     const savedData = await prisma.task.create({
       data: {
-        name,
-        explanation,
-        deadlineDate: new Date(deadlineDate),
-        genreId: Number(genreId),
-        status: Number(status),
-        makerId,
-        assigneeId
+        ...req.body,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status), 
+        genreId: Number(req.body.genreId),  
       },
     });
-
-    res.json(savedData);
-  } catch (error) {
-    console.error("タスク保存エラー:", error);
-    res.status(500).send("タスクの保存に失敗しました");
+    res.json(savedData)
+  } catch(error) {
+    console.log(error)
+    res.status(500).send("タスクの保存に失敗しました")
   }
-});
+})
 
 //タスクの編集 river
 app.put("/tasks/:id",async(req, res) => {

@@ -118,18 +118,18 @@ onMounted(async () => {
       <div class="deadline-note">※変更されない場合は現在の期限を反映</div>
     </div>
     
-<h4 class="input_title">担当者</h4>
-<select v-model="task.assigneeId" class="input_select">
-  <option disabled value="">-- 担当者を選択 --</option>
-  <option
-    v-for="user in userStore.users"
-    :key="user.uid"
-    :value="user.uid"
-  >
-    {{ user.displayName || '（名前未登録）' }}
-  </option>
-</select>
-
+    <h4 class="input_title">担当者</h4>
+    <select v-model="task.assigneeId" class="input_select">
+      <option disabled value="">-- 担当者を選択 --</option>
+      <option
+        v-for="user in userStore.users"
+        :key="user.uid"
+        :value="user.uid"
+      >
+        {{ user.displayName || '（名前未登録）' }}
+      </option>
+    </select>
+    
     <input class="input_submit" type="submit" value="送信" />
   </Form>
 </template>
