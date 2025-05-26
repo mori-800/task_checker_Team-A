@@ -75,7 +75,7 @@ const submitTask = async (values) => {
             
       <!-- 説明 -->
       <h4 class="input_title">説明</h4>
-      <Field type="text" id="explanation" class="input-field" name="explanation" rules="required" />
+      <Field as="textarea" id="explanation" class="input-field" name="explanation" rules="required" />
       <ErrorMessage as="div" name="explanation" class="error-message">
         <p>This field is required</p>
       </ErrorMessage>
@@ -164,6 +164,14 @@ textarea {
 }
 #explanation{
   height: 100px;
+  text-align: left;         /* テキストを左寄せ */
+  vertical-align: top;      /* テキストを上寄せ */
+  padding: 8px;             /* paddingも明示するとよい */
+  font-family: 'Dancing Script', cursive;
+  color: #6a3f7e;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
 }
 
 /* 選択式フィールド */

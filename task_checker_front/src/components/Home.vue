@@ -42,7 +42,7 @@ onMounted(async()=> {
   const now = new Date()
   overdueTasks.value = res.data.filter(task => (new Date(task.deadlineDate) < now &&task.status < 5))
 
-  if (overdueTasks.value.length > 0 && doneTasks.value.length > 0) {
+  if (overdueTasks.value.length > 0) {
     showWarningModal.value = true
   }
 })
