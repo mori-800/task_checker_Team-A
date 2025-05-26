@@ -17,15 +17,8 @@ const props = defineProps({
 
 //タスクの完了機能 追加機能なので今後残せるかは不明 森
 const completeTask = async () => {
-  const farFutureDate = new Date()
-  farFutureDate.setFullYear(farFutureDate.getFullYear() + 1000)
-
-  // 期限を未来に設定
-  props.task.deadlineDate = farFutureDate.toISOString()
-
   // ✅ ステータスを Done に設定（インデックス5）
-  props.task.status = 5
-
+  props.task.status++
   // 保存処理
   await taskStore.updateTasks(props.task.id, props.task)
 }
@@ -49,12 +42,8 @@ onMounted(() => {
 //以下はタスク完了機能を実装する場合のformattedDeadlineDateの記述 実装しない場合は上記のものを採用 森
 const formattedDeadlineDate = computed(() => {
   if (!props.task || !props.task.deadlineDate) return '';
-
   const deadline = new Date(props.task.deadlineDate);
-  const farFuture = new Date();
-  farFuture.setFullYear(farFuture.getFullYear() + 500); // 目安として500年後以降は完了扱い
-
-  if (deadline > farFuture) {
+  if (props.task.status===5) {
     return '完了済み'
   }
 
@@ -101,7 +90,7 @@ const taskStyle = computed(() => {
     <div class="task_input_contents">
       <StatusSelect @change="statusSelect" :tasks="props.task" />
       <!-- タスクの完了ボタン 追加機能なので今後残せるかは不明 森 -->
-      <button class="complete-button" @click.stop="completeTask">完了</button>
+      <button class="complete-button" @click.stop="completeTask" v-if="props.task.status<5">NEXT</button>
     </div>
   </div>
 </template>
