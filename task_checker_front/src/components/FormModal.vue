@@ -33,7 +33,7 @@ const closeModal = () => {
 
 <style>
 .vm {
-  height: 75vh;
+  height: 80vh;
   padding: 4vh 8vw;
   text-align: center;
   background-color: #f2f5f9eb; /* パステルピンク */

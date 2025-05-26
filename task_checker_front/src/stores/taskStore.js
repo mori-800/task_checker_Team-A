@@ -45,7 +45,7 @@ export const useTaskStore = defineStore('task', () => {
         }
       });
       const addedTask = response.data;
-      tasks.value.push(addedTask);
+      tasks.value=fetchAllTasks();
     }catch(error){
       console.log('タスクデータの保存ができませんでした', error);
     }
@@ -81,12 +81,11 @@ export const useTaskStore = defineStore('task', () => {
   async function deleteTasks(taskId) {
     if(!taskId) return;
     try{
-      const response = await api.delete('/tasks',{
-        params:{id: taskId},
-      })
-      const deletedTask = response.data;
-      const deleteTask=tasks.value.findIndex(t =>t.id === deletedTask.id);
-      tasks.value.splice(deleteTask,1);
+      const response = await api.delete(`/tasks/${taskId}`)
+      const index = tasks.value.findIndex(t => t.id === response.data.id);
+      if(index !== -1){
+        tasks.value.splice(index, 1);
+      }
     }catch(error){
       console.error("フロント側で削除の失敗",error)
     }

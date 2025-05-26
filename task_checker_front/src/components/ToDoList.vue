@@ -50,7 +50,7 @@ const closeModal = () => {
   min-width: 300px;
   width: auto;
   padding: 30px;
-  padding-top: 50px;
+  padding-top: 10px;
   /* background: linear-gradient(145deg, #fceaff, #e0f7ff);
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3); */

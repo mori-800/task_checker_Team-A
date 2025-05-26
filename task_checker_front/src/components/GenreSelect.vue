@@ -21,7 +21,7 @@ const genreStore = useGenreStore();
       </option>
     </select>
     
-    <ErrorMessage as="div" name="genreId">
+    <ErrorMessage as="div" name="genreId" class="error-message">
       <p>This field must be selected</p>
     </ErrorMessage> 
   </Field>
@@ -42,5 +42,13 @@ const genreStore = useGenreStore();
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3); 
   transition: transform 0.2s ease;
+}
+
+/* エラーメッセージ */
+.error-message {
+  color: #f76262;
+  font-size: 0.8rem;
+  margin-top: 2px; /* 少し余白を減らして、ギュッと */
+  font-family: 'Comic Sans MS', cursive;
 }
 </style>

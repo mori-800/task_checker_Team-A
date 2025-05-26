@@ -54,62 +54,33 @@ const authenticateToken = async (req, res, next) => {
 //タスクの取得 river
 app.get("/tasks", async(req, res) => {
   try {
-  const AllTasks = await prisma.task.findMany();
+  const AllTasks = await prisma.task.findMany({
+    orderBy:{
+      deadlineDate: 'asc',
+  }});
   res.json(AllTasks)
   } catch(error) {
   console.log(error)
   }
 })
 //タスクの投稿 river
-// app.post("/tasks",upload.single('image_url'), async (req, res) => {
-//   try {
-//     const deadlineDate = new Date(req.body.deadlineDate)
-//     const savedData = await prisma.task.create({
-//       data: {
-//         ...req.body,
-//         deadlineDate: deadlineDate,
-//         status: Number(req.body.status), 
-//         genreId: Number(req.body.genreId),  
-//       },
-//     });
-//     res.json(savedData)
-//   } catch(error) {
-//     console.log(error)
-//     res.status(500).send("タスクの保存に失敗しました")
-//   }
-// })
-
-//タスク完了機能実装版のapp.post 実装しないなら上記のものを採用 森
-app.post("/tasks", upload.single('image_url'), async (req, res) => {
+app.post("/tasks",upload.single('image_url'), async (req, res) => {
   try {
-    const {
-      name,
-      explanation,
-      deadlineDate,
-      genreId,
-      status,
-      makerId,
-      assigneeId
-    } = req.body;
-
+    const deadlineDate = new Date(req.body.deadlineDate)
     const savedData = await prisma.task.create({
       data: {
-        name,
-        explanation,
-        deadlineDate: new Date(deadlineDate),
-        genreId: Number(genreId),
-        status: Number(status),
-        makerId,
-        assigneeId
+        ...req.body,
+        deadlineDate: deadlineDate,
+        status: Number(req.body.status), 
+        genreId: Number(req.body.genreId),  
       },
     });
-
-    res.json(savedData);
-  } catch (error) {
-    console.error("タスク保存エラー:", error);
-    res.status(500).send("タスクの保存に失敗しました");
+    res.json(savedData)
+  } catch(error) {
+    console.log(error)
+    res.status(500).send("タスクの保存に失敗しました")
   }
-});
+})
 
 //タスクの編集 river
 app.put("/tasks/:id",async(req, res) => {
@@ -133,13 +104,11 @@ app.put("/tasks/:id",async(req, res) => {
   }
 })
 //タスクの削除機能 river
-app.delete('/tasks',async(req, res)=>{
-  const delete_id=parseInt(req.query.id);
+app.delete('/tasks/:id',async(req, res)=>{
+  const delete_id=parseInt(req.params.id,10);
   try{
       const task = await prisma.task.delete({
-      where:{
-        id: delete_id,
-      }
+      where:{id: delete_id,}
     });
     res.json(task);
   }catch(error){
