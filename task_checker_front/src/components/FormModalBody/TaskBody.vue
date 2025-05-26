@@ -68,7 +68,7 @@ const submitTask = async (values) => {
       <!-- タイトル -->
       <h4 class="input_title">タイトル</h4>
       <Field type="text" id="name" class="input-field" name="name" rules="required" />
-      <ErrorMessage as="div" name="name">
+      <ErrorMessage as="div" name="name" class="error-message">
         <p>This field is required</p>
       </ErrorMessage>
 
@@ -76,7 +76,7 @@ const submitTask = async (values) => {
       <!-- 説明 -->
       <h4 class="input_title">説明</h4>
       <Field type="text" id="explanation" class="input-field" name="explanation" rules="required" />
-      <ErrorMessage as="div" name="explanation">
+      <ErrorMessage as="div" name="explanation" class="error-message">
         <p>This field is required</p>
       </ErrorMessage>
 
@@ -84,7 +84,7 @@ const submitTask = async (values) => {
       <!-- 期限 -->
       <h4 class="input_title">期限</h4>
       <Field type="date" id="deadlineDate" class="input-field" name="deadlineDate" rules="required" />
-      <ErrorMessage as="div" name="deadlineDate">
+      <ErrorMessage as="div" name="deadlineDate" class="error-message">
         <p>This field is required</p>
       </ErrorMessage>
       
@@ -98,7 +98,7 @@ const submitTask = async (values) => {
             {{ user.displayName || '名前未登録' }}
           </option>
         </select>
-        <ErrorMessage as="div" name="assigneeId">
+        <ErrorMessage as="div" name="assigneeId" class="error-message">
           <p>This field must be selected</p>
         </ErrorMessage>
       </Field>
@@ -108,20 +108,6 @@ const submitTask = async (values) => {
 </template>
 
 <style scoped>
-/* モーダルボディ */
-.input_menu {
-  font-size: 20px;
-  font-weight: bold;
-  color: #bd7bab;
-  text-align: center;
-  margin-bottom: 24px;
-  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
-  padding: 10px 20px;
-  background: linear-gradient(145deg, #fceaff, #e0f7ff);
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
-  display: inline-block;
-}
 
 .modal_body {
   display: flex;
@@ -133,8 +119,22 @@ const submitTask = async (values) => {
   padding: 16px;  /* パディングを縮小 */
   box-shadow: 0 6px 16px rgba(255, 182, 255, 0.3);
   max-width: 70vw;
-  max-height: 70vh;
-  overflow-y: auto;
+  /* max-height: 70vh; */
+}
+
+/* モーダルボディ */
+.input_menu {
+  font-size: 20px;
+  font-weight: bold;
+  color: #bd7bab;
+  text-align: center;
+  margin-bottom: 12px;
+  font-family: 'Comic Sans MS', 'Hiragino Maru Gothic Pro', 'Yu Gothic UI', sans-serif;
+  padding: 10px 20px;
+  background: linear-gradient(145deg, #fceaff, #e0f7ff);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(200, 180, 255, 0.3);
+  display: inline-block;
 }
 
 /* 各入力欄のタイトル */
@@ -181,6 +181,7 @@ textarea {
   color: #f76262;
   font-size: 0.8rem;
   margin-top: 2px; /* 少し余白を減らして、ギュッと */
+  font-family: 'Comic Sans MS', cursive;
 }
 
 /* 送信ボタン */

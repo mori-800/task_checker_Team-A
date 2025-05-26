@@ -54,7 +54,10 @@ const authenticateToken = async (req, res, next) => {
 //タスクの取得 river
 app.get("/tasks", async(req, res) => {
   try {
-  const AllTasks = await prisma.task.findMany();
+  const AllTasks = await prisma.task.findMany({
+    orderBy:{
+      deadlineDate: 'asc',
+  }});
   res.json(AllTasks)
   } catch(error) {
   console.log(error)
@@ -133,13 +136,11 @@ app.put("/tasks/:id",async(req, res) => {
   }
 })
 //タスクの削除機能 river
-app.delete('/tasks',async(req, res)=>{
-  const delete_id=parseInt(req.query.id);
+app.delete('/tasks/:id',async(req, res)=>{
+  const delete_id=parseInt(req.params.id,10);
   try{
       const task = await prisma.task.delete({
-      where:{
-        id: delete_id,
-      }
+      where:{id: delete_id,}
     });
     res.json(task);
   }catch(error){

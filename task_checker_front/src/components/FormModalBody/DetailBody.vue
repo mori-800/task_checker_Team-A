@@ -129,7 +129,7 @@ const genreName = computed(() => {
           編集
           <FormModal v-model="showModal" body="editBody" :task="props.task" @close-modal="closeModal" />
         </button>
-        <button type="button" class="detail_delete_button" @click="DeleteTask(task.id)">削除</button>
+        <button type="button" class="detail_delete_button" @click="DeleteTask(props.task.id)">削除</button>
       </div>
     </div>
     <div class="detail_modal_center">
