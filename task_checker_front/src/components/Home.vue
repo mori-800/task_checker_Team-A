@@ -11,6 +11,7 @@ import { useGenreStore } from '../stores/genreStore'
 import api from '../api/axios'
 const showWarningModal = ref(false)
 const overdueTasks = ref([])
+const doneTasks = ref([])
 
 const showModal = ref(false);
 const taskStore = useTaskStore();
@@ -39,7 +40,7 @@ onMounted(async()=> {
   //森の遊び 後で消す
   const res = await api.get('/tasks') // APIで全タスク取得
   const now = new Date()
-  overdueTasks.value = res.data.filter(task => new Date(task.deadlineDate) < now)
+  overdueTasks.value = res.data.filter(task => (new Date(task.deadlineDate) < now &&task.status < 5))
 
   if (overdueTasks.value.length > 0) {
     showWarningModal.value = true

@@ -8,24 +8,24 @@ import { useGenreStore } from '../../stores/genreStore'
 import { useUserStore } from '../../stores/userStore';
 import { useCommentStore } from '../../stores/comment';
 import { auth,onAuthStateChanged } from '../../firebase';
-import { Form, Field, ErrorMessage } from 'vee-validate'
+import { Form, Field, ErrorMessage,defineRule,useForm } from 'vee-validate'
 import { required } from '@vee-validate/rules'
-import { defineRule } from 'vee-validate'
 
 defineRule('required', required)
 
 //コメントの投稿
 const makerId=ref('');
 // コメント送信ボタンが押されたときに呼ばれる
-const handleSubmitComment = (values) => {
-  submitComment(props.task.id, makerId.value,values)
-}
+const handleSubmitComment = async (values, { resetForm }) => {
+  await submitComment(props.task.id, makerId.value, values);
+  resetForm(); // ← ここでちゃんとフォームをクリア
+};
 
-const submitComment = async (taskId, makerId, values) => {
+const submitComment = async (taskId, makerId, comment) => {
 // コメントをstoreに送信し、再取得して一覧に反映
   await commentStore.addComment({
     taskId,
-    content: values.content,
+    content: comment.content,
     makerId,
   })
   await commentStore.fetchComment()  // 再取得して反映
@@ -136,9 +136,8 @@ const genreName = computed(() => {
     </div>
   </div>
 
-  <Form @submit="handleSubmitComment" class="comment-form">
+  <Form :initial-values="{ content: '' }" @submit="handleSubmitComment" class="comment-form">
     <h2><label for="comment">コメント投稿</label></h2>
-
     <Field
       as="textarea"
       id="comment"
@@ -150,7 +149,6 @@ const genreName = computed(() => {
     <ErrorMessage name="content" v-slot="{ message }">
       <p class="error-message">何も書いてないと送信できないよ😿</p>
     </ErrorMessage>
-
     <button type="submit" class="comment-submit-button">送信</button>
   </Form>
 

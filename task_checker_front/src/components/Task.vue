@@ -61,13 +61,15 @@ const closeModal = () => {
 
 
 const taskStyle = computed(() => {
-  // 現在の日時より deadlineDate が後であるかをチェック
-  if (!props.task || !props.task.deadlineDate) return {};
-  const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
-  // 条件に基づいてスタイルオブジェクトを返す
-  return {
-    backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
-  };
+  // 現在の日時より deadlineDateが後であるかをチェック
+  if(props.task.status<5){
+    if (!props.task || !props.task.deadlineDate) return {};
+      const isDeadlineAfterToday = new Date(props.task.deadlineDate) > new Date();
+      // 条件に基づいてスタイルオブジェクトを返す
+    return {
+      backgroundColor: isDeadlineAfterToday ? 'white' : 'rgb(250, 194, 194)',
+    };
+  }
 })
 
 </script>
@@ -98,7 +100,7 @@ const taskStyle = computed(() => {
 <style scoped>
 /* タスクカード */
 .task {
-  background-color: #fff5f8; /* やさしいピンク */
+  background-color: white; /* やさしいピンク */
   max-height: 350px;
   width: 300px;
   margin-bottom: 20px;
