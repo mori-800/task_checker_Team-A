@@ -34,7 +34,6 @@ onMounted(async () => {
   
   <div class="main">
     <Header />
-
     <div class="contents">
       <h2 class="search-title">検索結果</h2> <!-- ここを追加 -->
       <div class="task_field" v-for="task in taskStore.searchResults" :key="task.id" >
@@ -52,7 +51,10 @@ onMounted(async () => {
   padding: 0;
   min-height: 100vh;
 }
-
+.contents{
+  padding-left: 2%;
+  overflow-y: auto;
+}
 /* 検索結果タイトル */
 .search-title {
   font-size: 24px;
@@ -65,7 +67,7 @@ onMounted(async () => {
   padding: 8px 16px;
   border-radius: 12px;
   display: inline-block;
-  box-shadow: 0 2px 6px rgba(255, 204, 249, 0.4);
+  /* box-shadow: 0 2px 6px rgba(255, 204, 249, 0.4); */
   margin-left: 8px; /* ←少し右にずらす */
 }
 
@@ -74,7 +76,6 @@ onMounted(async () => {
   margin-bottom: 16px;
   padding: 12px;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(255, 204, 249, 0.2);
 }
 
 </style>

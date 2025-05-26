@@ -12,7 +12,6 @@ import { Form, Field, ErrorMessage,defineRule,useForm } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 
 defineRule('required', required)
-const { resetForm } = useForm()
 
 //コメントの投稿
 const makerId=ref('');

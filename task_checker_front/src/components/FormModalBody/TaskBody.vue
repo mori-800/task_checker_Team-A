@@ -162,6 +162,9 @@ textarea {
   box-shadow: 0 4px 8px rgba(255, 182, 255, 0.3);
   margin-bottom: 8px; /* 上下の余白をさらに縮小 */
 }
+#explanation{
+  height: 100px;
+}
 
 /* 選択式フィールド */
 .select {
