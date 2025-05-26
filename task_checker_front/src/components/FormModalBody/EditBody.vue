@@ -129,7 +129,7 @@ onMounted(async () => {
         {{ user.displayName || '（名前未登録）' }}
       </option>
     </select>
-    
+
     <input class="input_submit" type="submit" value="送信" />
   </Form>
 </template>
@@ -161,7 +161,7 @@ onMounted(async () => {
 /* 各ラベル */
 .input_title {
   display: block;
-  width: fit-content;
+  width: 100px;
   max-width: 100%;
   padding: 8px 16px;
   margin: 16px auto 12px auto;
@@ -180,7 +180,7 @@ onMounted(async () => {
 input,
 textarea,
 .input_select {
-  width: 150px;
+  width: 200px;
   height: 18px;
   font-size: 16px;
   color: #703c85;
@@ -194,7 +194,9 @@ textarea,
   box-shadow: 0 2px 6px rgba(255, 182, 255, 0.3); 
   transition: transform 0.2s ease;
 }
-
+textarea{
+  height: 100px;
+}
 /* ドロップダウンも同じ装飾 */
 .input_select:focus,
 input:focus,
