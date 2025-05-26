@@ -1,29 +1,32 @@
 <script setup>
-import { ref , computed , onMounted } from 'vue';
+
 import FormModal from '../FormModal.vue';
+import Comment from '../Comment.vue';
+import { ref , computed , onMounted } from 'vue';
 import { useTaskStore } from '../../stores/taskStore';
 import { useGenreStore } from '../../stores/genreStore'
 import { useUserStore } from '../../stores/userStore';
 import { useCommentStore } from '../../stores/comment';
-import Comment from '../Comment.vue';
-
+import { auth,onAuthStateChanged } from '../../firebase';
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { required } from '@vee-validate/rules'
 import { defineRule } from 'vee-validate'
 
 defineRule('required', required)
 
+//コメントの投稿
+const makerId=ref('');
 // コメント送信ボタンが押されたときに呼ばれる
 const handleSubmitComment = (values) => {
-  submitComment(props.task.id, values)
+  submitComment(props.task.id, makerId.value,values)
 }
 
+const submitComment = async (taskId, makerId, values) => {
 // コメントをstoreに送信し、再取得して一覧に反映
-const submitComment = async (taskId, values) => {
-  console.log('コメント送信:', values.content, 'taskId:', taskId)
   await commentStore.addComment({
     taskId,
-    content: values.content
+    content: values.content,
+    makerId,
   })
   await commentStore.fetchComment()  // 再取得して反映
 }
@@ -39,9 +42,6 @@ const props = defineProps({
   task: Object
 })
 
-const comment = ref({});
-
-// 担当者の名前をユーザー一覧から取得する
 const assigneeName = computed(() => {
   const user = userStore.users.find(u => u.uid === props.task.assigneeId)
   return user ? user.displayName || '（名前未登録）' : '不明なユーザー'
@@ -103,6 +103,13 @@ const DeleteTask = async (taskId) => {
 onMounted(async()=> {
   await commentStore.fetchComment();
   await genreStore.fetchAllGenres()
+  onAuthStateChanged(auth, (user) => {
+    if(user) {
+      makerId.value=auth.currentUser.uid;
+    }else{
+      makerId = null;
+    }
+  })
   await userStore.fetchAllUsers() // ✅ 担当者・作成者名の取得に必要
 })
 

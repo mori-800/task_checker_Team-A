@@ -6,11 +6,12 @@ export const useCommentStore = defineStore('comment', () => {
   const comments = ref([])
   const addComment = async(comment) => {
     try{
-      const response = await api.post('/comment', comment);
+      const response = await api.post('/comments', comment);
       const addedComment = response.data;
+      
       comments.value.push(addedComment);
     }catch(error){
-      console.log('コメント保存ができませんでした')
+      console.error('コメント保存ができませんでした',error)
     }
   }
   const fetchComment = async() => {

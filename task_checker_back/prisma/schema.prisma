@@ -34,6 +34,8 @@ model Genre {
 model Comment {
   id      Int    @id @default(autoincrement())
   content String // コメント内容
+  makerId String //コメントの製作者
+  content_dt DateTime @default(now()) //コメントの投稿日時
   taskId  Int    // chatテーブルへの外部キーカラム
   tasks    Task   @relation(fields: [taskId], references: [id])
 }
