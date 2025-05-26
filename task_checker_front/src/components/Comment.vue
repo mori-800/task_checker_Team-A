@@ -1,7 +1,7 @@
 <script setup>
 import { useCommentStore } from '../stores/comment';
 import { useUserStore } from '../stores/userStore';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 const props = defineProps({
   comment: Object
@@ -33,9 +33,12 @@ const deleteComment = async(commentId) => {
 
 <template>
   <div class="comment_wrapper">
-    <p class="comment_content">{{ MakerName }}</p>
-    <p class="comment_content">{{ comment.content }}</p>
-    <p class="comment_content">{{ comment.content_dt }}</p>
+    <div class="comment_content">
+      <p class="comment_MakerName">
+        <span>{{ MakerName }}</span>
+        <span>{{ toJPDate(comment.content_dt) }}</span></p>
+      <p class="comment_text">{{comment.content}}</p> 
+    </div>
     <button @click="deleteComment(comment.id)" class="btn">×</button>
   </div>
 </template>
@@ -63,7 +66,18 @@ const deleteComment = async(commentId) => {
   border: 1px dashed #ffccf9;
   box-shadow: inset 0 1px 2px rgba(255, 182, 255, 0.2);
 }
-
+.comment_MakerName{
+  font-size: 13px;
+  border-bottom: 2px dotted #ffc8f9;
+  display: flex;
+  justify-content: space-between;
+  color: #91709e;
+  margin: 3px;
+}
+.comment_text{
+  text-align: left;
+  margin: 3px;
+}
 .btn {
   background: linear-gradient(to right, #fcd5ce, #f9c0c0);
   color: #6d2932;
